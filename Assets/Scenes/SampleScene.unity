@@ -4050,7 +4050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: ec958752dfb0df04d88a9639aab9ca5f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7680580347602820307, guid: ec958752dfb0df04d88a9639aab9ca5f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -8621,6 +8621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uC138\uB9AC\uC548_Attack_Ready"
       objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: 79c2c0c0fb3bb554e92c35f0b447c049, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7680580347602820307, guid: 79c2c0c0fb3bb554e92c35f0b447c049, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -10281,11 +10285,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9018384397503341335, guid: 0e89fca983699ee4bb7899185a9b8949, type: 3}
       propertyPath: m_Name
-      value: "\uC138\uB9AC\uC548_idle"
+      value: "\uC138\uB9AC\uC548"
       objectReference: {fileID: 0}
     - target: {fileID: 9018384397503341335, guid: 0e89fca983699ee4bb7899185a9b8949, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9038867422318522346, guid: 0e89fca983699ee4bb7899185a9b8949, type: 3}
       propertyPath: m_LocalPosition.x

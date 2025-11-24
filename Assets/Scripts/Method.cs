@@ -80,4 +80,16 @@ public static class Method
         float ca = defender.stats.CA;  // 0~1
         return Random.value < ca;
     }
+
+    // ========== 8. 레이어 재귀적 설정 ==========
+    public static void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (child == null) continue;
+            SetLayerRecursively(child.gameObject, layer);
+        }
+    }
 }

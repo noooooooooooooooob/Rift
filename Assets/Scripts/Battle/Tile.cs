@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public class BattleGrid
+{
+    public const int Width = 10;
+    public const int Height = 5;
+    public Tile[,] Tiles;
+}
+
 public class Tile : MonoBehaviour
 {
     public Vector2Int tileOffset; // Offset of the tile in the grid
@@ -9,5 +16,9 @@ public class Tile : MonoBehaviour
         get { return gridPosition; }
         set { gridPosition = value; }
     }
-
+    public Unit occupant;
+    public bool IsOccupied
+    {
+        get { return occupant != null; }
+    }
 }

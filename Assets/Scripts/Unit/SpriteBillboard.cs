@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[ExecuteAlways]
 public class SpriteBillboard : MonoBehaviour
 {
     [SerializeField] private bool freezeRotationX = true;

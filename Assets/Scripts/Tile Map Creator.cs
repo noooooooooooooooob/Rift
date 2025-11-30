@@ -4,21 +4,22 @@ public class TileMapCreator : MonoBehaviour
 {
     public GameObject tilePrefab;
     public Transform startPos;
-    public int width;
-    public int height;
     public float spaceX, spaceZ;
     public void GenerateMap()
     {
         ClearMap();  // 기존 타일 제거
 
-        for (int z = 0; z < height; z++)
+        for (int z = 0; z < BattleGrid.Height; z++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < BattleGrid.Width; x++)
             {
                 Vector3 pos = new Vector3(startPos.position.x + x * spaceX, startPos.position.y, startPos.position.z + z * spaceZ);
-                GameObject tile = Instantiate(tilePrefab, pos, tilePrefab.transform.rotation, transform);
-                tile.name = $"Tile_{x}_{z}";
-                tile.GetComponent<Tile>().GridPosition = new Vector2Int(x, z);
+                GameObject tileGO = Instantiate(tilePrefab, pos, tilePrefab.transform.rotation, transform);
+                tileGO.name = $"Tile_{x}_{z}";
+                Tile tile = tileGO.GetComponent<Tile>();
+
+                tile.GridPosition = new Vector2Int(x, z);
+                Battle_Manager.instance.battleGrid.Tiles[x, z] = tile;
             }
         }
     }

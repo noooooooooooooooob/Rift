@@ -9,7 +9,7 @@ public class BattleGrid
 
 public class Tile : MonoBehaviour
 {
-    public Vector2Int tileOffset; // Offset of the tile in the grid
+    SpriteRenderer spriteRenderer;
     Vector2Int gridPosition;
     public Vector2Int GridPosition
     {
@@ -20,5 +20,20 @@ public class Tile : MonoBehaviour
     public bool IsOccupied
     {
         get { return occupant != null; }
+    }
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void SetHighlight(bool highlight)
+    {
+        if (highlight)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
+        }
     }
 }

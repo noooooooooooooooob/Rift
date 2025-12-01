@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &70295842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &81458324
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &98319833
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &108171267
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -976,7 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &144785360
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &150348199
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &155906266
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1611,7 +1611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &249818892
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &262476382
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1819,7 +1819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &268742974
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1966,7 +1966,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 1.12011, y: 5, z: -7.1300697}
+  m_LocalPosition: {x: 5.12011, y: 5, z: -7.1300697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2281,7 +2281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &371509752
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2830,7 +2830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &463703792
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3251,8 +3251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TileMapCreator
   tilePrefab: {fileID: 1806617658702546151, guid: 572dd9aedd1ce0342b6c504daa7eba6f, type: 3}
   startPos: {fileID: 530497487}
-  width: 10
-  height: 5
   spaceX: 1.8
   spaceZ: 1.8
 --- !u!1 &547618273 stripped
@@ -3301,7 +3299,7 @@ Transform:
   m_GameObject: {fileID: 554410773}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 1.12011, y: 5, z: -7.1300697}
+  m_LocalPosition: {x: 5.12011, y: 5, z: -7.1300697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3375,7 +3373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineSplineDolly
   m_SplineSettings:
     Spline: {fileID: 1224774331}
-    Position: 0.5
+    Position: 1
     Units: 1
   SplineOffset: {x: 0, y: 0, z: 0}
   CameraRotation: 0
@@ -3483,7 +3481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &569591908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3592,7 +3590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &608087525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3908,7 +3906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &696259432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4012,7 +4010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &700860833
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4241,7 +4239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &774240534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4582,7 +4580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &856898710
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4691,7 +4689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &889924218
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4795,7 +4793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &921405125
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4899,7 +4897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &924076619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5034,7 +5032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &944273724
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5213,7 +5211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1016065497
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5410,7 +5408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1053550033
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5620,7 +5618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1084801172
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5861,7 +5859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1152686277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6071,7 +6069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1160845577
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6175,7 +6173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1162010776
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6460,7 +6458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1203116284
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6723,7 +6721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1255607910
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7218,7 +7216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322890240}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 2.666, y: -0.304, z: 0.465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7270,7 +7268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1327598735
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7374,7 +7372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1340970130
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7664,7 +7662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1412748080
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7768,7 +7766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1425848646
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7872,7 +7870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1433063732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7976,7 +7974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1467247972
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8080,7 +8078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1530525908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8184,7 +8182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1535513302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8288,7 +8286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1563225469
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8392,7 +8390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1582896210
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8880,7 +8878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1697763595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8984,7 +8982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1709738384
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10312,7 +10310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1814372931
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10522,7 +10520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1830571688
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10754,7 +10752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1853952342
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10858,7 +10856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1890688529
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10962,7 +10960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1927175861
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11066,7 +11064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &1948178052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11584,7 +11582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &2068988542
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12080,7 +12078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
 --- !u!212 &2124808845
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle_Manager : MonoBehaviour
@@ -17,4 +18,6 @@ public class Battle_Manager : MonoBehaviour
         }
     }
     public BattleGrid battleGrid;
+    public List<Unit> playerUnits;
+    public List<Unit> enemyUnits;
 }

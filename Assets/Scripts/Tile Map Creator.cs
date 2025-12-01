@@ -16,6 +16,7 @@ public class TileMapCreator : MonoBehaviour
                 Vector3 pos = new Vector3(startPos.position.x + x * spaceX, startPos.position.y, startPos.position.z + z * spaceZ);
                 GameObject tileGO = Instantiate(tilePrefab, pos, tilePrefab.transform.rotation, transform);
                 tileGO.name = $"Tile_{x}_{z}";
+                tileGO.layer = LayerMask.NameToLayer("Tile");
                 Tile tile = tileGO.GetComponent<Tile>();
 
                 tile.GridPosition = new Vector2Int(x, z);

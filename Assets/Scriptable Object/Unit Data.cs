@@ -6,6 +6,7 @@ public class UnitData : ScriptableObject
     public string unitName;
     public string unitClass;
     public string unitDescription;
-    public Sprite unitSprite;
+    public Sprite unitPortrait;
+    public Sprite unitDraggingSprite;
     public UnitStat baseStat;
 }

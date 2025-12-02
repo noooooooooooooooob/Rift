@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1178439185852047279}
   - component: {fileID: 3219305972419945015}
   - component: {fileID: 7981552655090687337}
-  m_Layer: 0
+  - component: {fileID: 2354690033170431840}
+  m_Layer: 9
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,4 +104,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc60f832fb19c0245b7e9fb76cdeefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileOffset: {x: 0, y: 0}
+  occupant: {fileID: 0}
+--- !u!65 &2354690033170431840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806617658702546151}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.46875, y: 1.4687504, z: 0.20000005}
+  m_Center: {x: 0, y: 0, z: 0}

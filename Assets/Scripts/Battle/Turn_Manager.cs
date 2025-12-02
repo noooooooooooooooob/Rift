@@ -41,6 +41,7 @@ public class Turn_Manager : MonoBehaviour
         // 배치 단계 처리 로직
         Debug.Log("Deployment Phase Started");
         // 예: 플레이어가 유닛을 배치할 때까지 대기
+        deploymentController.BeginDeployment();
         yield return new WaitUntil(() => deploymentController.IsDeploymentValid());
         Debug.Log("Deployment Phase Ended");
         currentPhase = BattlePhase.Battle;

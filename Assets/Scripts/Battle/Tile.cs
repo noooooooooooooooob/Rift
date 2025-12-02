@@ -1,12 +1,5 @@
 using UnityEngine;
 
-public class BattleGrid
-{
-    public const int Width = 10;
-    public const int Height = 5;
-    public Tile[,] Tiles;
-}
-
 public class Tile : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
@@ -21,6 +14,10 @@ public class Tile : MonoBehaviour
     {
         get { return occupant != null; }
     }
+    public Vector3 WorldPosition
+    {
+        get { return transform.position; }
+    }
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -29,7 +26,7 @@ public class Tile : MonoBehaviour
     {
         if (highlight)
         {
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.yellow;
         }
         else
         {

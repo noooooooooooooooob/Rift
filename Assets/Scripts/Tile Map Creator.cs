@@ -5,6 +5,7 @@ public class TileMapCreator : MonoBehaviour
     public GameObject tilePrefab;
     public Transform startPos;
     public float spaceX, spaceZ;
+    public Tile[,] tiles = new Tile[BattleGrid.Width, BattleGrid.Height];
     public void GenerateMap()
     {
         ClearMap();  // 기존 타일 제거
@@ -16,11 +17,10 @@ public class TileMapCreator : MonoBehaviour
                 Vector3 pos = new Vector3(startPos.position.x + x * spaceX, startPos.position.y, startPos.position.z + z * spaceZ);
                 GameObject tileGO = Instantiate(tilePrefab, pos, tilePrefab.transform.rotation, transform);
                 tileGO.name = $"Tile_{x}_{z}";
-                tileGO.layer = LayerMask.NameToLayer("Tile");
                 Tile tile = tileGO.GetComponent<Tile>();
 
                 tile.GridPosition = new Vector2Int(x, z);
-                Battle_Manager.instance.battleGrid.Tiles[x, z] = tile;
+                tiles[x, z] = tile;
             }
         }
     }

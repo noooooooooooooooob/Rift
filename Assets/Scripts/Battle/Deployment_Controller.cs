@@ -8,25 +8,49 @@ public class Deployment_Controller : MonoBehaviour
     Camera mainCamera;
     LayerMask tileMask;
     Tile currentHoverTile;
+    List<GameObject> previewObjects = new List<GameObject>();
+    GameObject previewGO;
+    SpriteRenderer previewSR;
 
     private void Start()
     {
         mainCamera = Camera.main;
         tileMask = LayerMask.GetMask("Tile");
     }
-    // x 좌표 기준으로 절반만 배치 가능
-    // 예: grid.Width / 2 보다 작은 x만 허용
-    public bool CanPlaceOnTile(Tile tile)
-    {
-        return tile.GridPosition.x < BattleGrid.Width / 2 && !tile.IsOccupied;
-    }
-
     public void BeginDeployment()
     {
         playerUnits = Battle_Manager.instance.playerUnits;
-
+        foreach (Unit unit in playerUnits)
+        {
+            CreatePreviewObject(unit);
+            previewObjects.Add(previewGO);
+        }
+        ReStartDrag(playerUnits[0]);
     }
-    private void Update()
+    private void CreatePreviewObject(Unit unit)
+    {
+        previewGO = new GameObject("UnitPreview");
+        previewSR = previewGO.AddComponent<SpriteRenderer>();
+        previewSR.sprite = unit.unitData.unitDraggingSprite;
+        previewSR.sortingOrder = 100; // 맨 위에 보이게
+        previewSR.color = new Color(1, 1, 1, 0.7f); // 반투명
+
+        previewGO.SetActive(false);
+    }
+    public void ReStartDrag(Unit unit)
+    {
+        if(draggingUnit != null) return;
+        draggingUnit = unit;
+        currentHoverTile = null;
+
+        // 기존 타일 점유 해제 (다시 배치할 수 있게)
+        if (unit.CurrentTile != null)
+        {
+            unit.CurrentTile.occupant = null;
+            unit.CurrentTile = null;
+        }
+    }
+    void Update()
     {
         if (draggingUnit == null) return;
 
@@ -37,7 +61,6 @@ public class Deployment_Controller : MonoBehaviour
             TryPlaceDraggingUnit();
         }
     }
-
     private void FollowMouse()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -47,8 +70,8 @@ public class Deployment_Controller : MonoBehaviour
             Tile tile = hit.collider.GetComponent<Tile>();
             if (tile != null)
             {
-                // 유닛을 타일 위치 위로 살짝 띄워서 위치
-                draggingUnit.transform.position = tile.transform.position;
+                draggingUnit.transform.position = tile.WorldPosition;
+                tile.SetHighlight(true);
                 UpdateHoverTile(tile);
                 return;
             }
@@ -85,24 +108,14 @@ public class Deployment_Controller : MonoBehaviour
     {
         if (currentHoverTile != null && CanPlaceOnTile(currentHoverTile))
         {
-            // 실제 배치
-            draggingUnit.transform.position = currentHoverTile.transform.position;
-            draggingUnit.CurrentTile = currentHoverTile;
-            currentHoverTile.occupant = draggingUnit;
+            TryPlaceUnit(draggingUnit, currentHoverTile);
 
             ClearHoverTile();
             draggingUnit = null;
         }
-        else
-        {
-            // 배치 불가능한 위치 클릭했을 때 처리
-            // 1) 그냥 계속 들고 있게 두거나
-            // 2) 원래 자리로 되돌리거나 (원래 위치 저장해뒀다가)
-            // 지금은 일단 계속 들고 있게 놔두자
-        }
     }
 
-    public bool TryPlaceUnit(Unit unit, Tile tile)
+    bool TryPlaceUnit(Unit unit, Tile tile)
     {
         if (!CanPlaceOnTile(tile)) return false;
 
@@ -116,6 +129,13 @@ public class Deployment_Controller : MonoBehaviour
         unit.CurrentTile = tile;
         tile.occupant = unit;
         return true;
+    }
+
+    // x 좌표 기준으로 절반만 배치 가능
+    // 예: grid.Width / 2 보다 작은 x만 허용
+    public bool CanPlaceOnTile(Tile tile)
+    {
+        return tile.GridPosition.x < BattleGrid.Width / 2 && !tile.IsOccupied;
     }
 
     public bool IsDeploymentValid()

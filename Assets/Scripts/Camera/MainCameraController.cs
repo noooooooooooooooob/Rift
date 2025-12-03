@@ -67,12 +67,12 @@ public class MainCameraController : MonoBehaviour
     // ==========================
     void HandleDrag()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             isDragging = true;
             lastPointerPos = Mouse.current.position.ReadValue();
         }
-        else if (Mouse.current.leftButton.wasReleasedThisFrame)
+        else if (Mouse.current.rightButton.wasReleasedThisFrame)
         {
             isDragging = false;
         }

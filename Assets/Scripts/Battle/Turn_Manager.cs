@@ -16,7 +16,7 @@ public class Turn_Manager : MonoBehaviour
     void Start()
     {
         currentPhase = BattlePhase.Deployment;
-        deploymentController = GetComponent<Deployment_Controller>();
+        StartCoroutine(State());
     }
     private IEnumerator State()
     {

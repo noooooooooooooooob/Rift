@@ -12,26 +12,14 @@ public class BattleGrid
 public class Battle_Manager : MonoBehaviour
 {
     public static Battle_Manager instance;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
     public TileMapCreator tileMapCreator;
     public BattleGrid battleGrid;
     public List<Unit> playerUnits;
     public List<Unit> enemyUnits;
 
-    private void Start()
+    private void Awake()
     {
+        instance = this;
         battleGrid = new BattleGrid();
         battleGrid.Tiles = new Tile[BattleGrid.Width, BattleGrid.Height];
         tileInit();

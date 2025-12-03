@@ -4,11 +4,11 @@ using System.Collections.Generic;
 public class Deployment_Controller : MonoBehaviour
 {
     public List<Unit> playerUnits;
-    Unit draggingUnit;
+    public Unit draggingUnit;
     Camera mainCamera;
     LayerMask tileMask;
     Tile currentHoverTile;
-    List<GameObject> previewObjects = new List<GameObject>();
+    public List<GameObject> previewObjects = new List<GameObject>();
     GameObject previewGO;
     SpriteRenderer previewSR;
 
@@ -25,7 +25,7 @@ public class Deployment_Controller : MonoBehaviour
             CreatePreviewObject(unit);
             previewObjects.Add(previewGO);
         }
-        ReStartDrag(playerUnits[0]);
+        StartDrag(playerUnits[0]);
     }
     private void CreatePreviewObject(Unit unit)
     {
@@ -36,6 +36,11 @@ public class Deployment_Controller : MonoBehaviour
         previewSR.color = new Color(1, 1, 1, 0.7f); // 반투명
 
         previewGO.SetActive(false);
+    }
+    private void StartDrag(Unit unit)
+    {
+        draggingUnit = unit;
+        currentHoverTile = null;
     }
     public void ReStartDrag(Unit unit)
     {
@@ -61,15 +66,17 @@ public class Deployment_Controller : MonoBehaviour
             TryPlaceDraggingUnit();
         }
     }
-    private void FollowMouse()
+    void FollowMouse()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, tileMask))
         {
+            
             Tile tile = hit.collider.GetComponent<Tile>();
             if (tile != null)
             {
+                Debug.Log($"Hovering over Tile {tile.GridPosition.x}, {tile.GridPosition.y}");
                 draggingUnit.transform.position = tile.WorldPosition;
                 tile.SetHighlight(true);
                 UpdateHoverTile(tile);

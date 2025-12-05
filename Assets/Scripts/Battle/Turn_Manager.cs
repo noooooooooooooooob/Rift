@@ -12,12 +12,6 @@ public class Turn_Manager : MonoBehaviour
 {
     public BattlePhase currentPhase;
     public Deployment_Controller deploymentController;
-
-    void Start()
-    {
-        currentPhase = BattlePhase.Deployment;
-        StartCoroutine(State());
-    }
     private IEnumerator State()
     {
         while (true)
@@ -45,5 +39,11 @@ public class Turn_Manager : MonoBehaviour
         yield return new WaitUntil(() => deploymentController.IsDeploymentValid());
         Debug.Log("Deployment Phase Ended");
         currentPhase = BattlePhase.Battle;
+    }
+    public void OnCutSceneEnd()
+    {
+        Debug.Log("CutScene End → Deployment Phase로 전환");
+        currentPhase = BattlePhase.Deployment;
+        StartCoroutine(State());
     }
 }

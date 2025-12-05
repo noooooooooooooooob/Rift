@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using NUnit.Framework;
 
 public class Deployment_Controller : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class Deployment_Controller : MonoBehaviour
     Camera mainCamera;
     LayerMask tileMask;
     Tile currentHoverTile;
-    public List<GameObject> previewObjects = new List<GameObject>();
+    public Queue<GameObject> previewObjects = new Queue<GameObject>();
     GameObject previewGO;
     SpriteRenderer previewSR;
 
@@ -23,9 +25,10 @@ public class Deployment_Controller : MonoBehaviour
         foreach (Unit unit in playerUnits)
         {
             CreatePreviewObject(unit);
-            previewObjects.Add(previewGO);
+            previewObjects.Enqueue(previewGO);
         }
-        StartDrag(playerUnits[0]);
+        StartDrag(previewObjects.Dequeue().GetComponent<Unit>());
+
     }
     private void CreatePreviewObject(Unit unit)
     {
@@ -61,30 +64,42 @@ public class Deployment_Controller : MonoBehaviour
 
         FollowMouse();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             TryPlaceDraggingUnit();
         }
     }
     void FollowMouse()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+        // 1) New Input System에서 마우스 좌표 읽기
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+
+        Ray ray = mainCamera.ScreenPointToRay(mousePos);
+
+        // 기본 드래그용 이동
+        draggingUnit.transform.position = ray.origin + ray.direction * 10f;
+
+        // 2) Physics.Raycast (그대로 사용 가능)
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, tileMask))
         {
-            
             Tile tile = hit.collider.GetComponent<Tile>();
+
             if (tile != null)
             {
                 Debug.Log($"Hovering over Tile {tile.GridPosition.x}, {tile.GridPosition.y}");
+
+                // 타일 위라면 타일 위치로 스냅
                 draggingUnit.transform.position = tile.WorldPosition;
+
+                // 하이라이트 처리
                 tile.SetHighlight(true);
                 UpdateHoverTile(tile);
+
                 return;
             }
         }
 
-        // 타일이 아닌 곳이면, 그냥 바닥 쪽으로만 이동 시키거나 그대로 두기
+        // 타일 위가 아님
         ClearHoverTile();
     }
 
@@ -135,6 +150,10 @@ public class Deployment_Controller : MonoBehaviour
         unit.transform.position = tile.transform.position; // 타일 중앙으로 이동
         unit.CurrentTile = tile;
         tile.occupant = unit;
+        if(!IsDeploymentValid())
+        {
+            StartDrag(previewObjects.Dequeue().GetComponent<Unit>());
+        }
         return true;
     }
 

@@ -110,6 +110,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!114 &5379832603353012512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +140,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Unit
   CurrentTile: {fileID: 0}
   unitData: {fileID: 11400000, guid: 509217a590384744093392ed7598eab4, type: 2}
+  stats:
+    HP: 1
+    UP: 1
+    ATK: 1
+    DEF: 1
+    SPD: 1
+    AGI: 1
+    LS: 0
+    RST: 0
+    EV: 0
+    CA: 0
+    DR: 0
+    AP: 0
+  currentHP: 1
+  maxHP: 1
+  currentUP: 0
+  guard: 0
+  turnGauge: 14.190751
+  isPlayerUnit: 1
+  isDead: 0
+  actionMenuUI: {fileID: 0}
+  ultimateAction: {fileID: 0}
+  attackAction: {fileID: 0}
+  skill1Action: {fileID: 0}
+  skill2Action: {fileID: 0}
+  guardAction: {fileID: 0}
+  moveAction: {fileID: 0}
 --- !u!1 &1230167743765891181
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +201,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6394323993836258449
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -218,6 +247,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 712c52319b6bce84191640105348e9bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -227,7 +257,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2620786474009359561
 GameObject:
@@ -1356,6 +1385,7 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!4 &7680817720560961699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6641591729183422721, guid: 2f0e46cb92730af428dea114c4d72d1c, type: 3}
@@ -1647,6 +1677,7 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!114 &4771978965542378594
 MonoBehaviour:
   m_ObjectHideFlags: 0

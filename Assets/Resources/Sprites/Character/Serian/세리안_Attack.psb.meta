@@ -5124,28 +5124,6 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
     spritePosition: {x: 1485, y: 530}
-  - name: "\uB808\uC774\uC5B4 1"
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 393
-      y: 2008
-      width: 0
-      height: 0
-    spriteID: 01335345f98b23543a83aa78b4ab4516
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 393, y: 2008}
-    spritePosition: {x: 0, y: 2500}
   spriteImportData: []
   rigSpriteImportData: []
   sharedRigSpriteImportData: []
@@ -5677,7 +5655,7 @@ ScriptedImporter:
     layerID: 3
     mosaicPosition: {x: 393, y: 2008}
     flatten: 0
-    isImported: 1
+    isImported: 0
     isVisible: 1
   - name: "\uC6A9\uC9C0"
     spriteName: 

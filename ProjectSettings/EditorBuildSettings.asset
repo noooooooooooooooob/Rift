@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Start Scene.unity
     guid: bbd2b61fad09fbc4db1b026de41ecfe9
+  - enabled: 1
+    path: Assets/Scenes/Shop Scene.unity
+    guid: 01731efb980453144ac4d254c37e51a3
+  - enabled: 1
+    path: Assets/Scenes/Event Scene.unity
+    guid: 1639177dd52805a41838b7892b848b6c
+  - enabled: 1
+    path: Assets/Scenes/Boss Scene.unity
+    guid: df889cc17febe3a4291a5e02e703c634
+  - enabled: 1
+    path: Assets/Scenes/Stage Select Scene.unity
+    guid: 2a28fc11af3e2764a86521d31f4bf91c
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

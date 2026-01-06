@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 /// <summary>
 /// 전투 시스템의 핵심 매니저 (싱글톤)
@@ -87,5 +89,14 @@ public class Battle_Manager : MonoBehaviour
                 Debug.LogWarning($"[Battle_Manager] Attempted to remove {unit.unitData.unitName} from enemyUnits, but it was not found.");
             }
         }
+    }
+    public void OnBattleEnd()
+    {
+        // 전투 UI 숨김
+        if (Battle_UI_Manager.instance != null)
+        {
+            Battle_UI_Manager.instance.OnBattleEnd();
+        }
+        Stage_Manager.instance.CompleteCurrentNode();
     }
 }

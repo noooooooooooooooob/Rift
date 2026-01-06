@@ -68,7 +68,7 @@ public class Turn_Manager : MonoBehaviour
                     yield return StartCoroutine(HandleBattlePhase());
                     break;
                 case BattlePhase.Result:
-                    // yield return StartCoroutine(HandleResultPhase());  // TODO: 결과 단계 구현 필요
+                    HandleResultPhase();
                     yield break;  // 결과 단계 후 상태 머신 종료
             }
         }
@@ -205,12 +205,6 @@ public class Turn_Manager : MonoBehaviour
                 {
                     Debug.Log("전투 종료 조건 충족!");
 
-                    // 전투 UI 숨김
-                    if (Battle_UI_Manager.instance != null)
-                    {
-                        Battle_UI_Manager.instance.OnBattleEnd();
-                    }
-
                     currentPhase = BattlePhase.Result;
                     yield break;
                 }
@@ -307,5 +301,14 @@ public class Turn_Manager : MonoBehaviour
         Debug.Log($"[Turn_Manager] {deadUnit.unitData.unitName} 사망 감지");
         Battle_Manager.instance.RemoveUnitFromBattle(deadUnit);
         shouldCheckBattleEnd = true;  // 다음 프레임에 승패 체크
+    }
+    /// <summary>
+    /// 결과 단계 처리
+    /// 승리/패배 화면 표시 및 후처리
+    /// </summary>
+    private void HandleResultPhase()
+    {
+        Debug.Log("Result Phase Started");
+        Battle_Manager.instance.OnBattleEnd();
     }
 }

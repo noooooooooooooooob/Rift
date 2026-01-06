@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 
 public class Stage_Manager : MonoBehaviour
 {
@@ -48,15 +46,22 @@ public class Stage_Manager : MonoBehaviour
         {
             case Stage_Type.BATTLE:
                 Debug.Log("Battle Node Selected");
+                SceneManager.LoadScene("Battle Scene");
                 break;
             case Stage_Type.SHOP:
                 Debug.Log("Shop Node Selected");
+                // SceneManager.LoadScene("Shop Scene"); 
+                SceneManager.LoadScene("Battle Scene");
                 break;
             case Stage_Type.EVENT:
                 Debug.Log("Event Node Selected");
+                // SceneManager.LoadScene("Event Scene");
+                SceneManager.LoadScene("Battle Scene");
                 break;
             case Stage_Type.BOSS:
                 Debug.Log("Boss Node Selected");
+                // SceneManager.LoadScene("Boss Scene");
+                SceneManager.LoadScene("Battle Scene");
                 break;
         }
         currentStage.isCurrentNode = false;

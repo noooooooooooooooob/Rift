@@ -9,7 +9,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     // 기존 필드
-    public Tile CurrentTile;  // 현재 위치한 타일
+    public Tile currentTile;  // 현재 위치한 타일
     public UnitData unitData;  // 유닛 기본 데이터 (ScriptableObject)
 
     // 런타임 스탯 (전투 중 변경 가능)
@@ -39,6 +39,7 @@ public class Unit : MonoBehaviour
 
     // 매니저 참조 (전투 시작 시 설정)
     private Turn_Manager turnManager;
+    public Unit_Animation unitAnimation; // 유닛 애니메이션 컴포넌트 참조
 
     /// <summary>
     /// 유닛 초기화 (Battle_Manager 또는 배치 완료 후 호출)
@@ -108,6 +109,15 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
+    /// 턴 받아옴
+    /// </summary>
+    public bool GetTurn()
+    {
+
+        return true;
+    }
+
+    /// <summary>
     /// 사망 처리
     /// TurnGaugeManager와 Turn_Manager에게 사망을 알리고 승패 체크를 트리거
     /// </summary>
@@ -123,6 +133,15 @@ public class Unit : MonoBehaviour
         if (turnManager != null)
             turnManager.OnUnitDeath(this);
 
-        // TODO: 사망 애니메이션, VFX 등
+        
+        if (isPlayerUnit)
+        {
+
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }

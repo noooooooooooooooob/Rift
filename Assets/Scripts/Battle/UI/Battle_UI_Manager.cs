@@ -10,88 +10,42 @@ public class Battle_UI_Manager : MonoBehaviour
 
     [Header("Panel References")]
     public GameObject battleUI_Panel;
+    public GameObject GameOver_Panel;
     public Turn_Gauge turnGaugeUI;
-
     void Awake()
     {
-        // 싱글톤 초기화
-        if (instance == null)
+        if(instance == null)
         {
             instance = this;
-        }
-        else
-        {
-            Debug.LogWarning("Battle_UI_Manager: Multiple instances detected!");
-            Destroy(gameObject);
+            return;
         }
     }
-
     void Start()
     {
-        // 초기에는 전투 UI 숨김
-        if (battleUI_Panel != null)
+        if (GameOver_Panel != null)
         {
-            battleUI_Panel.SetActive(false);
+            GameOver_Panel.SetActive(false);
         }
     }
 
-    /// <summary>
-    /// 전투 UI 표시
-    /// </summary>
-    public void ShowBattleUI()
+    public void OnBattlePhaseStart()
     {
+        // 전투 UI 패널 활성화
         if (battleUI_Panel != null)
         {
             battleUI_Panel.SetActive(true);
         }
-
-        if (turnGaugeUI != null)
-        {
-            turnGaugeUI.Initialize();
-        }
     }
-
-    /// <summary>
-    /// 전투 UI 숨김
-    /// </summary>
-    public void HideBattleUI()
+    public void OnBattleEnd()
     {
+        // 전투 UI 패널 비활성화
         if (battleUI_Panel != null)
         {
             battleUI_Panel.SetActive(false);
         }
-    }
-
-    /// <summary>
-    /// 전투 페이즈 시작 시 호출
-    /// Turn_Manager에서 호출됨
-    /// </summary>
-    public void OnBattlePhaseStart()
-    {
-        Debug.Log("Battle_UI_Manager: OnBattlePhaseStart called");
-
-        ShowBattleUI();
-
-        if (turnGaugeUI != null)
+        if (GameOver_Panel != null)
         {
-            turnGaugeUI.StartUpdating();
-        }
-        else
-        {
-            Debug.LogWarning("Battle_UI_Manager: turnGaugeUI is null!");
-        }
-    }
-
-    /// <summary>
-    /// 전투 종료 시 호출
-    /// </summary>
-    public void OnBattleEnd()
-    {
-        HideBattleUI();
-
-        if (turnGaugeUI != null)
-        {
-            turnGaugeUI.enabled = false;
+            GameOver_Panel.SetActive(true);
         }
     }
 }

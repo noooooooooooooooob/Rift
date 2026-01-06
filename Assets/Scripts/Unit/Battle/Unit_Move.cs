@@ -2,15 +2,43 @@ using UnityEngine;
 
 public class Unit_Move : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public Unit unit;
+    public float animationDuration;
+
+    private void Awake()
     {
-        
+        if (unit == null)
+            unit = GetComponent<Unit>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void MoveToTile(Tile targetTile)
     {
-        
+        // 타일이 점유되어 있는지 확인
+        if (targetTile.IsOccupied)
+        {
+            Debug.LogWarning("타일이 이미 점유되어 있어 이동할 수 없습니다!");
+            return;
+        }
+
+        // 현재 타일에서 점유 해제
+        if (unit.currentTile != null)
+        {
+            unit.currentTile.occupant = null;
+        }
+
+        // 유닛의 위치를 타일의 월드 위치로 이동
+        unit.transform.position = targetTile.WorldPosition;
+
+        // 타일의 점유자로 유닛 설정
+        targetTile.occupant = unit.gameObject;
+
+        // 유닛의 현재 타일 업데이트
+        unit.currentTile = targetTile;
+
+        // 이동 애니메이션 재생
+        if (unit.unitAnimation != null)
+        {
+            unit.unitAnimation.PlayMoveAnimation();
+        }
     }
 }

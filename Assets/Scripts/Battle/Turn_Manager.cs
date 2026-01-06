@@ -27,10 +27,12 @@ public class Turn_Manager : MonoBehaviour
 
     [Header("Battle References")]
     public TurnGuage_Manager turnGaugeManager;  // 턴 게이지 매니저 참조
+    public Action_Controller actionController;  // 액션 컨트롤러 참조
 
     private bool isReadyToStartBattle = false;  // 버튼 클릭 여부 플래그
     private Unit currentTurnUnit;  // 현재 턴을 받은 유닛
     private bool shouldCheckBattleEnd = false;  // 유닛 사망 시 true로 설정되어 승패 체크 트리거
+    public bool isTurnEnd = false;  // 유닛 턴 종료 여부 플래그
 
     /// <summary>
     /// 초기화: 버튼 이벤트 연결 및 초기 상태 설정
@@ -229,6 +231,8 @@ public class Turn_Manager : MonoBehaviour
 
                     // 3-5. 유닛 행동 실행
                     yield return StartCoroutine(ExecuteUnitTurn(currentTurnUnit));
+
+                    currentTurnUnit.turnGauge -= 100.0f;  // 행동 후 게이지 100 소모
                 }
             }
 
@@ -277,10 +281,11 @@ public class Turn_Manager : MonoBehaviour
         if (unit.isPlayerUnit)
         {
             Debug.Log($"[Player Turn] {unit.unitData.unitName} - 입력 대기 중 (TODO)");
-            // TODO: 플레이어 입력 처리
-            // - 이동 가능 타일 표시
-            // - 공격/스킬 대상 선택
-            // - 행동 실행
+            actionController.TurnStart(unit);
+            isTurnEnd = false;
+
+            yield return new WaitUntil(() => isTurnEnd);
+
             yield return new WaitForSeconds(1f);  // 임시 대기
         }
         else
@@ -300,6 +305,7 @@ public class Turn_Manager : MonoBehaviour
     public void OnUnitDeath(Unit deadUnit)
     {
         Debug.Log($"[Turn_Manager] {deadUnit.unitData.unitName} 사망 감지");
+        Battle_Manager.instance.RemoveUnitFromBattle(deadUnit);
         shouldCheckBattleEnd = true;  // 다음 프레임에 승패 체크
     }
 }

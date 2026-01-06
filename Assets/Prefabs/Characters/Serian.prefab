@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bce3707ee9c2f24e88beb0efa09ce87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unit
-  CurrentTile: {fileID: 0}
+  currentTile: {fileID: 0}
   unitData: {fileID: 11400000, guid: 509217a590384744093392ed7598eab4, type: 2}
   stats:
     HP: 1
@@ -167,6 +167,7 @@ MonoBehaviour:
   skill2Action: {fileID: 0}
   guardAction: {fileID: 0}
   moveAction: {fileID: 0}
+  unitAnimation: {fileID: 0}
 --- !u!1 &1230167743765891181
 GameObject:
   m_ObjectHideFlags: 0

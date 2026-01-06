@@ -89,7 +89,6 @@ public class TurnGuage_Manager : MonoBehaviour
             return null;
 
         Unit nextUnit = readyUnits[0];
-        nextUnit.turnGauge  = 0f;  // 턴 획득 후 게이지 초기화
 
         return nextUnit;
     }

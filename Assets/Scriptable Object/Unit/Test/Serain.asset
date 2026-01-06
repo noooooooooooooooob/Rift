@@ -22,11 +22,12 @@ MonoBehaviour:
     UP: 1
     ATK: 1
     DEF: 1
-    SPD: 1
-    AGI: 1
+    SPD: 50
+    AGI: 6
     LS: 0
     RST: 0
     EV: 0
     CA: 0
     DR: 0
     AP: 0
+  skills: []

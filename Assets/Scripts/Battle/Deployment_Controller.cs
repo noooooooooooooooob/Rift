@@ -96,10 +96,10 @@ public class Deployment_Controller : MonoBehaviour
         if (draggingUnit != null) return;
 
         // 기존 타일 점유 해제
-        if (unit.CurrentTile != null)
+        if (unit.currentTile != null)
         {
-            unit.CurrentTile.occupant = null;
-            unit.CurrentTile = null;
+            unit.currentTile.occupant = null;
+            unit.currentTile = null;
         }
 
         // placedUnits에서 제거 (다시 배치할 것이므로)
@@ -218,7 +218,7 @@ public class Deployment_Controller : MonoBehaviour
     {
         // 유닛을 타일에 배치
         unit.transform.position = tile.WorldPosition;
-        unit.CurrentTile = tile;
+        unit.currentTile = tile;
         tile.occupant = unit.gameObject;
 
         // 불투명하게 복원
@@ -243,7 +243,7 @@ public class Deployment_Controller : MonoBehaviour
     /// </summary>
     public bool CanPlaceOnTile(Tile tile)
     {
-        return tile.GridPosition.x < BattleGrid.Width / 2 && !tile.IsOccupied;
+        return tile.GridPosition.x < Battle_Manager.GridWidth / 2 && !tile.IsOccupied;
     }
 
     /// <summary>

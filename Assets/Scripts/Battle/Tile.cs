@@ -41,6 +41,11 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
+    /// 타일이 점유되어 있는지 확인
+    /// </summary>
+    public bool isPlayerTile = false;
+
+    /// <summary>
     /// 타일의 월드 좌표
     /// </summary>
     public Vector3 WorldPosition

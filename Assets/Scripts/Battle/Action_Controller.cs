@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public enum ActionType
@@ -62,6 +63,10 @@ public class Action_Controller : MonoBehaviour
         // 마우스 클릭 감지 (새 Input System)
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
+            // UI 위에 있으면 무시
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             Tile clickedTile = GetTileUnderMouse();
             if (clickedTile != null)
             {
@@ -118,7 +123,7 @@ public class Action_Controller : MonoBehaviour
     private void ShowMovableTiles()
     {
         ClearHighlights();
-        List<Tile> tiles = Method.GetTilesSoloTarget(currentUnit, currentUnit.stats.AGI);
+        List<Tile> tiles = Method.GetMovableTiles(currentUnit, currentUnit.stats.AGI);
         foreach (var tile in tiles)
         {
             tile.SetHighlight(HighlightType.Movable);
@@ -128,8 +133,7 @@ public class Action_Controller : MonoBehaviour
     private void ShowAttackableTiles()
     {
         ClearHighlights();
-        List<Tile> tiles = Method.GetTilesSoloTarget(currentUnit, currentUnit.attackAction.attackSkillData.range, true); // 예시: 공격 범위는 이동 범위 + 1
-        foreach (var tile in tiles)
+        foreach (var tile in Battle_Manager.instance.enemyTiles)
         {
             tile.SetHighlight(HighlightType.Attackable);
             highlightedTiles.Add(tile);
@@ -195,7 +199,9 @@ public class Action_Controller : MonoBehaviour
         ClearHighlights();
         actionMenuUI.HideAllMenus();
 
-        currentUnit.attackAction.ExecuteAttack(tile.occupant.GetComponent<Unit>());
+        List<Tile> attackableTiles = Method.GetAttackableTiles(currentUnit, currentUnit.attackAction.attackSkillData, tile);
+
+        currentUnit.attackAction.ExecuteAttack(attackableTiles);
         yield return new WaitForSeconds(currentUnit.attackAction.animationDuration);
         turnManager.isTurnEnd = true;
     }
@@ -268,6 +274,8 @@ public class Action_Controller : MonoBehaviour
                 tile.SetHighlight(HighlightType.Movable);
                 break;
             case ActionType.Attack:
+                tile.SetHighlight(HighlightType.Attackable);
+                break;
             case ActionType.Skill1:
             case ActionType.Skill2:
             case ActionType.Ultimate:

@@ -8,48 +8,34 @@ using UnityEngine;
 public class TileMapCreator : MonoBehaviour
 {
     public GameObject tilePrefab;  // 타일 프리팹
-    public Transform startPos;     // 생성 시작 위치
+    public Transform playerTilesStartPos;     // 생성 시작 위치
+    public Transform enemyTilesStartPos;      // 적 타일 생성 시작 위치
     public float spaceX, spaceZ;   // 타일 간격 (X, Z축)
-    public Tile[,] tiles = new Tile[Battle_Manager.GridWidth, Battle_Manager.GridHeight];  // 생성된 타일 배열
+    public Tile[,] playerTiles = new Tile[Battle_Manager.GridWidth, Battle_Manager.GridHeight];  // 생성된 타일 배열
+    public Tile[,] enemyTiles = new Tile[Battle_Manager.GridWidth, Battle_Manager.GridHeight];  // 내부 타일 배열
 
     /// <summary>
     /// 런타임 초기화: 자식 오브젝트에서 타일들을 찾아서 배열에 저장
     /// </summary>
     private void Awake()
     {
-        Debug.Log("[TileMapCreator] Awake - Finding tiles from children");
-
-        // 자식 오브젝트들을 순회하며 타일 찾기
-        foreach (Transform child in transform)
+        for (int i = 0; i < transform.childCount; i++)
         {
+            GameObject child = transform.GetChild(i).gameObject;
             Tile tile = child.GetComponent<Tile>();
             if (tile != null)
             {
-                Vector2Int pos = tile.GridPosition;
-                if (pos.x >= 0 && pos.x < Battle_Manager.GridWidth &&
-                    pos.y >= 0 && pos.y < Battle_Manager.GridHeight)
+                Vector2Int gridPos = tile.GridPosition;
+                if (child.name.StartsWith("Player_Tile_"))
                 {
-                    tiles[pos.x, pos.y] = tile;
-                    Debug.Log($"[TileMapCreator] Found tile at ({pos.x}, {pos.y}): {child.name}");
+                    playerTiles[gridPos.x, gridPos.y] = tile;
+                }
+                else if (child.name.StartsWith("Enemy_Tile_"))
+                {
+                    enemyTiles[gridPos.x, gridPos.y] = tile;
                 }
             }
         }
-
-        // NULL 타일 체크
-        int nullCount = 0;
-        for (int x = 0; x < Battle_Manager.GridWidth; x++)
-        {
-            for (int y = 0; y < Battle_Manager.GridHeight; y++)
-            {
-                if (tiles[x, y] == null)
-                {
-                    nullCount++;
-                    Debug.LogWarning($"[TileMapCreator] tiles[{x}, {y}] is NULL!");
-                }
-            }
-        }
-
-        Debug.Log($"[TileMapCreator] Awake complete - {nullCount} NULL tiles out of {Battle_Manager.GridWidth * Battle_Manager.GridHeight}");
     }
 
     /// <summary>
@@ -64,13 +50,22 @@ public class TileMapCreator : MonoBehaviour
         {
             for (int x = 0; x < Battle_Manager.GridWidth; x++)
             {
-                Vector3 pos = new Vector3(startPos.position.x + x * spaceX, startPos.position.y, startPos.position.z + z * spaceZ);
+                Vector3 pos = new Vector3(playerTilesStartPos.position.x + x * spaceX, playerTilesStartPos.position.y, playerTilesStartPos.position.z + z * spaceZ);
                 GameObject tileGO = Instantiate(tilePrefab, pos, tilePrefab.transform.rotation, transform);
-                tileGO.name = $"Tile_{x}_{z}";
+                tileGO.name = $"Player_Tile_{x}_{z}";
                 Tile tile = tileGO.GetComponent<Tile>();
 
                 tile.GridPosition = new Vector2Int(x, z);
-                tiles[x, z] = tile;
+                playerTiles[x, z] = tile;
+
+                // 적 타일 생성
+                Vector3 enemyPos = new Vector3(enemyTilesStartPos.position.x + x * spaceX, enemyTilesStartPos.position.y, enemyTilesStartPos.position.z + z * spaceZ);
+                GameObject enemyTileGO = Instantiate(tilePrefab, enemyPos, tilePrefab.transform.rotation, transform);
+                enemyTileGO.name = $"Enemy_Tile_{x}_{z}";
+                Tile enemyTile = enemyTileGO.GetComponent<Tile>();
+
+                enemyTile.GridPosition = new Vector2Int(x, z);
+                enemyTiles[x, z] = enemyTile;
             }
         }
     }

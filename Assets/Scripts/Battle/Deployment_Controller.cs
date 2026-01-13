@@ -243,7 +243,7 @@ public class Deployment_Controller : MonoBehaviour
     /// </summary>
     public bool CanPlaceOnTile(Tile tile)
     {
-        return tile.GridPosition.x < Battle_Manager.GridWidth / 2 && !tile.IsOccupied;
+        return tile.isPlayerTile && !tile.IsOccupied;
     }
 
     /// <summary>

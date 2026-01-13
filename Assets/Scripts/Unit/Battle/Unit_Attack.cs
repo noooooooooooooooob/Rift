@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit_Attack : MonoBehaviour
@@ -12,7 +13,7 @@ public class Unit_Attack : MonoBehaviour
             unit = GetComponent<Unit>();
     }
 
-    public virtual void ExecuteAttack(Unit targetUnit)
+    public virtual void ExecuteAttack(List<Tile> tiles)
     {
         if (attackSkillData == null)
         {
@@ -21,6 +22,16 @@ public class Unit_Attack : MonoBehaviour
         }
 
         unit.unitAnimation.PlayAttackAnimation();
-        unit.Attack(targetUnit, 10);
+        foreach (var tile in tiles)
+        {
+            if (tile.occupant != null)
+            {
+                Unit targetUnit = tile.occupant.GetComponent<Unit>();
+                if (targetUnit != null)
+                {
+                    unit.TakeDamage(100);
+                }
+            }
+        }
     }
 }

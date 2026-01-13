@@ -150,86 +150,125 @@ public static class Method
         return Mathf.Abs(from.x - to.x) + Mathf.Abs(from.y - to.y);
     }
 
-    /// <summary>
-    /// 유닛과 타일 간의 거리 계산
-    /// </summary>
-    public static int GetDistance(Unit unit, Tile tile)
-    {
-        if (unit.currentTile == null || tile == null) return int.MaxValue;
-        return GetManhattanDistance(unit.currentTile.GridPosition, tile.GridPosition);
-    }
-
     // ========== 10. 이동 가능 타일 계산 (BFS) ==========
     /// <summary>
     /// 유닛이 이동 가능한 모든 타일 리스트 반환
     /// BFS를 사용하여 실제 도달 가능한 타일만 반환 (장애물 우회 경로 고려)
     /// </summary>
     /// <param name="unit">이동할 유닛</param>
-    /// <param name="moveRange">이동 범위 (기본 2)</param>
+    /// <param name="moveRange">이동 범위</param>
     /// <returns>이동 가능한 타일 리스트</returns>
-    public static List<Tile> GetTilesSoloTarget(Unit unit, int moveRange, bool ignoreOccupants = false)
+    public static List<Tile> GetMovableTiles(Unit unit, int moveRange)
     {
         List<Tile> movableTiles = new List<Tile>();
-
-        if (unit.currentTile == null || Battle_Manager.instance == null)
+        if (unit.currentTile == null || moveRange <= 0)
             return movableTiles;
 
-        Vector2Int startPos = unit.currentTile.GridPosition;
-        Queue<(Tile tile, int distance)> queue = new Queue<(Tile, int)>();
-        Dictionary<Vector2Int, int> visited = new Dictionary<Vector2Int, int>();
+        // 유닛 타입에 따라 타일 배열 선택
+        Tile[,] tiles = unit.isPlayerUnit
+            ? Battle_Manager.instance.playerTiles
+            : Battle_Manager.instance.enemyTiles;
 
-        // 시작 타일 추가
-        queue.Enqueue((unit.currentTile, 0));
-        visited[startPos] = 0;
+        // BFS depth 추적용 Dictionary
+        Dictionary<Tile, int> distance = new Dictionary<Tile, int>();
+        Queue<Tile> queue = new Queue<Tile>();
 
-        // 4방향 벡터 (상하좌우)
-        Vector2Int[] directions = new Vector2Int[]
-        {
-            new Vector2Int(0, 1),   // 위
-            new Vector2Int(0, -1),  // 아래
-            new Vector2Int(-1, 0),  // 왼쪽
-            new Vector2Int(1, 0)    // 오른쪽
+        queue.Enqueue(unit.currentTile);
+        distance[unit.currentTile] = 0;
+
+        Vector2Int[] directions = {
+            new Vector2Int(1, 0), new Vector2Int(-1, 0),
+            new Vector2Int(0, 1), new Vector2Int(0, -1)
         };
 
         while (queue.Count > 0)
         {
-            var (currentTile, currentDistance) = queue.Dequeue();
-            Vector2Int currentPos = currentTile.GridPosition;
+            Tile current = queue.Dequeue();
+            int currentDist = distance[current];
 
-            // 이동 범위 초과 시 스킵
-            if (currentDistance >= moveRange)
+            if (currentDist > moveRange)
                 continue;
 
-            // 4방향 탐색
-            foreach (Vector2Int dir in directions)
+            if (current != unit.currentTile && !current.IsOccupied)
+                movableTiles.Add(current);
+
+            if (currentDist >= moveRange)
+                continue;
+
+            foreach (var dir in directions)
             {
-                Vector2Int nextPos = currentPos + dir;
+                Vector2Int neighborPos = current.GridPosition + dir;
 
-                // 그리드 범위 체크
-                if (nextPos.x < 0 || nextPos.x >= Battle_Manager.GridWidth ||
-                    nextPos.y < 0 || nextPos.y >= Battle_Manager.GridHeight)
+                // 범위 체크
+                if (neighborPos.x < 0 || neighborPos.x >= Battle_Manager.GridWidth ||
+                    neighborPos.y < 0 || neighborPos.y >= Battle_Manager.GridHeight)
                     continue;
 
-                // 이미 더 짧은 거리로 방문했으면 스킵
-                if (visited.ContainsKey(nextPos) && visited[nextPos] <= currentDistance + 1)
-                    continue;
-
-                Tile nextTile = Battle_Manager.instance.tiles[nextPos.x, nextPos.y];
-
-                if (nextTile == null)
-                    continue;
-
-                // 점유된 타일은 통과 불가
-                if (nextTile.IsOccupied && !ignoreOccupants)
-                    continue;
-
-                // 방문 처리 및 큐 추가
-                visited[nextPos] = currentDistance + 1;
-                queue.Enqueue((nextTile, currentDistance + 1));
-                movableTiles.Add(nextTile);
+                Tile neighborTile = tiles[neighborPos.x, neighborPos.y];
+                if (neighborTile != null && !distance.ContainsKey(neighborTile) && !neighborTile.IsOccupied)
+                {
+                    queue.Enqueue(neighborTile);
+                    distance[neighborTile] = currentDist + 1;
+                }
             }
         }
-
         return movableTiles;
+    }
+    // ========== 11. 공격 가능 타일 계산 (BFS) ==========
+    /// <summary>
+    /// BFS를 사용하여 실제 도달 가능한 타일만 반환 (장애물 우회 경로 고려)
+    /// </summary>
+    /// <param name="unit">이동할 유닛</param>
+    /// <param name="moveRange">이동 범위</param>
+    /// <returns>이동 가능한 타일 리스트</returns>
+    public static List<Tile> GetAttackableTiles(Unit unit, SkillData skillData, Tile currentTile)
+    {
+        List<Tile> attackableTiles = new List<Tile>();
+        if (unit.currentTile == null || skillData == null)
+            return attackableTiles;
+
+        if(currentTile.isPlayerTile)
+            return attackableTiles;
+        // 유닛 타입에 따라 타일 배열 선택
+        Tile[,] tiles = unit.isPlayerUnit
+            ? Battle_Manager.instance.playerTiles
+            : Battle_Manager.instance.enemyTiles;
+
+        switch(skillData.skillTargetType)
+        {
+            case SkillTargetType.Solo:
+                attackableTiles.Add(currentTile);
+                return attackableTiles;
+            case SkillTargetType.Area:
+                return GetTilesAreaTarget(currentTile, skillData.area, tiles);
+            case SkillTargetType.Global:
+                foreach (var tile in tiles)
+                {
+                    if (tile != null)
+                        attackableTiles.Add(tile);
+                }
+                return attackableTiles;
+            default:
+                return attackableTiles;
+        }
+    }
+    public static List<Tile> GetTilesAreaTarget(Tile currentTile, List<Vector2Int> area, Tile[,] tiles)
+    {
+        List<Tile> areaTiles = new List<Tile>();
+        foreach (var offset in area)
+        {
+            Vector2Int targetPos = currentTile.GridPosition + offset;
+            // 범위 체크
+            if (targetPos.x < 0 || targetPos.x >= Battle_Manager.GridWidth ||
+                targetPos.y < 0 || targetPos.y >= Battle_Manager.GridHeight)
+                continue;
+
+            Tile targetTile = tiles[targetPos.x, targetPos.y];
+            if (targetTile != null)
+            {
+                areaTiles.Add(targetTile);
+            }
+        }
+        return areaTiles;
     }
 }

@@ -10,12 +10,13 @@ using UnityEngine.UI;
 /// </summary>
 public class Battle_Manager : MonoBehaviour
 {
-    public const int GridWidth = 10;  // 그리드 너비 (10칸)
+    public const int GridWidth = 5;  // 그리드 너비 (5칸)
     public const int GridHeight = 5;  // 그리드 높이 (5칸)
 
     public static Battle_Manager instance;  // 싱글톤 인스턴스
     public TileMapCreator tileMapCreator;  // 타일맵 생성기 참조
-    public Tile[,] tiles;  // 전투 그리드 타일 배열
+    public Tile[,] playerTiles;
+    public Tile[,] enemyTiles;
     public List<Unit> playerUnits;  // 플레이어 유닛 목록
     public List<Unit> enemyUnits;  // 적 유닛 목록
 
@@ -25,12 +26,8 @@ public class Battle_Manager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        tiles = new Tile[GridWidth, GridHeight];
-
-        // // 유닛 리스트 초기화 (중요!)
-        // playerUnits = new List<Unit>();
-        // enemyUnits = new List<Unit>();
-
+        playerTiles = new Tile[GridWidth, GridHeight];
+        enemyTiles = new Tile[GridWidth, GridHeight];
         tileInit();
     }
 
@@ -52,11 +49,18 @@ public class Battle_Manager : MonoBehaviour
         {
             for(int y = 0; y < GridHeight; y++)
             {
-                tiles[x, y] = tileMapCreator.tiles[x, y];
-                if (tiles[x, y] == null)
+                playerTiles[x, y] = tileMapCreator.playerTiles[x, y];
+                playerTiles[x, y].isPlayerTile = true;
+                enemyTiles[x, y] = tileMapCreator.enemyTiles[x, y];
+                if (playerTiles[x, y] == null)
                 {
                     nullCount++;
-                    Debug.LogWarning($"[Battle_Manager] tiles[{x}, {y}] is NULL after copying from TileMapCreator");
+                    Debug.LogWarning($"[Battle_Manager] playerTiles[{x},{y}] is NULL!");
+                }
+                if (enemyTiles[x, y] == null)
+                {
+                    nullCount++;
+                    Debug.LogWarning($"[Battle_Manager] enemyTiles[{x},{y}] is NULL!");
                 }
             }
         }

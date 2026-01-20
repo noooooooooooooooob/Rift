@@ -23,7 +23,6 @@ public class Party_Manager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("Party_Manager 초기화 완료");
         }
         else
         {
@@ -55,6 +54,14 @@ public class Party_Manager : MonoBehaviour
         {
             partyUnits.Add(unitGO);
             DontDestroyOnLoad(unitGO);  // GameObject를 씬 전환 시 유지
+
+            // SpriteBillboard 비활성화 (파티 상태에서는 카메라 추적 불필요)
+            SpriteBillboard billboard = unitGO.GetComponent<SpriteBillboard>();
+            if (billboard != null)
+            {
+                billboard.enabled = false;
+            }
+
             Debug.Log($"{unit.unitData.unitName} 파티에 추가됨 (총 {partyUnits.Count}명)");
         }
         else

@@ -20,7 +20,10 @@ public class SpriteBillboard : MonoBehaviour
     /// </summary>
     void Start()
     {
-        cameraTransform = Camera.main.transform;
+        if (cameraTransform == null)
+        {
+            findCamera();
+        }
     }
 
     /// <summary>
@@ -29,10 +32,20 @@ public class SpriteBillboard : MonoBehaviour
     /// </summary>
     void LateUpdate()
     {
+        if (cameraTransform == null) 
+        {
+            findCamera();
+        }
+
         transform.rotation = Quaternion.Euler(
             freezeRotationX ? 0 : cameraTransform.rotation.eulerAngles.x,
             freezeRotationY ? 0 : cameraTransform.rotation.eulerAngles.y,
             freezeRotationZ ? 0 : cameraTransform.rotation.eulerAngles.z
         );
+    }
+
+    void findCamera()
+    {
+        cameraTransform = Camera.main.transform;
     }
 }

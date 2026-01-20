@@ -50,7 +50,7 @@ public class Stage_Manager : MonoBehaviour
                 break;
             case Stage_Type.SHOP:
                 Debug.Log("Shop Node Selected");
-                // SceneManager.LoadScene("Shop Scene"); 
+                // SceneManager.LoadScene("Shop Scene");
                 SceneManager.LoadScene("Battle Scene");
                 break;
             case Stage_Type.EVENT:
@@ -294,7 +294,6 @@ public class Stage_Manager : MonoBehaviour
                 connection.targetNode.isUnlocked = true;
                 connection.targetNode.UpdateVisual();
             }
-
         }
     }
 }

@@ -28,48 +28,8 @@ unity -projectPath "C:\Users\User\Desktop\Unity\Rift"
 ### Git
 표준 git 워크플로우 사용. 최근 커밋들은 캐릭터 프리팹 및 렌더 설정에 대한 빈번한 반복 작업을 보여줍니다.
 
-## 아키텍처 개요
-
-### 핵심 시스템
-
-**전투 시스템** (`Assets/Scripts/Battle/`)
-- **Battle_Manager**: 10x5 그리드(`BattleGrid`)를 관리하고 플레이어/적 유닛 리스트를 추적하는 싱글톤
-- **Turn_Manager**: 3단계(배치 → 전투 → 결과)로 구성된 상태 머신. 현재는 배치 단계만 구현됨
-- **Deployment_Controller**: 드래그 앤 드롭을 통한 유닛 배치 처리. 유닛은 그리드의 왼쪽 절반(x < 5)에만 배치 가능
-- **Tile**: 그리드 셀 컴포넌트. 위치와 점유 유닛을 추적
-
-**유닛 시스템** (`Assets/Scripts/Unit/`)
-- **Unit**: `CurrentTile` 참조와 `UnitData` ScriptableObject를 가진 핵심 엔티티
-- **UnitStat**: 전투 스탯 구조체 (HP, ATK, DEF, SPD, AGI, LS, RST, EV, CA, DR, AP)
-- **UnitData**: 유닛 설정을 위한 ScriptableObject (이름, 클래스, 스탯, 스프라이트, 초상화)
-
-**카메라 시스템** (`Assets/Scripts/Camera/`)
-- **CameraManager**: 두 가지 Cinemachine 카메라 상태 관리 (보드 뷰 = 우선순위 10, 포커스 뷰 = 우선순위 20)
-- **MainCameraController**: 우클릭 드래그로 궤도 카메라 조작, 마우스 휠로 줌 조절(FOV 30-70), 스플라인 돌리 이동
-
-**입력 시스템** (`Assets/Scripts/Always/`)
-- **ClickController**: Unity의 새 Input System을 사용하는 전역 레이캐스트 핸들러
-- **IClickable**: 클릭 가능 객체를 위한 인터페이스 (`void OnClick()`)
-- **UnitClickable**: 유닛을 클릭 가능하게 만들고 카메라 포커스를 트리거
-
-### 게임 흐름
-
-```
-씬 로드
-  → CameraManager 초기화
-  → Battle_Manager가 TileMapCreator로부터 10x5 그리드 생성
-  → 타임라인 컷신 재생
-  → CutSceneCallback.OnCutSceneEnd() 발동
-  → Turn_Manager가 배치 단계로 전환
-  → 플레이어가 유닛 배치 (왼쪽 절반만)
-  → 모든 유닛 배치 완료 → 전투 단계 시작 (미구현)
-```
-
 ### 주요 패턴
 
-**싱글톤:**
-- `Battle_Manager.instance`
-- `CameraManager.instance`
 
 **코루틴 상태 머신:**
 ```csharp

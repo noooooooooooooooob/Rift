@@ -29,7 +29,7 @@ public class Unit_Attack : MonoBehaviour
                 Unit targetUnit = tile.occupant.GetComponent<Unit>();
                 if (targetUnit != null)
                 {
-                    unit.TakeDamage(100);
+                    targetUnit.TakeDamage(100);
                 }
             }
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,6 +8,8 @@ using UnityEngine;
 public class Battle_UI_Manager : MonoBehaviour
 {
     public static Battle_UI_Manager instance;
+
+    public List<Transform> unit_UI_Positions; // 유닛 UI 위치 리스트
 
     [Header("Panel References")]
     public GameObject battleUI_Panel;

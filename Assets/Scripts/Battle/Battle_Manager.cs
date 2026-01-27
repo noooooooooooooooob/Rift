@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 /// <summary>
@@ -19,13 +17,21 @@ public class Battle_Manager : MonoBehaviour
     public Tile[,] enemyTiles;
     public List<Unit> playerUnits;  // 플레이어 유닛 목록
     public List<Unit> enemyUnits;  // 적 유닛 목록
+    public Button gameEndButton;
 
     /// <summary>
     /// 초기화: 싱글톤 설정 및 그리드 생성
     /// </summary>
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         playerTiles = new Tile[GridWidth, GridHeight];
         enemyTiles = new Tile[GridWidth, GridHeight];
         tileInit();
@@ -67,6 +73,7 @@ public class Battle_Manager : MonoBehaviour
 
         Debug.Log($"[Battle_Manager] tileInit complete - {nullCount} NULL tiles out of {GridWidth * GridHeight}");
     }
+
     public void RemoveUnitFromBattle(Unit unit)
     {
         if (unit.isPlayerUnit)
@@ -94,6 +101,7 @@ public class Battle_Manager : MonoBehaviour
             }
         }
     }
+
     public void OnBattleEnd()
     {
         // 전투 UI 숨김
@@ -102,5 +110,6 @@ public class Battle_Manager : MonoBehaviour
             Battle_UI_Manager.instance.OnBattleEnd();
         }
         Stage_Manager.instance.CompleteCurrentNode();
+        Party_Manager.instance.OnBattleEnd();
     }
 }

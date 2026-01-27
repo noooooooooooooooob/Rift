@@ -12,10 +12,24 @@ public class Stage_Manager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Stage Select Scene" && mapContainer != null)  // 씬 이름 확인
+        {
+            ShowMap();
         }
     }
     [Header("Runtime")]
@@ -29,17 +43,29 @@ public class Stage_Manager : MonoBehaviour
     public float nodeSpacing = 3f; // 같은 레이어 내 노드 간격
 
     [Header("Visuals")]
+    private Transform mapContainer;  // 자동 생성됨
     public GameObject nodePrefab;
     public LineRenderer connectionLinePrefab;
     public Sprite battleIcon;
     public Sprite shopIcon;
     public Sprite eventIcon;
+    public Sprite restIcon;
     public Sprite bossIcon;
     public Sprite startIcon;
     public Color lockedColor = Color.gray;
     public Color unlockedColor = Color.white;
     public Color completedColor = Color.green;
     public Color currentColor = Color.yellow;
+    public void ShowMap()
+    {
+        mapContainer.gameObject.SetActive(true);
+    }
+
+    public void HideMap()
+    {
+        mapContainer.gameObject.SetActive(false);
+    }
+
     public void SelectNode(Stage_Node newStage)
     {
         switch (newStage.nodeType)
@@ -56,6 +82,11 @@ public class Stage_Manager : MonoBehaviour
             case Stage_Type.EVENT:
                 Debug.Log("Event Node Selected");
                 // SceneManager.LoadScene("Event Scene");
+                SceneManager.LoadScene("Battle Scene");
+                break;
+            case Stage_Type.REST:
+                Debug.Log("Rest Node Selected");
+                // SceneManager.LoadScene("Rest Scene");
                 SceneManager.LoadScene("Battle Scene");
                 break;
             case Stage_Type.BOSS:
@@ -83,7 +114,16 @@ public class Stage_Manager : MonoBehaviour
 
     void Start()
     {
+        CreateMapContainer();
         GenerateMap();
+    }
+
+    void CreateMapContainer()
+    {
+        GameObject container = new GameObject("MapContainer");
+        container.transform.SetParent(transform);
+        container.transform.localPosition = Vector3.zero;
+        mapContainer = container.transform;
     }
 
     void GenerateMap()
@@ -98,19 +138,26 @@ public class Stage_Manager : MonoBehaviour
         currentStage = startNode;
 
         List<Stage_Node> previousLayer = new List<Stage_Node> { startNode };
-        // Layer 1~4: Random Nodes
+        // Layer 1~totalLayers-1
         for (int layer = 1; layer < totalLayers; layer++)
         {
             List<Stage_Node> currentLayer = new List<Stage_Node>();
-            // 마지막 레이어는 보스만
+
+            // 마지막 레이어: 보스
             if (layer == totalLayers - 1)
             {
                 Stage_Node bossNode = CreateNode(Stage_Type.BOSS, layer, 1);
                 currentLayer.Add(bossNode);
             }
+            // 보스 전 레이어: 휴식 (노드 1개만)
+            else if (layer == totalLayers - 2)
+            {
+                Stage_Node restNode = CreateNode(Stage_Type.REST, layer, 1);
+                currentLayer.Add(restNode);
+            }
+            // 나머지: 랜덤 노드
             else
             {
-                // 랜덤 노드 생성
                 for (int i = 0; i < nodesPerLayer; i++)
                 {
                     Stage_Type randomType = GetRandomNodeType();
@@ -130,7 +177,7 @@ public class Stage_Manager : MonoBehaviour
         // 위치 계산
         Vector3 position = CalculateNodePosition(layer, index);
 
-        GameObject nodeObj = Instantiate(nodePrefab, position, Quaternion.identity, transform);
+        GameObject nodeObj = Instantiate(nodePrefab, position, Quaternion.identity, mapContainer);
         Stage_Node node = nodeObj.GetComponent<Stage_Node>();
 
         node.nodeType = type;
@@ -157,12 +204,15 @@ public class Stage_Manager : MonoBehaviour
     {
         if (prevLayer.Count == 1)
         {
-            prevLayer[0].isCompleted = true;
             foreach (var currNode in currLayer)
             {
                 CreateConnection(prevLayer[0], currNode);
-                currNode.isUnlocked = true;
-                currNode.UpdateVisual();
+                // 시작 노드에서만 다음 레이어 unlock
+                if (prevLayer[0].nodeType == Stage_Type.START)
+                {
+                    currNode.isUnlocked = true;
+                    currNode.UpdateVisual();
+                }
             }
             return;
         }
@@ -223,7 +273,7 @@ public class Stage_Manager : MonoBehaviour
 
     void CreateConnection(Stage_Node fromNode, Stage_Node toNode)
     {
-        LineRenderer line = Instantiate(connectionLinePrefab, transform);
+        LineRenderer line = Instantiate(connectionLinePrefab, mapContainer);
         line.SetPosition(0, fromNode.transform.position);
         line.SetPosition(1, toNode.transform.position);
 
@@ -235,46 +285,16 @@ public class Stage_Manager : MonoBehaviour
 
         fromNode.nextNodes.Add(connection);
     }
-
-    void RemoveIsolatedNodes()
-    {
-        List<Stage_Node> nodesToRemove = new List<Stage_Node>();
-
-        foreach (Stage_Node node in allStages)
-        {
-            // Skip boss nodes (last layer naturally has no outgoing connections)
-            if (node.nodeType == Stage_Type.BOSS)
-                continue;
-
-            // If node has no outgoing connections, mark for removal
-            if (node.nextNodes.Count == 0)
-            {
-                nodesToRemove.Add(node);
-            }
-        }
-
-        // Remove nodes and clean up
-        foreach (Stage_Node node in nodesToRemove)
-        {
-            allStages.Remove(node);
-            Destroy(node.gameObject);
-        }
-
-        if (nodesToRemove.Count > 0)
-        {
-            Debug.Log($"Removed {nodesToRemove.Count} isolated nodes with no connections");
-        }
-    }
     Stage_Type GetRandomNodeType()
     {
-        int rand = Random.Range(0, 3);
-        switch (rand)
-        {
-            case 0: return Stage_Type.BATTLE;
-            case 1: return Stage_Type.SHOP;
-            case 2: return Stage_Type.EVENT;
-            default: return Stage_Type.BATTLE;
-        }
+        int rand = Random.Range(0, 10);
+
+        if (rand < 7)
+            return Stage_Type.BATTLE;
+        else if (rand < 9)
+            return Stage_Type.EVENT;
+        else
+            return Stage_Type.SHOP;
     }
     public void CompleteCurrentNode()
     {
@@ -284,7 +304,6 @@ public class Stage_Manager : MonoBehaviour
             {
                 if (node.gridPosition.x == currentStage.gridPosition.x)
                 {
-                    node.isCompleted = true;
                     node.isUnlocked = false;
                     node.UpdateVisual();
                 }

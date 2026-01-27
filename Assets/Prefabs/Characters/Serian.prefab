@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 4723848329556787154}
   - component: {fileID: 4656894512944643122}
   - component: {fileID: 5936858552875836311}
+  - component: {fileID: 6507920142273812658}
   m_Layer: 0
   m_Name: Serian
   m_TagString: Unit
@@ -282,6 +283,7 @@ MonoBehaviour:
   guardAction: {fileID: 8952261749773592475}
   moveAction: {fileID: 2988044248012281378}
   unitAnimation: {fileID: 5936858552875836311}
+  effectHandler: {fileID: 6507920142273812658}
 --- !u!114 &4348746411033705262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +377,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058d024346a398748854b71018dae81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unit_Animation
+--- !u!114 &6507920142273812658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680380445087641850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8c1f5268069d24a977c3139d3a96e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectHandler
+  weapon: {fileID: 0}
+  armors: []
+  activeBuffs: []
 --- !u!1 &1146368606821405304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,16 +2125,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Action_Menu_UI
   ActionMenuPanel: {fileID: 1146368606821405304}
-  SkillMenuPanel: {fileID: 3806025371726528884}
   ReturnMenuPanel: {fileID: 3046417328366330376}
-  moveButton: {fileID: 4245378015946009874}
-  attackButton: {fileID: 6203726848929984366}
-  skillButton: {fileID: 6986628649445008189}
-  guardButton: {fileID: 7086332645944854975}
-  skill1Button: {fileID: 5445809518673158290}
-  skill2Button: {fileID: 1932793439923262477}
-  skillReturnButton: {fileID: 4598797638376948174}
+  prevActionIcon: {fileID: 0}
+  currentActionIcon: {fileID: 0}
+  nextActionIcon: {fileID: 0}
+  currentActionName: {fileID: 0}
+  upButton: {fileID: 0}
+  downButton: {fileID: 0}
+  confirmButton: {fileID: 0}
+  cancelButton: {fileID: 0}
   returnButton: {fileID: 1405314300200600400}
+  transitionDuration: 0.2
+  previewAlpha: 0.4
+  spacing: 100
+  actionDataList: []
 --- !u!1 &7457925060099079682
 GameObject:
   m_ObjectHideFlags: 0

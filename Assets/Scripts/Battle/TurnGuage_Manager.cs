@@ -73,7 +73,7 @@ public class TurnGuage_Manager : MonoBehaviour
     }
 
     /// <summary>
-    /// 다음 턴을 받을 유닛을 반환하고 게이지 100 소모
+    /// 다음 턴을 받을 유닛을 반환 (게이지 소모는 Turn_Manager에서 처리)
     /// 동점일 경우 게이지가 가장 높은 유닛 우선
     /// </summary>
     /// <returns>턴을 받을 유닛 (없으면 null)</returns>

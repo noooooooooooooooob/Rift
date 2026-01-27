@@ -228,6 +228,13 @@ public class Deployment_Controller : MonoBehaviour
             sr.color = new Color(1, 1, 1, 1f);
         }
 
+        // SpriteBillboard 활성화 (전투씬에서만 필요)
+        SpriteBillboard billboard = unit.GetComponent<SpriteBillboard>();
+        if (billboard != null)
+        {
+            billboard.enabled = true;
+        }
+
         // 배치된 유닛 목록에 추가
         placedUnits.Add(unit);
 

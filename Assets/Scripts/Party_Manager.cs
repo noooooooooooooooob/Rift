@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 파티 유닛 관리자 (싱글톤, DontDestroyOnLoad)
@@ -23,11 +24,23 @@ public class Party_Manager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
             Destroy(gameObject);
             return;
+        }
+    }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Stage Select Scene")  // 씬 이름 확인
+        {
+            ResetPartyUnitsScale();
         }
     }
 
@@ -112,6 +125,20 @@ public class Party_Manager : MonoBehaviour
     /// </summary>
     public void UpdatePartyAfterBattle()
     {
+        // SpriteBillboard 비활성화 (전투씬 이후에는 불필요)
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                SpriteBillboard billboard = go.GetComponent<SpriteBillboard>();
+                if (billboard != null)
+                {
+                    billboard.enabled = false;
+                }
+            }
+        }
+
+        HidePartyUnits();
         // 사망한 유닛 제거
         int deadCount = 0;
         for (int i = partyUnits.Count - 1; i >= 0; i--)
@@ -166,5 +193,53 @@ public class Party_Manager : MonoBehaviour
     public int GetPartyCount()
     {
         return partyUnits.Count;
+    }
+
+    public void OnBattleEnd()
+    {
+        UpdatePartyAfterBattle();
+    }
+
+    /// <summary>
+    /// 파티 유닛들 비활성화 (맵 씬에서 사용)
+    /// </summary>
+    public void HidePartyUnits()
+    {
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+                go.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 파티 유닛들 스케일 원상복구 (캐릭터 셀렉트 → 스테이지 셀렉트 전환 시)
+    /// </summary>
+    public void ResetPartyUnitsScale()
+    {
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                go.transform.localScale = Vector3.one;
+                go.SetActive(false);
+            }
+        }
+    }
+
+    public void HealParty(float percentage)
+    {
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                Unit unit = go.GetComponent<Unit>();
+                if (unit != null && !unit.isDead)
+                {
+                    int healAmount = Mathf.CeilToInt(unit.maxHP * percentage);
+                    unit.Heal(healAmount);
+                }
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class UnitRecruitButton : MonoBehaviour
     public Sprite portraitImage;
     private const int MAX_PARTY_SIZE = 3;
     private bool isSelected = false;
+    public List<Transform> spawnPoints;
     void Start()
     {
         button.onClick.AddListener(OnButtonClicked);
@@ -67,8 +69,17 @@ public class UnitRecruitButton : MonoBehaviour
         // 유닛 생성
         spawnedUnit = Instantiate(unitPrefab);
         spawnedUnit.name = unitPrefab.name;
-        spawnedUnit.SetActive(false);  // 씬에 보이지 않도록 비활성화
 
+        // 위치 설정
+        if (spawnPoints != null && spawnPoints.Count > 0)
+        {
+            spawnedUnit.transform.position = spawnPoints[Party_Manager.instance.GetPartyCount()].position;
+            spawnedUnit.transform.localScale = spawnPoints[Party_Manager.instance.GetPartyCount()].localScale;
+        }
+        else
+        {
+            spawnedUnit.transform.position = Vector3.zero; // 기본 위치
+        }
         // Party_Manager에 추가
         Party_Manager.instance.AddUnitToParty(spawnedUnit);
 

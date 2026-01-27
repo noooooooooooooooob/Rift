@@ -10,6 +10,7 @@ public class CutSceneCallback : MonoBehaviour
     {
         director = GetComponent<PlayableDirector>();
         director.stopped += OnTimelineStopped;
+        Stage_Manager.instance.HideMap();
     }
 
     private void OnTimelineStopped(PlayableDirector obj)

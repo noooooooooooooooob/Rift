@@ -23,6 +23,7 @@ public class SkillData : ScriptableObject
     [Header("Basic Info")]
     public string skillName;
     public string description;
+    public Sprite icon;
 
     [Header("Costs & Cooldown")]
     public int cost;           // SP 소모량

@@ -49,6 +49,7 @@ public class Stage_Node : MonoBehaviour, IPointerDownHandler
             case Stage_Type.BATTLE: nodeSprite.sprite = Stage_Manager.instance.battleIcon; break;
             case Stage_Type.SHOP: nodeSprite.sprite = Stage_Manager.instance.shopIcon; break;
             case Stage_Type.EVENT: nodeSprite.sprite = Stage_Manager.instance.eventIcon; break;
+            case Stage_Type.REST: nodeSprite.sprite = Stage_Manager.instance.restIcon; break;
             case Stage_Type.BOSS: nodeSprite.sprite = Stage_Manager.instance.bossIcon; break;
             case Stage_Type.START: nodeSprite.sprite = Stage_Manager.instance.startIcon; break;
         }
@@ -65,7 +66,6 @@ public class Stage_Node : MonoBehaviour, IPointerDownHandler
             targetColor = Stage_Manager.instance.lockedColor;
 
         // 투명도 설정
-        targetColor.a = isUnlocked ? 1.0f : 0.5f;
         nodeSprite.color = targetColor;
     }
     public void UpdateVisual()
@@ -82,7 +82,6 @@ public class Stage_Node : MonoBehaviour, IPointerDownHandler
             targetColor = Stage_Manager.instance.lockedColor;
 
         // 투명도 설정
-        targetColor.a = isUnlocked ? 1.0f : 0.5f;
         nodeSprite.color = targetColor;
     }
     public void OnPointerDown(PointerEventData eventData)

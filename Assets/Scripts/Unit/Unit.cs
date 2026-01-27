@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 /// <summary>
@@ -37,9 +36,11 @@ public class Unit : MonoBehaviour
     public Unit_Guard guardAction;       // 방어 액션 참조
     public Unit_Move moveAction;         // 이동 액션 참조
 
+    [Header("References")]
     // 매니저 참조 (전투 시작 시 설정)
     private Turn_Manager turnManager;
     public Unit_Animation unitAnimation; // 유닛 애니메이션 컴포넌트 참조
+    public EffectHandler effectHandler; // 이펙트 핸들러 컴포넌트 참조
 
     /// <summary>
     /// 유닛 초기화 (Battle_Manager 또는 배치 완료 후 호출)
@@ -136,7 +137,8 @@ public class Unit : MonoBehaviour
         
         if (isPlayerUnit)
         {
-
+            // 플레이어 유닛은 비활성화만 (부활 가능성)
+            gameObject.SetActive(false);
         }
         else
         {

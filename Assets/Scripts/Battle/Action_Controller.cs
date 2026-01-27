@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public enum ActionType
 {
@@ -23,16 +23,94 @@ public class Action_Controller : MonoBehaviour
     public Action_Menu_UI actionMenuUI; // 액션 메뉴 UI 참조
     private Tile hoveredTile;
     public List<Tile> availableTiles = new List<Tile>();
-    public List<Tile> highlightedTiles = new List<Tile>(); 
+    public List<Tile> highlightedTiles = new List<Tile>();
     private Camera mainCamera;
     private LayerMask tileLayerMask;
     public Turn_Manager turnManager;
     private ActionType currentMode = ActionType.Move;
 
+    // Input System
+    [Header("Input")]
+    public InputActionAsset inputActions;
+    private InputAction actionUp;
+    private InputAction actionDown;
+    private InputAction actionEnter;
+    private InputAction actionCancel;
+
     void Awake()
     {
         mainCamera = Camera.main;
         tileLayerMask = LayerMask.GetMask("Tile");
+
+        // Input Actions 찾기
+        if (inputActions != null)
+        {
+            actionUp = inputActions.FindAction("Action Up");
+            actionDown = inputActions.FindAction("Action Down");
+            actionEnter = inputActions.FindAction("Action Enter");
+            actionCancel = inputActions.FindAction("Action Cancel");
+        }
+    }
+
+    void OnEnable()
+    {
+        if (inputActions != null)
+        {
+            inputActions.Enable();
+
+            // 액션 콜백 등록
+            if (actionUp != null) actionUp.performed += OnActionUp;
+            if (actionDown != null) actionDown.performed += OnActionDown;
+            if (actionEnter != null) actionEnter.performed += OnActionEnter;
+            if (actionCancel != null) actionCancel.performed += OnActionCancel;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (inputActions != null)
+        {
+            // 액션 콜백 해제
+            if (actionUp != null) actionUp.performed -= OnActionUp;
+            if (actionDown != null) actionDown.performed -= OnActionDown;
+            if (actionEnter != null) actionEnter.performed -= OnActionEnter;
+            if (actionCancel != null) actionCancel.performed -= OnActionCancel;
+
+            inputActions.Disable();
+        }
+    }
+
+    private void OnActionUp(InputAction.CallbackContext context)
+    {
+        if (currentUnit == null || actionMenuUI == null) return;
+        if (actionMenuUI.IsMenuActive())
+        {
+            actionMenuUI.SelectPrevious();
+        }
+    }
+
+    private void OnActionDown(InputAction.CallbackContext context)
+    {
+        if (currentUnit == null || actionMenuUI == null) return;
+        if (actionMenuUI.IsMenuActive())
+        {
+            actionMenuUI.SelectNext();
+        }
+    }
+
+    private void OnActionEnter(InputAction.CallbackContext context)
+    {
+        if (currentUnit == null || actionMenuUI == null) return;
+        if (actionMenuUI.IsMenuActive())
+        {
+            OnConfirmAction();
+        }
+    }
+
+    private void OnActionCancel(InputAction.CallbackContext context)
+    {
+        if (currentUnit == null || actionMenuUI == null) return;
+        OnCancelAction();
     }
 
     void Update()
@@ -60,7 +138,7 @@ public class Action_Controller : MonoBehaviour
             }
         }
 
-        // 마우스 클릭 감지 (새 Input System)
+        // 마우스 좌클릭 감지 (타일 클릭용)
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             // UI 위에 있으면 무시
@@ -96,20 +174,42 @@ public class Action_Controller : MonoBehaviour
         currentUnit = unit;
         actionMenuUI = currentUnit.actionMenuUI;
 
-        actionMenuUI.moveButton.onClick.AddListener(OnMoveButtonClick);
-        actionMenuUI.attackButton.onClick.AddListener(OnAttackButtonClick);
-        actionMenuUI.skillButton.onClick.AddListener(OnSkillButtonClick);
-        actionMenuUI.guardButton.onClick.AddListener(OnGuardButtonClick);
+        // 기존 리스너 제거 후 새로 등록 (중복 방지)
+        ClearButtonListeners();
 
-        actionMenuUI.skill1Button.onClick.AddListener(OnSkill1ButtonClick);
-        actionMenuUI.skill2Button.onClick.AddListener(OnSkill2ButtonClick);
+        // 네비게이션 버튼 리스너 등록
+        if (actionMenuUI.upButton != null)
+            actionMenuUI.upButton.onClick.AddListener(OnUpButton);
+        if (actionMenuUI.downButton != null)
+            actionMenuUI.downButton.onClick.AddListener(OnDownButton);
+        if (actionMenuUI.confirmButton != null)
+            actionMenuUI.confirmButton.onClick.AddListener(OnConfirmAction);
+        if (actionMenuUI.cancelButton != null)
+            actionMenuUI.cancelButton.onClick.AddListener(OnCancelAction);
 
-        // actionMenuUI.ultimateButton.onClick.AddListener(OnUltimateButtonClick);
-        actionMenuUI.skillReturnButton.onClick.AddListener(OnCancelButtonClick);
+        // Return 패널의 버튼 리스너
+        if (actionMenuUI.returnButton != null)
+            actionMenuUI.returnButton.onClick.AddListener(OnCancelAction);
 
-        actionMenuUI.returnButton.onClick.AddListener(OnCancelButtonClick);
         currentUnit.actionMenuUI.ShowActionMenu();
     }
+
+    private void ClearButtonListeners()
+    {
+        if (actionMenuUI == null) return;
+
+        if (actionMenuUI.upButton != null)
+            actionMenuUI.upButton.onClick.RemoveListener(OnUpButton);
+        if (actionMenuUI.downButton != null)
+            actionMenuUI.downButton.onClick.RemoveListener(OnDownButton);
+        if (actionMenuUI.confirmButton != null)
+            actionMenuUI.confirmButton.onClick.RemoveListener(OnConfirmAction);
+        if (actionMenuUI.cancelButton != null)
+            actionMenuUI.cancelButton.onClick.RemoveListener(OnCancelAction);
+        if (actionMenuUI.returnButton != null)
+            actionMenuUI.returnButton.onClick.RemoveListener(OnCancelAction);
+    }
+
     private void EndTurn()
     {
         currentUnit = null;
@@ -120,6 +220,7 @@ public class Action_Controller : MonoBehaviour
             turnManager.isTurnEnd = true;
         }
     }
+
     private void ShowMovableTiles()
     {
         ClearHighlights();
@@ -130,6 +231,7 @@ public class Action_Controller : MonoBehaviour
             highlightedTiles.Add(tile);
         }
     }
+
     private void ShowAttackableTiles()
     {
         ClearHighlights();
@@ -139,6 +241,7 @@ public class Action_Controller : MonoBehaviour
             highlightedTiles.Add(tile);
         }
     }
+
     private void HandleTileClick(Tile tile)
     {
         Debug.Log($"[HandleTileClick] Tile clicked: {tile?.GridPosition}, currentMode: {currentMode}");
@@ -165,6 +268,7 @@ public class Action_Controller : MonoBehaviour
                 break;
         }
     }
+
     private IEnumerator HandleMoveTo(Tile tile)
     {
         if (tile == null)
@@ -191,6 +295,7 @@ public class Action_Controller : MonoBehaviour
         yield return new WaitForSeconds(currentUnit.moveAction.animationDuration);
         turnManager.isTurnEnd = true;
     }
+
     private IEnumerator HandleAttack(Tile tile)
     {
         if (tile == null || !highlightedTiles.Contains(tile))
@@ -205,6 +310,7 @@ public class Action_Controller : MonoBehaviour
         yield return new WaitForSeconds(currentUnit.attackAction.animationDuration);
         turnManager.isTurnEnd = true;
     }
+
     private IEnumerator HandleSkill1(Tile tile)
     {
         if (tile == null || !highlightedTiles.Contains(tile))
@@ -215,6 +321,7 @@ public class Action_Controller : MonoBehaviour
         actionMenuUI.ShowActionMenu();
         yield return null;
     }
+
     private IEnumerator HandleSkill2(Tile tile)
     {
         if (tile == null || !highlightedTiles.Contains(tile))
@@ -225,6 +332,7 @@ public class Action_Controller : MonoBehaviour
         actionMenuUI.ShowActionMenu();
         yield return null;
     }
+
     private IEnumerator HandleGuard(Tile tile)
     {
         ClearHighlights();
@@ -232,6 +340,7 @@ public class Action_Controller : MonoBehaviour
         actionMenuUI.ShowActionMenu();
         yield return null;
     }
+
     private IEnumerator HandleUltimate(Tile tile)
     {
         if (tile == null || !highlightedTiles.Contains(tile))
@@ -256,6 +365,7 @@ public class Action_Controller : MonoBehaviour
         availableTiles.Clear();
         highlightedTiles.Clear();
     }
+
     /// <summary>
     /// 타일의 원래 하이라이트 복원
     /// </summary>
@@ -283,99 +393,83 @@ public class Action_Controller : MonoBehaviour
                 break;
         }
     }
-    // 이동 버튼
-    public void OnMoveButtonClick()
+
+    // 위 버튼 클릭
+    public void OnUpButton()
     {
-        if (currentUnit == null) return;
-
-        Debug.Log("Move button clicked");
-
-        currentMode = ActionType.Move;  // 이동 모드 설정
-        actionMenuUI.HideActionMenu();
-        actionMenuUI.ShowReturnMenu();
-
-        ShowMovableTiles();
-    }
-
-    // 공격 버튼
-    public void OnAttackButtonClick()
-    {
-        if (currentUnit == null) return;
-
-        currentMode = ActionType.Attack;  // 공격 모드 설정
-        actionMenuUI.HideActionMenu();
-        actionMenuUI.ShowReturnMenu();
-
-        ShowAttackableTiles();
-    }
-
-    // 스킬 메뉴 버튼
-    public void OnSkillButtonClick()
-    {
-        actionMenuUI.HideActionMenu();
-        actionMenuUI.ShowSkillMenu();
-    }
-
-    // 스킬1 버튼
-    public void OnSkill1ButtonClick()
-    {
-        if (currentUnit == null) return;
-
-        currentMode = ActionType.Skill1;  // 스킬1 모드 설정
-        actionMenuUI.HideSkillMenu();
-        actionMenuUI.ShowReturnMenu();
-
-        ShowAttackableTiles();  // 스킬도 공격 범위와 동일하게
-    }
-
-    // 스킬2 버튼
-    public void OnSkill2ButtonClick()
-    {
-        if (currentUnit == null) return;
-
-        currentMode = ActionType.Skill2;  // 스킬2 모드 설정
-        actionMenuUI.HideSkillMenu();
-        actionMenuUI.ShowReturnMenu();
-
-        ShowAttackableTiles();
-    }
-
-    // 궁극기 버튼
-    public void OnUltimateButtonClick()
-    {
-        if (currentUnit == null) return;
-
-        // UP 체크
-        if (currentUnit.currentUP < currentUnit.stats.UP)
+        if (actionMenuUI != null)
         {
-            Debug.Log("궁극기 포인트 부족!");
-            return;
+            actionMenuUI.SelectPrevious();
         }
+    }
 
-        currentMode = ActionType.Ultimate;  // 궁극기 모드 설정
-        actionMenuUI.HideSkillMenu();
+    // 아래 버튼 클릭
+    public void OnDownButton()
+    {
+        if (actionMenuUI != null)
+        {
+            actionMenuUI.SelectNext();
+        }
+    }
+
+    // 확인 버튼 - 현재 선택된 액션 실행
+    public void OnConfirmAction()
+    {
+        if (currentUnit == null || actionMenuUI == null) return;
+
+        ActionType selectedAction = actionMenuUI.GetCurrentActionType();
+        Debug.Log($"Confirm action: {selectedAction}");
+
+        currentMode = selectedAction;
+        actionMenuUI.HideActionMenu();
         actionMenuUI.ShowReturnMenu();
 
-        ShowAttackableTiles();
+        switch (selectedAction)
+        {
+            case ActionType.Move:
+                ShowMovableTiles();
+                break;
+            case ActionType.Attack:
+                ShowAttackableTiles();
+                break;
+            case ActionType.Skill1:
+                ShowAttackableTiles();
+                break;
+            case ActionType.Skill2:
+                ShowAttackableTiles();
+                break;
+            case ActionType.Guard:
+                // 방어는 즉시 실행 (타일 선택 불필요)
+                StartCoroutine(ExecuteGuard());
+                break;
+            case ActionType.Ultimate:
+                // UP 체크
+                if (currentUnit.currentUP < currentUnit.stats.UP)
+                {
+                    Debug.Log("궁극기 포인트 부족!");
+                    actionMenuUI.HideReturnMenu();
+                    actionMenuUI.ShowActionMenu();
+                    return;
+                }
+                ShowAttackableTiles();
+                break;
+        }
     }
 
-    // 방어 버튼 (즉시 실행)
-    public void OnGuardButtonClick()
+    private IEnumerator ExecuteGuard()
     {
-        if (currentUnit == null) return;
-
-        currentMode = ActionType.Guard;  // 방어 모드 설정
-        actionMenuUI.HideActionMenu();
-        // StartCoroutine(ExecuteGuard());
+        actionMenuUI.HideAllMenus();
+        // 방어 로직 (추후 구현)
+        Debug.Log("방어 실행");
+        yield return null;
+        turnManager.isTurnEnd = true;
     }
 
-    // 취소 버튼
-    public void OnCancelButtonClick()
+    // 취소 버튼 - 타일 선택 모드에서 메뉴로 복귀
+    public void OnCancelAction()
     {
         ClearHighlights();
-
         actionMenuUI.HideReturnMenu();
-        actionMenuUI.HideSkillMenu();
         actionMenuUI.ShowActionMenu();
     }
 }

@@ -15,6 +15,8 @@ public class Battle_UI_Manager : MonoBehaviour
     public GameObject battleUI_Panel;
     public GameObject GameOver_Panel;
     public Turn_Gauge turnGaugeUI;
+    public RectTransform[] playerUI_Anchors; // 플레이어 유닛 UI 앵커들
+    public RectTransform[] enemyUI_Anchors;  // 적 유닛 UI
     void Awake()
     {
         if(instance == null)
@@ -28,6 +30,38 @@ public class Battle_UI_Manager : MonoBehaviour
         if (GameOver_Panel != null)
         {
             GameOver_Panel.SetActive(false);
+        }
+    }
+    public void OnDeploymentPhaseStart()
+    {
+        var partyUnits = Party_Manager.instance.GetPartyUnits();
+        for (int i = 0; i < partyUnits.Count && i < playerUI_Anchors.Length; i++)
+        {
+            Unit unit = partyUnits[i];
+            unit.hpBar.UpdateBar(unit.currentHP, unit.maxHP);
+            unit.upBar.UpdateBar(unit.currentUP, unit.stats.UP);
+
+            // 원래 부모 저장 후 이동
+            unit.originalUIParent = unit.uiAnchor.parent;
+            unit.uiAnchor.SetParent(playerUI_Anchors[i], false);
+            unit.uiAnchor.anchoredPosition = Vector2.zero;
+            unit.uiAnchor.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// UI를 원래 부모로 되돌리기
+    /// </summary>
+    public void ReturnUIToUnits()
+    {
+        foreach (Unit unit in Party_Manager.instance.GetPartyUnits())
+        {
+            if (unit.originalUIParent != null)
+            {
+                unit.uiAnchor.SetParent(unit.originalUIParent, false);
+                unit.uiAnchor.anchoredPosition = Vector2.zero;
+                unit.uiAnchor.gameObject.SetActive(false);
+            }
         }
     }
 

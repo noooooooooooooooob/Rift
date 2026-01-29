@@ -1,122 +1,165 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using DG.Tweening;
 
 /// <summary>
-/// 드래그 가능한 아이템 컴포넌트
-/// 슬롯의 자식으로 존재하며, 드래그 시 Canvas 최상위로 이동
+/// 드래그 앤 드롭 처리
+/// 슬롯의 iconImage를 사용하여 드래그 표시
 /// </summary>
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [Header("References")]
-    [SerializeField] private Image itemImage;
+    /// <summary>
+    /// 현재 드래그 중인 아이템 (static으로 전역 접근)
+    /// </summary>
+    public static DraggableItem currentlyDragging;
 
-    [Header("Animation Settings")]
-    [SerializeField] private float dragAlpha = 0.6f;
-    [SerializeField] private float returnDuration = 0.2f;
+    [Header("Drag Settings")]
+    [Range(0f, 1f)]
+    public float dragAlpha = 0.5f; // 드래그 중 원본 불투명도
 
-    public EquipmentData Equipment { get; private set; }
-    public Slot_Base SourceSlot { get; private set; }
-
-    private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
+    private EquipmentData item;
+    private SlotBase sourceSlot;
     private Canvas canvas;
-    private Transform originalParent;
-    private Vector3 originalPosition;
-    private int originalSiblingIndex;
-    private bool isDragging;
 
-    private void Awake()
+    // 드래그 이미지 (마우스 따라다니는 복사본)
+    private GameObject dragImageObject;
+    private RectTransform dragImageRect;
+
+    // 원본 아이콘 참조
+    private Image slotIconImage;
+    private Color originalIconColor;
+
+    private bool dropSucceeded;
+
+    /// <summary>
+    /// 이 드래그 아이템의 장비 데이터
+    /// </summary>
+    public EquipmentData Item => item;
+
+    /// <summary>
+    /// 드래그가 시작된 슬롯
+    /// </summary>
+    public SlotBase SourceSlot => sourceSlot;
+
+    /// <summary>
+    /// 아이템 및 출발 슬롯 설정
+    /// </summary>
+    public void Setup(EquipmentData equipmentData, SlotBase slot, Canvas parentCanvas)
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-            canvasGroup = gameObject.AddComponent<CanvasGroup>();
-    }
+        item = equipmentData;
+        sourceSlot = slot;
+        canvas = parentCanvas;
 
-    public void Initialize(Slot_Base slot, EquipmentData equipment, Canvas rootCanvas)
-    {
-        SourceSlot = slot;
-        Equipment = equipment;
-        canvas = rootCanvas;
-
-        if (itemImage != null && equipment != null && equipment.icon != null)
+        // 슬롯의 iconImage 참조
+        if (slot != null)
         {
-            itemImage.sprite = equipment.icon;
-            itemImage.enabled = true;
+            slotIconImage = slot.iconImage;
         }
     }
 
-    public void SetSlot(Slot_Base slot)
-    {
-        SourceSlot = slot;
-    }
-
+    /// <summary>
+    /// 드래그 시작
+    /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Equipment == null) return;
+        if (item == null) return;
 
-        isDragging = true;
-
-        // 원래 위치 저장
-        originalParent = transform.parent;
-        originalPosition = rectTransform.anchoredPosition;
-        originalSiblingIndex = transform.GetSiblingIndex();
-
-        // Canvas 최상위로 이동 (다른 UI 위에 그려지도록)
-        transform.SetParent(canvas.transform);
-        transform.SetAsLastSibling();
-
-        // 투명도 조절 및 레이캐스트 비활성화
-        canvasGroup.alpha = dragAlpha;
-        canvasGroup.blocksRaycasts = false;
-
-        // 스케일 애니메이션
-        rectTransform.DOScale(1.1f, 0.1f).SetEase(Ease.OutBack);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (Equipment == null || !isDragging) return;
-
-        // 마우스 위치 따라 이동
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (!isDragging) return;
-
-        isDragging = false;
-        canvasGroup.alpha = 1f;
-        canvasGroup.blocksRaycasts = true;
-
-        // 드롭이 처리되지 않은 경우 원래 위치로 복귀
-        if (transform.parent == canvas.transform)
+        // 장비 슬롯에서 드래그 시작 시 씬 제한 체크
+        if (sourceSlot is Equipment_Slot && !Inventory_Manager.CanModifyEquipment)
         {
-            ReturnToOriginalPosition();
+            eventData.pointerDrag = null;
+            return;
         }
 
-        // 스케일 복귀
-        rectTransform.DOScale(1f, 0.1f).SetEase(Ease.OutBack);
+        currentlyDragging = this;
+        dropSucceeded = false;
+
+        // 원본 아이콘 반투명하게
+        if (slotIconImage != null)
+        {
+            originalIconColor = slotIconImage.color;
+            Color c = slotIconImage.color;
+            c.a = dragAlpha;
+            slotIconImage.color = c;
+        }
+
+        // 드래그 이미지 생성
+        CreateDragImage(eventData.position);
     }
 
-    public void ReturnToOriginalPosition()
+    /// <summary>
+    /// 드래그 중
+    /// </summary>
+    public void OnDrag(PointerEventData eventData)
     {
-        transform.SetParent(originalParent);
-        transform.SetSiblingIndex(originalSiblingIndex);
+        if (item == null || dragImageRect == null) return;
 
-        rectTransform.DOAnchorPos(originalPosition, returnDuration)
-            .SetEase(Ease.OutBack);
+        // 드래그 이미지가 마우스 따라다님
+        dragImageRect.position = eventData.position;
     }
 
-    public void MoveToSlot(Slot_Base newSlot)
+    /// <summary>
+    /// 드래그 종료
+    /// </summary>
+    public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(newSlot.transform);
-        SourceSlot = newSlot;
+        currentlyDragging = null;
 
-        rectTransform.DOAnchorPos(Vector2.zero, returnDuration)
-            .SetEase(Ease.OutBack);
+        // 드래그 이미지 제거
+        if (dragImageObject != null)
+        {
+            Destroy(dragImageObject);
+        }
+
+        // 드롭 실패 시 원본 아이콘 복원
+        if (!dropSucceeded && slotIconImage != null)
+        {
+            slotIconImage.color = originalIconColor;
+        }
+    }
+
+    /// <summary>
+    /// 드롭 성공 시 호출 (슬롯에서 호출)
+    /// </summary>
+    public void OnDropSuccess()
+    {
+        dropSucceeded = true;
+
+        // 드래그 이미지 제거
+        if (dragImageObject != null)
+        {
+            Destroy(dragImageObject);
+        }
+
+        // 드래그 아이템 오브젝트 제거 (슬롯에서 새로 생성됨)
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// 마우스를 따라다니는 드래그 이미지 생성
+    /// </summary>
+    private void CreateDragImage(Vector2 position)
+    {
+        if (canvas == null || slotIconImage == null || slotIconImage.sprite == null) return;
+
+        // 새 게임오브젝트 생성
+        dragImageObject = new GameObject("DragImage");
+        dragImageObject.transform.SetParent(canvas.transform);
+        dragImageObject.transform.SetAsLastSibling();
+
+        // RectTransform 설정
+        dragImageRect = dragImageObject.AddComponent<RectTransform>();
+        dragImageRect.sizeDelta = slotIconImage.rectTransform.sizeDelta; // 원본 크기 사용
+        dragImageRect.position = position;
+
+        // Image 설정
+        Image img = dragImageObject.AddComponent<Image>();
+        img.sprite = slotIconImage.sprite;
+        img.raycastTarget = false;
+
+        // CanvasGroup
+        CanvasGroup cg = dragImageObject.AddComponent<CanvasGroup>();
+        cg.blocksRaycasts = false;
+        cg.alpha = 0.9f;
     }
 }

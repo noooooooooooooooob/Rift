@@ -33,6 +33,7 @@ public class Deployment_Controller : MonoBehaviour
     /// </summary>
     public void BeginDeployment()
     {
+        Battle_UI_Manager.instance.OnDeploymentPhaseStart();
         // Party_Manager로부터 파티 유닛 가져오기
         if (Party_Manager.instance == null)
         {

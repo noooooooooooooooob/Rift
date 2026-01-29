@@ -22,6 +22,12 @@ public class VFX_Manager : MonoBehaviour
     [Header("Pool Settings")]
     [SerializeField] private int initialPoolSize = 3;
 
+    [Header("Damage Text")]
+    [SerializeField] private GameObject damageTextPrefab;
+    [SerializeField] private int damageTextPoolSize = 15;
+    private Queue<DamageText> damageTextPool;
+    private Transform damageTextContainer;
+
     // 이펙트 프리팹 딕셔너리
     private Dictionary<string, GameObject> effectsDictionary;
 
@@ -68,6 +74,65 @@ public class VFX_Manager : MonoBehaviour
                 CreatePooledEffect(effect.name);
             }
         }
+
+        // 대미지 텍스트 풀 초기화
+        InitializeDamageTextPool();
+    }
+
+    private void InitializeDamageTextPool()
+    {
+        if (damageTextPrefab == null) return;
+
+        damageTextPool = new Queue<DamageText>();
+        damageTextContainer = new GameObject("DamageTextPool").transform;
+        damageTextContainer.SetParent(transform);
+
+        for (int i = 0; i < damageTextPoolSize; i++)
+        {
+            CreateDamageText();
+        }
+    }
+
+    private DamageText CreateDamageText()
+    {
+        GameObject obj = Instantiate(damageTextPrefab, damageTextContainer);
+        DamageText damageText = obj.GetComponent<DamageText>();
+        damageText.Initialize(this);
+        obj.SetActive(false);
+        damageTextPool.Enqueue(damageText);
+        return damageText;
+    }
+
+    /// <summary>
+    /// 대미지 텍스트 표시
+    /// </summary>
+    public void PlayDamageText(Vector3 position, int value, DamageTextType type)
+    {
+        if (damageTextPool == null) return;
+
+        // 풀에서 가져오기
+        if (damageTextPool.Count == 0)
+        {
+            CreateDamageText();
+        }
+
+        DamageText damageText = damageTextPool.Dequeue();
+        damageText.transform.SetParent(null);
+        damageText.transform.position = position;
+        damageText.gameObject.SetActive(true);
+        damageText.Play(value, type);
+    }
+
+    /// <summary>
+    /// 대미지 텍스트 풀로 반환
+    /// </summary>
+    public void ReturnDamageText(DamageText damageText)
+    {
+        if (damageText == null) return;
+
+        damageText.gameObject.SetActive(false);
+        damageText.transform.SetParent(damageTextContainer);
+        damageTextPool.Enqueue(damageText);
     }
 
     private GameObject CreatePooledEffect(string effectName)

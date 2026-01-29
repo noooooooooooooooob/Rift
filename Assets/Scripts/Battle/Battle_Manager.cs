@@ -111,5 +111,9 @@ public class Battle_Manager : MonoBehaviour
         }
         Stage_Manager.instance.CompleteCurrentNode();
         Party_Manager.instance.OnBattleEnd();
+        if (Battle_UI_Manager.instance != null)
+        {
+            Battle_UI_Manager.instance.ReturnUIToUnits();
+        }
     }
 }

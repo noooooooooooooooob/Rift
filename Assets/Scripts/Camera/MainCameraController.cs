@@ -4,29 +4,41 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// 메인 카메라 컨트롤러
-/// 우클릭 드래그로 스플라인 돌리 이동 및 피치(상하) 회전
-/// 마우스 휠로 FOV 기반 줌 인/아웃
+/// 우클릭 드래그로 카메라 X축 이동
+/// 마우스 휠로 Y+Z 이동 기반 줌 인/아웃
 /// 부드러운 이동을 위한 Damping 적용
 /// </summary>
 public class MainCameraController : MonoBehaviour
 {
     [Header("Cinemachine")]
-    public CinemachineSplineDolly dolly;           // 스플라인 경로를 따라 이동하는 Dolly
     public Transform cameraTransform;              // 실제 CinemachineCamera의 transform
-    public CinemachineCamera vcam;                 // FOV 수정용 Virtual Camera
+    public CinemachineCamera vcam;                 // Virtual Camera (FOV는 고정)
+    public Transform lookAtTarget;                 // 카메라가 바라볼 타겟 (전장 중심)
 
-    [Header("Settings")]
-    public float horizontalSensitivity = 0.003f;   // 좌우 드래그 감도 (Dolly Position)
-    public float verticalSensitivity   = 0.1f;     // 상하 드래그 감도 (Pitch)
-    public float minPitch = -15f;                  // 최소 피치 각도 (내려다보기 제한)
-    public float maxPitch = 30f;                   // 최대 피치 각도 (올려다보기 제한)
+    [Header("Movement Settings")]
+    public float horizontalSensitivity = 0.01f;    // 좌우 드래그 감도
+    public float verticalSensitivity = 0.01f;      // 상하 드래그 감도 (Y 오프셋)
 
-    [Header("Zoom")]
-    public float zoomSensitivity = 5f;             // 줌 속도
-    public float minFOV = 30f;                     // 최소 FOV (줌인)
-    public float maxFOV = 70f;                     // 최대 FOV (줌아웃)
-    float targetFOV;                               // 목표 FOV
-    float currentFOV;                              // 현재 FOV
+    [Header("Position Limits")]
+    public float minX = -5f;                       // X축 최소 위치
+    public float maxX = 5f;                        // X축 최대 위치
+    public float minYOffset = -3f;                 // Y 오프셋 최소값
+    public float maxYOffset = 3f;                  // Y 오프셋 최대값
+    public float minY = 1f;                        // 최종 Y 최소값 (바닥 뚫기 방지)
+
+    [Header("Zoom (Y+Z Movement)")]
+    public float zoomSensitivity = 0.001f;         // 줌 속도
+    [Tooltip("줌인 시 카메라 Y 위치 (낮음)")]
+    public float zoomInY = 3f;
+    [Tooltip("줌아웃 시 카메라 Y 위치 (높음)")]
+    public float zoomOutY = 10f;
+    [Tooltip("줌인 시 카메라 Z 위치 (가까움)")]
+    public float zoomInZ = -5f;
+    [Tooltip("줌아웃 시 카메라 Z 위치 (멀음)")]
+    public float zoomOutZ = -15f;
+
+    float currentZoom;                             // 현재 줌 레벨 (0=줌아웃, 1=줌인)
+    float targetZoom;                              // 목표 줌 레벨
 
     [Header("Damping")]
     public float positionDamping = 8f;             // 위치 이동 Damping
@@ -36,29 +48,30 @@ public class MainCameraController : MonoBehaviour
     bool isDragging;                               // 현재 드래그 중인지
     Vector2 lastPointerPos;                        // 이전 프레임의 마우스 위치
 
-    float currentPitch;                            // 현재 피치 각도
-    float targetPitch;                             // 목표 피치 각도
+    float currentXPos;                             // 현재 X 위치
+    float targetXPos;                              // 목표 X 위치
 
-    float currentPos;                              // 현재 Dolly Position (0~1)
-    float targetPos;                               // 목표 Dolly Position (0~1)
+    float currentYOffset;                          // 현재 Y 오프셋 (드래그)
+    float targetYOffset;                           // 목표 Y 오프셋 (드래그)
 
     /// <summary>
     /// 초기화: 현재 카메라 상태를 기준으로 초기값 설정
     /// </summary>
     void Start()
     {
-        // ---------- Pitch 초기화 ----------
-        currentPitch = cameraTransform.localEulerAngles.x;
-        if (currentPitch > 180) currentPitch -= 360;  // -180~180 범위로 정규화
-        targetPitch = currentPitch;
+        // ---------- Position ----------
+        currentXPos = cameraTransform.position.x;
+        targetXPos = currentXPos;
 
-        // ---------- Dolly pos ----------
-        currentPos = dolly.CameraPosition;
-        targetPos = currentPos;
+        // ---------- Zoom ----------
+        // 현재 Y 위치를 기준으로 초기 줌 레벨 계산
+        float currentY = cameraTransform.position.y;
+        currentZoom = Mathf.InverseLerp(zoomOutY, zoomInY, currentY);
+        targetZoom = currentZoom;
 
-        // ---------- FOV ----------
-        currentFOV = vcam.Lens.FieldOfView;
-        targetFOV = currentFOV;
+        // ---------- Y Offset ----------
+        currentYOffset = 0f;
+        targetYOffset = 0f;
     }
 
     /// <summary>
@@ -79,8 +92,8 @@ public class MainCameraController : MonoBehaviour
     // ==========================
     /// <summary>
     /// 우클릭 드래그 처리
-    /// 좌우 드래그: Dolly Position 이동 (스플라인 경로를 따라 이동)
-    /// 상하 드래그: Pitch 회전 (카메라 각도 조절)
+    /// 좌우 드래그: 카메라 X 위치 이동
+    /// 상하 드래그: 카메라 Y 오프셋 이동 (줌 Y에 추가)
     /// </summary>
     void HandleDrag()
     {
@@ -108,9 +121,9 @@ public class MainCameraController : MonoBehaviour
     // 2) 마우스 휠 줌
     // ==========================
     /// <summary>
-    /// 마우스 휠로 FOV 조절 (줌 인/아웃)
-    /// 스크롤 업: FOV 감소 = 줌인
-    /// 스크롤 다운: FOV 증가 = 줌아웃
+    /// 마우스 휠로 Y+Z 위치 이동 (줌 인/아웃)
+    /// 스크롤 업: 줌인 (카메라가 낮아지면서 가까워짐)
+    /// 스크롤 다운: 줌아웃 (카메라가 높아지면서 멀어짐)
     /// </summary>
     void HandleZoomWheel()
     {
@@ -118,9 +131,9 @@ public class MainCameraController : MonoBehaviour
 
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            // FOV 감소 = 줌인
-            targetFOV -= scroll * zoomSensitivity * Time.deltaTime;
-            targetFOV = Mathf.Clamp(targetFOV, minFOV, maxFOV);
+            // 스크롤 업 = 줌인 (targetZoom 증가)
+            targetZoom += scroll * zoomSensitivity;
+            targetZoom = Mathf.Clamp01(targetZoom);
         }
     }
 
@@ -134,19 +147,34 @@ public class MainCameraController : MonoBehaviour
     /// </summary>
     void ApplyDamping()
     {
-        // Dolly Position
-        currentPos = Mathf.Lerp(currentPos, targetPos, Time.deltaTime * positionDamping);
-        dolly.CameraPosition = currentPos;
+        // X Position (드래그)
+        currentXPos = Mathf.Lerp(currentXPos, targetXPos, Time.deltaTime * positionDamping);
 
-        // Pitch
-        currentPitch = Mathf.Lerp(currentPitch, targetPitch, Time.deltaTime * rotationDamping);
-        Vector3 euler = cameraTransform.localEulerAngles;
-        euler.x = currentPitch;
-        cameraTransform.localEulerAngles = euler;
+        // Y Offset (드래그)
+        currentYOffset = Mathf.Lerp(currentYOffset, targetYOffset, Time.deltaTime * positionDamping);
 
-        // FOV Zoom
-        currentFOV = Mathf.Lerp(currentFOV, targetFOV, Time.deltaTime * zoomDamping);
-        vcam.Lens.FieldOfView = currentFOV;
+        // Zoom (Y, Z Position)
+        currentZoom = Mathf.Lerp(currentZoom, targetZoom, Time.deltaTime * zoomDamping);
+        float zoomY = Mathf.Lerp(zoomOutY, zoomInY, currentZoom);
+        float targetZ = Mathf.Lerp(zoomOutZ, zoomInZ, currentZoom);
+
+        Vector3 pos = cameraTransform.position;
+        pos.x = currentXPos;
+        pos.y = Mathf.Max(zoomY + currentYOffset, minY);  // 줌 Y + 드래그 오프셋, 최소값 제한
+        pos.z = targetZ;
+        cameraTransform.position = pos;
+
+        // LookAt (X축 rotation만 변경, Y/Z축 고정)
+        if (lookAtTarget != null)
+        {
+            Vector3 direction = lookAtTarget.position - cameraTransform.position;
+            float targetPitch = Mathf.Atan2(-direction.y, new Vector2(direction.x, direction.z).magnitude) * Mathf.Rad2Deg;
+
+            Vector3 euler = cameraTransform.eulerAngles;
+            euler.x = Mathf.LerpAngle(euler.x, targetPitch, Time.deltaTime * rotationDamping);
+            // Y, Z축은 고정
+            cameraTransform.eulerAngles = euler;
+        }
     }
 
 
@@ -155,17 +183,17 @@ public class MainCameraController : MonoBehaviour
     // ==========================
     /// <summary>
     /// 드래그 델타값을 카메라 파라미터에 적용
-    /// X 델타 → Dolly Position (스플라인 경로 이동)
-    /// Y 델타 → Pitch (카메라 상하 각도)
+    /// X 델타 → 카메라 X 위치 이동
+    /// Y 델타 → 카메라 Y 오프셋 이동
     /// </summary>
     void ApplyDrag(Vector2 delta)
     {
-        // 1. Spline Dolly pos 좌우 이동
-        targetPos += -delta.x * horizontalSensitivity;
-        targetPos = Mathf.Clamp01(targetPos);  // 0~1 범위 제한
+        // X 위치 이동
+        targetXPos += -delta.x * horizontalSensitivity;
+        targetXPos = Mathf.Clamp(targetXPos, minX, maxX);
 
-        // 2. Pitch
-        targetPitch -= -delta.y * verticalSensitivity;
-        targetPitch = Mathf.Clamp(targetPitch, minPitch, maxPitch);  // 각도 제한
+        // Y 오프셋 이동
+        targetYOffset += -delta.y * verticalSensitivity;
+        targetYOffset = Mathf.Clamp(targetYOffset, minYOffset, maxYOffset);
     }
 }

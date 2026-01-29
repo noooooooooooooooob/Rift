@@ -27,6 +27,10 @@ public class Unit : MonoBehaviour
 
     [Header("UI")]
     public Action_Menu_UI actionMenuUI; // 액션 메뉴 UI 참조
+    public RectTransform uiAnchor;      // 유닛 UI 앵커 위치
+    public Transform originalUIParent;  // 원래 UI 부모 (되돌리기용)
+    public Unit_Bar hpBar;
+    public Unit_Bar upBar;
 
     [Header("Actions")]
     public Unit_Ultimate ultimateAction; // 궁극기 액션 참조
@@ -79,9 +83,14 @@ public class Unit : MonoBehaviour
     /// 데미지 받기
     /// HP를 감소시키고 0 이하가 되면 사망 처리
     /// </summary>
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, DamageTextType type = DamageTextType.Normal)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
+        hpBar.UpdateBar(currentHP, maxHP);
+
+        // 대미지 텍스트 표시
+        Vector3 textPos = transform.position + Vector3.up * 1.0f;
+        VFX_Manager.Instance?.PlayDamageText(textPos, damage, type);
 
         if (currentHP <= 0)
         {
@@ -97,7 +106,17 @@ public class Unit : MonoBehaviour
     public void Heal(int amount)
     {
         if (isDead) return;
+
+        int actualHeal = Mathf.Min(maxHP - currentHP, amount);
         currentHP = Mathf.Min(maxHP, currentHP + amount);
+        hpBar.UpdateBar(currentHP, maxHP);
+
+        // 힐 텍스트 표시 (실제 회복량이 있을 때만)
+        if (actualHeal > 0)
+        {
+            Vector3 textPos = transform.position + Vector3.up * 1.0f;
+            VFX_Manager.Instance?.PlayDamageText(textPos, actualHeal, DamageTextType.Heal);
+        }
     }
 
     /// <summary>
@@ -107,6 +126,7 @@ public class Unit : MonoBehaviour
     {
         if (isDead) return;
         currentUP = Mathf.Min(stats.UP, currentUP + amount);
+        upBar.UpdateBar(currentUP, stats.UP);
     }
 
     /// <summary>
@@ -114,7 +134,6 @@ public class Unit : MonoBehaviour
     /// </summary>
     public bool GetTurn()
     {
-
         return true;
     }
 
@@ -144,6 +163,5 @@ public class Unit : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
     }
 }

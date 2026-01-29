@@ -6,7 +6,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(powershell -Command:*)",
       "Bash(git checkout:*)",
-      "Bash(perl -i -p0e:*)"
+      "Bash(perl -i -p0e:*)",
+      "Bash(find:*)"
     ]
   }
 }

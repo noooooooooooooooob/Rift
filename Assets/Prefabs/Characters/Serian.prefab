@@ -276,6 +276,9 @@ MonoBehaviour:
   isPlayerUnit: 1
   isDead: 0
   actionMenuUI: {fileID: 5400248817668106952}
+  uiAnchor: {fileID: 0}
+  hpBar: {fileID: 0}
+  upBar: {fileID: 0}
   ultimateAction: {fileID: 4656894512944643122}
   attackAction: {fileID: 4348746411033705262}
   skill1Action: {fileID: 2114639742459885355}

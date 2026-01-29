@@ -27,9 +27,14 @@ public class Stage_Manager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Stage Select Scene" && mapContainer != null)  // 씬 이름 확인
+        if (scene.name == "Stage Select Scene")  // 씬 이름 확인
         {
+            if(mapContainer != null)
             ShowMap();
+        }
+        else
+        {
+            HideMap();
         }
     }
     [Header("Runtime")]
@@ -76,18 +81,15 @@ public class Stage_Manager : MonoBehaviour
                 break;
             case Stage_Type.SHOP:
                 Debug.Log("Shop Node Selected");
-                // SceneManager.LoadScene("Shop Scene");
-                SceneManager.LoadScene("Battle Scene");
+                SceneManager.LoadScene("Shop Scene");
                 break;
             case Stage_Type.EVENT:
                 Debug.Log("Event Node Selected");
-                // SceneManager.LoadScene("Event Scene");
-                SceneManager.LoadScene("Battle Scene");
+                SceneManager.LoadScene("Event Scene");
                 break;
             case Stage_Type.REST:
                 Debug.Log("Rest Node Selected");
-                // SceneManager.LoadScene("Rest Scene");
-                SceneManager.LoadScene("Battle Scene");
+                SceneManager.LoadScene("Rest Scene");
                 break;
             case Stage_Type.BOSS:
                 Debug.Log("Boss Node Selected");

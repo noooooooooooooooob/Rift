@@ -19,6 +19,7 @@ public class EquipmentData : ScriptableObject
     [TextArea] public string description;
     public EquipmentSlot slot;
     public Sprite icon;
+    public int price;
 
     [Header("Effects")]
     public List<EffectData> effects = new List<EffectData>();

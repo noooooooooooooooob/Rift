@@ -11,6 +11,8 @@ public class Party_Manager : MonoBehaviour
 {
     public static Party_Manager instance;  // 싱글톤 인스턴스
 
+    public int money = 0;
+
     [Header("Party Management")]
     public List<GameObject> partyUnits = new List<GameObject>();  // 선택된 파티 유닛 GameObject들 (DontDestroyOnLoad로 보존)
 
@@ -41,6 +43,10 @@ public class Party_Manager : MonoBehaviour
         if (scene.name == "Stage Select Scene")  // 씬 이름 확인
         {
             ResetPartyUnitsScale();
+        }
+        if (scene.name == "Start Scene")  // 씬 이름 확인
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -227,7 +233,10 @@ public class Party_Manager : MonoBehaviour
         }
     }
 
-    public void HealParty(float percentage)
+    /// <summary>
+    /// 파티 전체 회복 (비율)
+    /// </summary>
+    public void HealPartyPercent(float percentage)
     {
         foreach (GameObject go in partyUnits)
         {
@@ -238,6 +247,61 @@ public class Party_Manager : MonoBehaviour
                 {
                     int healAmount = Mathf.CeilToInt(unit.maxHP * percentage);
                     unit.Heal(healAmount);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 파티 전체 회복 (고정값)
+    /// </summary>
+    public void HealPartyFixed(int amount)
+    {
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                Unit unit = go.GetComponent<Unit>();
+                if (unit != null && !unit.isDead)
+                {
+                    unit.Heal(amount);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 파티 전체 대미지 (비율)
+    /// </summary>
+    public void DamagePartyPercent(float percentage)
+    {
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                Unit unit = go.GetComponent<Unit>();
+                if (unit != null && !unit.isDead)
+                {
+                    int damage = Mathf.CeilToInt(unit.maxHP * percentage);
+                    unit.TakeDamage(damage);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 파티 전체 대미지 (고정값)
+    /// </summary>
+    public void DamagePartyFixed(int damage)
+    {
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                Unit unit = go.GetComponent<Unit>();
+                if (unit != null && !unit.isDead)
+                {
+                    unit.TakeDamage(damage);
                 }
             }
         }

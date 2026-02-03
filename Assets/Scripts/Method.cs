@@ -85,6 +85,12 @@ public static class Method
     /// <returns>최종 피해량 (정수)</returns>
     public static int CalculateDamage(Unit attacker, Unit defender, float multiplier = 1f, float flatBonus = 0f)
     {
+        if(attacker == null || defender == null)
+            return 0;
+
+        if(IsHit(attacker, defender) == false)
+            return 0;
+
         float atk = attacker.stats.ATK;
 
         // 기본 데미지
@@ -108,6 +114,9 @@ public static class Method
     /// <returns>회복량 (정수)</returns>
     public static int CalculateLifeSteal(Unit attacker, int finalDamage)
     {
+        if(attacker == null)
+            return 0;
+        
         float ls = attacker.stats.LS;  // 0~1
         if (ls <= 0f) return 0;
 

@@ -83,6 +83,7 @@ public class Unit : MonoBehaviour
         currentHP = Mathf.Max(0, currentHP - damage);
         hpBar.UpdateBar(currentHP, maxHP);
 
+        type = damage == 0 ? DamageTextType.Miss : type; 
         // 대미지 텍스트 표시
         Vector3 textPos = transform.position + Vector3.up * 1.0f;
         VFX_Manager.Instance?.PlayDamageText(textPos, damage, type);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,6 +13,9 @@ public class Battle_Manager : MonoBehaviour
     public const int GridHeight = 5;  // 그리드 높이 (5칸)
 
     public static Battle_Manager instance;  // 싱글톤 인스턴스
+    public BattleMap currentBattleMapData;  // 현재 전투 맵 데이터
+    private bool isBossBattle = false;
+    public BossMap currentBossMapData;  // 현재 보스 맵 데이터
     public TileMapCreator tileMapCreator;  // 타일맵 생성기 참조
     public Tile[,] playerTiles;
     public Tile[,] enemyTiles;
@@ -40,6 +44,16 @@ public class Battle_Manager : MonoBehaviour
         enemyTiles = new Tile[GridWidth, GridHeight];
         tileInit();
         UpdateActivePoints();
+        if(SceneManager.GetActiveScene().name == "Boss Scene")
+        {
+            currentBossMapData = Resources.Load<BossMap>("Scriptable Objects/Boss Maps/");
+            isBossBattle = true;
+        }
+        else
+        {
+            currentBattleMapData = Resources.Load<BattleMap>("Scriptable Objects/Battle Maps/");
+            isBossBattle = false;
+        }
     }
 
     /// <summary>

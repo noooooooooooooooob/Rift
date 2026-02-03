@@ -19,7 +19,7 @@ public class UnitStat
     [Range(0f, 1f)] public float EV;        // Evasion - 회피 확률 (0~1, 1 = 100%)
     [Range(0f, 1f)] public float CA;        // Counter Attack - 반격 확률 (0~1)
     [Range(0f, 0.99f)] public float DR;     // Damage Reduction - 피해 감소율 (0~0.99, 최종 피해에 적용)
-    public float AP;                        // Armor Penetration - 방어구 관통 (상대 DEF를 무시)
+    [Range(0f, 1.0f)] public float AP;                        // Armor Penetration - 방어구 관통 (상대 DEF를 무시)
 
     /// <summary>
     /// 깊은 복사 메서드

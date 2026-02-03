@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 
 /// <summary>
 /// 적 유닛 AI 컨트롤러
@@ -10,14 +11,28 @@ using System.Linq;
 public class Enemy_AI : MonoBehaviour
 {
     public Unit unit;
-
     [Header("AI Settings")]
     public float actionDelay = 0.5f;  // 행동 간 딜레이
-
+    [Header("Action")]
+    public bool canMove = true;
+    public bool canAttack = true;
+    public bool canUseSkill1 = false;
+    public bool canUseSkill2 = false;
+    public bool canGuard = false;
+    public bool canUltimate = false;
+    [Header("Action Weights")]
+    private float weightSum = 0;
+    public float attackWeight = 70;
+    public float moveWeight = 10;
+    public float skill1Weight = 10;
+    public float skill2Weight = 10;
+    public float guardWeight = 5;
+    
     private void Awake()
     {
         if (unit == null)
             unit = GetComponent<Unit>();
+        weightSum = attackWeight + moveWeight + skill1Weight + skill2Weight + guardWeight;
     }
 
     /// <summary>
@@ -29,26 +44,54 @@ public class Enemy_AI : MonoBehaviour
 
         yield return new WaitForSeconds(actionDelay);
 
-        // 1. 공격 가능한 타겟 찾기
         Unit target = FindBestTarget();
-
-        if (target != null && IsInAttackRange(target))
+        while (true)
         {
-            // 공격 범위 내에 타겟이 있으면 공격
-            Debug.Log($"[Enemy_AI] {unit.unitData.unitName} → {target.unitData.unitName} 공격!");
-            yield return StartCoroutine(ExecuteAttack(target));
-        }
-        else
-        {
-            // 공격 범위 밖이면 이동
-            if (target != null)
+            int ran = Random.Range(0, (int)weightSum);
+            if(ran < attackWeight && canAttack)
             {
-                Debug.Log($"[Enemy_AI] {unit.unitData.unitName} → {target.unitData.unitName} 방향으로 이동");
-                yield return StartCoroutine(ExecuteMove(target));
+                if(unit.attackAction.attackSkillData.cost > Battle_Manager.instance.enemyActivePoint)   continue;
+                // 공격
+                if (target != null)
+                {
+                    yield return ExecuteAttack(target);
+                    break;
+                }
             }
-            else
+            else if(ran < attackWeight + moveWeight && canMove)
             {
-                Debug.Log($"[Enemy_AI] {unit.unitData.unitName} 타겟 없음, 대기");
+                // 이동
+                if (target != null)
+                {
+                    yield return ExecuteMove(target);
+                    break;
+                }
+            }
+            else if(ran < attackWeight + moveWeight + skill1Weight && canUseSkill1)
+            {
+                if(unit.skill1Action.skill1Data.cost > Battle_Manager.instance.enemyActivePoint)   continue;
+                // 스킬1 사용
+                if (target != null)
+                {
+                    yield return ExecuteSkill1(target);
+                    break;
+                }
+            }
+            else if(ran < attackWeight + moveWeight + skill1Weight + skill2Weight && canUseSkill2)
+            {
+                if(unit.skill2Action.skill2Data.cost > Battle_Manager.instance.enemyActivePoint)   continue;
+                // 스킬2 사용
+                if (target != null)
+                {
+                    yield return ExecuteSkill2(target);
+                    break;
+                }
+            }
+            else if(ran < attackWeight + moveWeight + skill1Weight + skill2Weight + guardWeight && canGuard)
+            {
+                // 가드
+                yield return ExecuteGuard();
+                break;
             }
         }
 
@@ -75,29 +118,6 @@ public class Enemy_AI : MonoBehaviour
             .FirstOrDefault();
 
         return weakestTarget;
-    }
-
-    /// <summary>
-    /// 타겟이 공격 범위 내에 있는지 확인
-    /// </summary>
-    private bool IsInAttackRange(Unit target)
-    {
-        if (unit.currentTile == null || target.currentTile == null)
-            return false;
-
-        // 기본 공격 범위 (인접 타일)
-        int attackRange = 1;
-        if (unit.attackAction != null && unit.attackAction.attackSkillData != null)
-        {
-            
-        }
-
-        int distance = Method.GetManhattanDistance(
-            unit.currentTile.GridPosition,
-            target.currentTile.GridPosition
-        );
-
-        return distance <= attackRange;
     }
 
     /// <summary>
@@ -136,6 +156,48 @@ public class Enemy_AI : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
+    private IEnumerator ExecuteSkill1(Unit target)
+    {
+        if (unit.skill1Action == null)
+        {
+            Debug.LogWarning($"[Enemy_AI] {unit.unitData.unitName} skill1Action이 없습니다!");
+            yield break;
+        }
+
+        // 스킬1 사용 로직 (임시)
+        Debug.Log($"[Enemy_AI] {unit.unitData.unitName}가 스킬1을 사용합니다!");
+
+        yield return new WaitForSeconds(0.5f);
+    }
+    private IEnumerator ExecuteSkill2(Unit target)
+    {
+        if (unit.skill2Action == null)
+        {
+            Debug.LogWarning($"[Enemy_AI] {unit.unitData.unitName} skill2Action이 없습니다!");
+            yield break;
+        }
+
+        // 스킬2 사용 로직 (임시)
+        Debug.Log($"[Enemy_AI] {unit.unitData.unitName}가 스킬2를 사용합니다!");
+
+        yield return new WaitForSeconds(0.5f);
+    }
+    private IEnumerator ExecuteGuard()
+    {
+        if (unit.guardAction == null)
+        {
+            Debug.LogWarning($"[Enemy_AI] {unit.unitData.unitName} guardAction이 없습니다!");
+            yield break;
+        }
+
+        // 가드 액션 실행
+        // unit.guardAction.Guard();
+
+        Debug.Log($"[Enemy_AI] {unit.unitData.unitName}가 가드합니다!");
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
     /// <summary>
     /// 타겟 방향으로 이동
     /// </summary>
@@ -156,10 +218,8 @@ public class Enemy_AI : MonoBehaviour
             yield break;
         }
 
-        // 타겟에게 가장 가까운 타일 선택
-        Tile bestTile = movableTiles
-            .OrderBy(tile => Method.GetManhattanDistance(tile.GridPosition, target.currentTile.GridPosition))
-            .FirstOrDefault();
+        int randomIdx = Random.Range(0, movableTiles.Count);
+        Tile bestTile = movableTiles[randomIdx];
 
         if (bestTile != null)
         {

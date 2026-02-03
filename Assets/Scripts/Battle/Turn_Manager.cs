@@ -431,12 +431,4 @@ public class Turn_Manager : MonoBehaviour
             Debug.Log("[Ultimate] 메인 루프로 복귀");
         }
     }
-
-    /// <summary>
-    /// 궁극기 완료 콜백 - Action_Controller에서 호출 (더 이상 사용하지 않음)
-    /// </summary>
-    public void OnUltimateComplete()
-    {
-        // isTurnEnd = true로 처리됨
-    }
 }

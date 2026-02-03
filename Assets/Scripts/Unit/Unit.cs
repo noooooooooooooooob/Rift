@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// 유닛의 핵심 컴포넌트
@@ -46,6 +47,18 @@ public class Unit : MonoBehaviour
     public Unit_Animation unitAnimation; // 유닛 애니메이션 컴포넌트 참조
     public EffectHandler effectHandler; // 이펙트 핸들러 컴포넌트 참조
 
+    void Awake()
+    {
+        stats = unitData.baseStat.Clone();
+
+        maxHP = stats.HP;
+        currentHP = maxHP;
+        currentUP = 0;
+
+
+        hpBar.UpdateBar(currentHP, maxHP);
+        upBar.UpdateBar(currentUP, stats.UP);
+    }
     /// <summary>
     /// 유닛 초기화 (Battle_Manager 또는 배치 완료 후 호출)
     /// unitData로부터 기본 스탯을 복사하여 독립적인 런타임 스탯 생성
@@ -55,28 +68,10 @@ public class Unit : MonoBehaviour
         isPlayerUnit = isPlayer;
         turnManager = manager;
 
-        if (unitData != null && unitData.baseStat != null)
-        {
-            // baseStat을 복사하여 독립적인 런타임 스탯 생성
-            stats = unitData.baseStat.Clone();
-            maxHP = stats.HP;
-            currentHP = maxHP;
-        }
-        else
-        {
-            Debug.LogError($"Unit {gameObject.name}: unitData or baseStat is null!");
-        }
-
         turnGauge = 0f;
         isDead = false;
-    }
-
-    /// <summary>
-    /// 공격 처리
-    /// </summary>
-    public void Attack(Unit defender, int damage)
-    {
-        defender.TakeDamage(damage);
+        hpBar.UpdateBar(currentHP, maxHP);
+        upBar.UpdateBar(currentUP, stats.UP);
     }
 
     /// <summary>
@@ -91,6 +86,10 @@ public class Unit : MonoBehaviour
         // 대미지 텍스트 표시
         Vector3 textPos = transform.position + Vector3.up * 1.0f;
         VFX_Manager.Instance?.PlayDamageText(textPos, damage, type);
+        Vector3 hitEffectPos = textPos + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f));
+        VFX_Manager.Instance?.Play("Hit_Effect", hitEffectPos);
+
+        unitAnimation.PlayHitAnimation();
 
         if (currentHP <= 0)
         {
@@ -117,6 +116,18 @@ public class Unit : MonoBehaviour
             Vector3 textPos = transform.position + Vector3.up * 1.0f;
             VFX_Manager.Instance?.PlayDamageText(textPos, actualHeal, DamageTextType.Heal);
         }
+    }
+
+    public void AddUP(int amount)
+    {
+        currentUP += amount;
+        if (currentUP >= stats.UP)
+        {
+            currentUP = stats.UP;
+            actionMenuUI.ultimateButton.interactable = true;
+        }
+
+        upBar.UpdateBar(currentUP, stats.UP);
     }
 
     /// <summary>
@@ -153,7 +164,7 @@ public class Unit : MonoBehaviour
         if (turnManager != null)
             turnManager.OnUnitDeath(this);
 
-        
+
         if (isPlayerUnit)
         {
             // 플레이어 유닛은 비활성화만 (부활 가능성)
@@ -163,5 +174,10 @@ public class Unit : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+    void OnDestroy()
+    {
+        transform.DOKill();
+        DOTween.Kill(transform);
     }
 }

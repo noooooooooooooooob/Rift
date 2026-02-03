@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class Action_Menu_UI : MonoBehaviour
 {
+    public Button ultimateButton;
     [Header("Panels")]
     public GameObject ActionMenuPanel;
     public GameObject ReturnMenuPanel;
@@ -17,12 +18,12 @@ public class Action_Menu_UI : MonoBehaviour
 
     [Header("Action Display - Text")]
     public TMP_Text currentActionName; // 중앙만 텍스트 표시
+    public TMP_Text actionCostText;
 
     [Header("Navigation Buttons")]
     public Button upButton;
     public Button downButton;
     public Button confirmButton;
-    public Button cancelButton;
 
     [Header("Return Panel")]
     public Button returnButton;
@@ -43,6 +44,7 @@ public class Action_Menu_UI : MonoBehaviour
 
     void Awake()
     {
+        ultimateButton.interactable = false;
         // 원래 위치 저장
         if (prevActionIcon != null)
             prevOriginalPos = prevActionIcon.transform.localPosition;
@@ -230,6 +232,11 @@ public class Action_Menu_UI : MonoBehaviour
         if (currentActionName != null)
         {
             currentActionName.text = actionDataList[currentIndex].actionName;
+        }
+
+        if (actionCostText != null)
+        {
+            actionCostText.text = actionDataList[currentIndex].actionCost.ToString();
         }
 
         // 다음 액션 (아래쪽, 투명)

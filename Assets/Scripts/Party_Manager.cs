@@ -131,6 +131,18 @@ public class Party_Manager : MonoBehaviour
     /// </summary>
     public void UpdatePartyAfterBattle()
     {
+        // 버프 제거
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+            {
+                EffectHandler effectHandler = go.GetComponent<EffectHandler>();
+                if (effectHandler != null)
+                {
+                    effectHandler.ClearAllBuffs();
+                }
+            }
+        }
         // SpriteBillboard 비활성화 (전투씬 이후에는 불필요)
         foreach (GameObject go in partyUnits)
         {

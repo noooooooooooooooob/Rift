@@ -8,9 +8,6 @@ using Unity.Cinemachine;
 /// </summary>
 public class UnitClickable : MonoBehaviour, IClickable
 {
-    public CinemachineCamera focusCamera;  // 이 캐릭터 전용 줌인용 카메라
-    // public CharacterInfoData infoData;     // 이름/직업/HP 등 정보 (TODO: 구현 예정)
-
     /// <summary>
     /// 유닛 클릭 시 호출
     /// 카메라를 해당 유닛에 포커스하고 UI 패널 표시 (TODO)
@@ -18,10 +15,7 @@ public class UnitClickable : MonoBehaviour, IClickable
     public void OnClick()
     {
         Debug.Log($"Clicked on unit: {gameObject.name}");
-        // 카메라 전환
-        CameraManager.instance.FocusOnCharacter(focusCamera);
 
-        // UI 열기 (TODO: 캐릭터 정보 패널 구현 예정)
-        // CharacterInfoPanel.instance.Show(infoData);
+        Battle_UI_Manager.instance.ShowUnitDescription(GetComponent<Unit>());
     }
 }

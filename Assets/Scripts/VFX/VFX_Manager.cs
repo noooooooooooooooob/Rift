@@ -198,14 +198,13 @@ public class VFX_Manager : MonoBehaviour
     /// <summary>
     /// 지정된 위치에 이펙트 재생
     /// </summary>
-    public GameObject Play(string effectName, Vector3 position, Quaternion rotation = default)
+    public GameObject Play(string effectName, Vector3 position)
     {
         GameObject effect = GetFromPool(effectName);
         if (effect == null) return null;
 
         effect.transform.SetParent(null);
         effect.transform.position = position;
-        effect.transform.rotation = rotation == default ? Quaternion.identity : rotation;
 
         TemporaryVFXPlayer player = effect.GetComponent<TemporaryVFXPlayer>();
         player?.Play();
@@ -223,7 +222,6 @@ public class VFX_Manager : MonoBehaviour
 
         effect.transform.SetParent(parent);
         effect.transform.localPosition = localPosition;
-        effect.transform.localRotation = Quaternion.identity;
 
         TemporaryVFXPlayer player = effect.GetComponent<TemporaryVFXPlayer>();
         player?.Play();

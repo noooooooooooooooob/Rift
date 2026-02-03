@@ -76,6 +76,7 @@ public class Deployment_Controller : MonoBehaviour
     private void StartDrag(Unit unit)
     {
         draggingUnit = unit;
+        draggingUnit.GetComponent<UnitClickable>().enabled = false; // 드래그 중 클릭 비활성화
         draggingUnit.gameObject.SetActive(true);
 
         // 드래그 중에는 반투명하게 표시
@@ -110,6 +111,7 @@ public class Deployment_Controller : MonoBehaviour
         Battle_Manager.instance.playerUnits.Remove(unit);
 
         StartDrag(unit);
+        draggingUnit.GetComponent<UnitClickable>().enabled = false; // 드래그 중 클릭 비활성화
     }
 
     /// <summary>
@@ -197,12 +199,14 @@ public class Deployment_Controller : MonoBehaviour
         if (currentHoverTile != null && CanPlaceOnTile(currentHoverTile))
         {
             PlaceUnit(draggingUnit, currentHoverTile);
+            draggingUnit.GetComponent<UnitClickable>().enabled = true; // 배치 후 클릭 활성화
             ClearHoverTile();
 
             // 다음 유닛 드래그 시작
             if (unitQueue.Count > 0)
             {
                 StartDrag(unitQueue.Dequeue());
+                draggingUnit.GetComponent<UnitClickable>().enabled = false; // 드래그 중 클릭 비활성화
             }
             else
             {
@@ -241,6 +245,9 @@ public class Deployment_Controller : MonoBehaviour
 
         // Battle_Manager에 등록
         Battle_Manager.instance.playerUnits.Add(unit);
+
+        // 턴 게이지 UI에 아이콘 추가
+        Battle_UI_Manager.instance?.turnGaugeUI?.AddUnitIcon(unit);
 
         Debug.Log($"[PlaceUnit] {unit.unitData.unitName}을(를) {tile.GridPosition}에 배치 → Battle_Manager.playerUnits: {Battle_Manager.instance.playerUnits.Count}명");
     }

@@ -15,19 +15,19 @@ MonoBehaviour:
   unitName: "\uD64D\uC5F0"
   unitClass: "\uD06C\uB9BC\uC2A8 \uB9AC\uD37C"
   unitDescription: "\uC789"
+  unitTurnGaugePrefab: {fileID: 3604922561627443427, guid: ec330a4b0ff560b4483faafbdbfe70a4, type: 3}
   unitPortrait: {fileID: 21300000, guid: 3c60d80ebcaf1ea4b924fa393d4a3a8b, type: 3}
   turnGaugeIcon: {fileID: 21300000, guid: 3c60d80ebcaf1ea4b924fa393d4a3a8b, type: 3}
   baseStat:
-    HP: 1
-    UP: 1
-    ATK: 11
-    DEF: 1
-    SPD: 50
-    AGI: 1
+    HP: 5300
+    UP: 5
+    ATK: 820
+    DEF: 67
+    SPD: 20
+    AGI: 3
     LS: 0
     RST: 0
     EV: 0
     CA: 0
     DR: 0
     AP: 0
-  skills: []

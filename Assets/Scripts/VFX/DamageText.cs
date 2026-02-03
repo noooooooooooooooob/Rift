@@ -127,9 +127,7 @@ public class DamageText : MonoBehaviour
         canvasTransform.localPosition = Vector3.zero;
 
         currentSequence = DOTween.Sequence();
-        // 루트는 이동, Canvas는 부드럽게 흔들림
         currentSequence.Join(transform.DOMove(endPos, duration * 1.2f).SetEase(Ease.OutSine));
-        currentSequence.Join(canvasTransform.DOShakePosition(shakeDuration * 0.7f, shakeStrength * 0.7f, 15, 90, false, true));
         currentSequence.Insert(duration * 0.6f, canvasGroup.DOFade(0f, duration * 0.6f));
         currentSequence.OnComplete(ReturnToPool);
     }

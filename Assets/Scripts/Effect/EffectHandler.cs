@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class EffectHandler : MonoBehaviour
 {
     private Unit unit;
+    public Buff_Container_UI buffContainerUI;
 
     [Header("Equipment")]
     [SerializeField] private EquipmentData weapon;
@@ -104,6 +105,8 @@ public class EffectHandler : MonoBehaviour
             activeBuffs.Add(instance);
             buffData.ApplyPassiveEffects(unit, 1);
         }
+
+        buffContainerUI?.RefreshBuffs();
     }
 
     public void RemoveBuff(BuffData buffData)
@@ -113,6 +116,7 @@ public class EffectHandler : MonoBehaviour
         {
             buffData.RemovePassiveEffects(unit, instance.stacks);
             activeBuffs.Remove(instance);
+            buffContainerUI?.RefreshBuffs();
         }
     }
 
@@ -123,6 +127,7 @@ public class EffectHandler : MonoBehaviour
             buff.buffData.RemovePassiveEffects(unit, buff.stacks);
         }
         activeBuffs.Clear();
+        buffContainerUI?.ClearAll();
     }
 
     public bool HasBuff(BuffData buffData)
@@ -270,6 +275,7 @@ public class EffectHandler : MonoBehaviour
                 activeBuffs.RemoveAt(i);
             }
         }
+        buffContainerUI?.RefreshBuffs();
     }
 
     #endregion

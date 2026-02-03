@@ -8,6 +8,7 @@ public class UnitData : ScriptableObject
     public string unitName;
     public string unitClass;
     public string unitDescription;
+    public GameObject unitTurnGaugePrefab; // 턴 게이지 UI에 사용될 프리팹
 
     [Header("Visual")]
     public Sprite unitPortrait;      // 큰 초상화 (대화, 상세 정보용)
@@ -15,6 +16,4 @@ public class UnitData : ScriptableObject
 
     [Header("Stats")]
     public UnitStat baseStat;
-    [Header("Skills")]
-    public List<SkillData> skills = new List<SkillData>();  // 유닛이 사용 가능한 스킬 목록
 }

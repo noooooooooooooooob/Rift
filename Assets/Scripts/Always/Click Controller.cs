@@ -45,25 +45,16 @@ public class ClickController : MonoBehaviour
                 // 클릭 가능한 오브젝트인지 확인
                 var clickable = hit.collider.GetComponent<IClickable>();
 
-                // Debug.Log($"Raycast hit: {hit.collider.name}");
-
                 if (clickable != null)
                 {
                     clickable.OnClick();  // 클릭 이벤트 전달
                 }
                 else
                 {
-                    // 콜라이더는 맞았는데 IClickable 없음 → 빈 공간 취급
-                    CameraManager.instance.SetBoardView();
-                    // CharacterInfoPanel.I.Hide();  // TODO: UI 패널 숨기기
+                    Battle_UI_Manager.instance.HideUnitDescription();
                 }
             }
-            else
-            {
-                // 아무 것도 안 맞음 → 완전 빈 공간 클릭
-                CameraManager.instance.SetBoardView();
-                // CharacterInfoPanel.I.Hide();  // TODO: UI 패널 숨기기
-            }
+            
         }
     }
 }

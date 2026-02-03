@@ -34,6 +34,11 @@ public class Turn_Manager : MonoBehaviour
     private bool shouldCheckBattleEnd = false;  // 유닛 사망 시 true로 설정되어 승패 체크 트리거
     public bool isTurnEnd = false;  // 유닛 턴 종료 여부 플래그
 
+    // 궁극기 시스템
+    private Coroutine currentTurnCoroutine;  // 현재 실행 중인 턴 코루틴
+    private bool isUltimateActive = false;   // 궁극기 모드 플래그
+    private Unit interruptedTurnUnit;        // 궁극기로 인해 중단된 유닛
+
     /// <summary>
     /// 초기화: 버튼 이벤트 연결 및 초기 상태 설정
     /// </summary>
@@ -124,7 +129,7 @@ public class Turn_Manager : MonoBehaviour
         Debug.Log("Deployment Phase Ended");
 
         currentPhase = BattlePhase.Battle;  // 다음 단계로 전환 (Battle Phase)
-        CameraManager.instance.canFocus = true;
+        Battle_UI_Manager.instance.IsClickInteractable = true;
     }
 
     /// <summary>
@@ -167,11 +172,21 @@ public class Turn_Manager : MonoBehaviour
             Debug.LogWarning("Battle_UI_Manager.instance is null!");
         }
 
-        // 1. 모든 유닛 초기화 (Turn_Manager 참조 전달)
+        // 1. 모든 유닛 초기화 (Turn_Manager 참조 전달) + 궁극기 버튼 연결
         foreach (var unit in Battle_Manager.instance.playerUnits)
         {
             if (unit != null)
+            {
                 unit.Initialize(true, this);
+
+                // 궁극기 버튼 이벤트 연결
+                if (unit.actionMenuUI?.ultimateButton != null)
+                {
+                    unit.actionMenuUI.ultimateButton.onClick.RemoveAllListeners();
+                    Unit capturedUnit = unit; // 클로저 캡처용
+                    unit.actionMenuUI.ultimateButton.onClick.AddListener(() => ActivateUltimate(capturedUnit));
+                }
+            }
         }
         foreach (var unit in Battle_Manager.instance.enemyUnits)
         {
@@ -193,9 +208,22 @@ public class Turn_Manager : MonoBehaviour
             yield break;
         }
 
-        // 3. 전투 메인 루프
+        // 3. 턴 게이지 UI에 적 유닛 아이콘 추가
+        if (Battle_UI_Manager.instance?.turnGaugeUI != null)
+        {
+            Battle_UI_Manager.instance.turnGaugeUI.InitializeForBattle();
+        }
+
+        // 4. 전투 메인 루프
         while (true)
         {
+            // 궁극기 진행 중이면 대기
+            if (isUltimateActive)
+            {
+                yield return null;
+                continue;
+            }
+
             // 3-1. 유닛이 죽었을 때만 승리/패배 조건 체크 (효율적)
             if (shouldCheckBattleEnd)
             {
@@ -223,10 +251,16 @@ public class Turn_Manager : MonoBehaviour
                 {
                     Debug.Log($"[Turn] {currentTurnUnit.unitData.unitName}의 턴!");
 
-                    // 3-5. 유닛 행동 실행
-                    yield return StartCoroutine(ExecuteUnitTurn(currentTurnUnit));
+                    // 3-5. 유닛 행동 실행 (코루틴 참조 저장)
+                    currentTurnCoroutine = StartCoroutine(ExecuteUnitTurn(currentTurnUnit));
+                    yield return currentTurnCoroutine;
 
-                    currentTurnUnit.turnGauge -= 100.0f;  // 행동 후 게이지 100 소모
+                    // 궁극기로 인한 중단이 아니면 게이지 소모
+                    if (!isUltimateActive)
+                    {
+                        currentTurnUnit.turnGauge -= 100.0f;
+                    }
+                    currentTurnUnit = null;
                 }
             }
 
@@ -280,15 +314,27 @@ public class Turn_Manager : MonoBehaviour
 
             yield return new WaitUntil(() => isTurnEnd);
 
+            Battle_Manager.instance.AddPlayerActivePoint(1);
+
             yield return new WaitForSeconds(1f);  // 임시 대기
         }
         else
         {
-            Debug.Log($"[Enemy Turn] {unit.unitData.unitName} - AI 행동 중 (TODO)");
-            // TODO: 적 AI 행동
-            // - 공격 대상 선택
-            // - 행동 실행
-            yield return new WaitForSeconds(1f);  // 임시 대기
+            Debug.Log($"[Enemy Turn] {unit.unitData.unitName} - AI 행동 중");
+
+            // 적 AI 컴포넌트 가져오기
+            Enemy_AI enemyAI = unit.GetComponent<Enemy_AI>();
+            if (enemyAI != null)
+            {
+                yield return StartCoroutine(enemyAI.ExecuteTurn());
+            }
+            else
+            {
+                Debug.LogWarning($"[Enemy Turn] {unit.unitData.unitName}에 Enemy_AI 컴포넌트가 없습니다!");
+                yield return new WaitForSeconds(1f);
+            }
+
+            Battle_Manager.instance.AddEnemyActivePoint(1);
         }
     }
 
@@ -301,6 +347,9 @@ public class Turn_Manager : MonoBehaviour
         Debug.Log($"[Turn_Manager] {deadUnit.unitData.unitName} 사망 감지");
         Battle_Manager.instance.RemoveUnitFromBattle(deadUnit);
         shouldCheckBattleEnd = true;  // 다음 프레임에 승패 체크
+
+        // 턴 게이지 UI에서 아이콘 제거
+        Battle_UI_Manager.instance?.turnGaugeUI?.RemoveIcon(deadUnit);
     }
     /// <summary>
     /// 결과 단계 처리
@@ -310,5 +359,84 @@ public class Turn_Manager : MonoBehaviour
     {
         Debug.Log("Result Phase Started");
         Battle_Manager.instance.OnBattleEnd();
+    }
+
+    /// <summary>
+    /// 궁극기 발동 - 현재 턴을 중단하고 즉시 해당 유닛의 궁극기 턴 시작
+    /// </summary>
+    public void ActivateUltimate(Unit unit)
+    {
+        if (isUltimateActive) return;  // 이미 궁극기 진행 중이면 무시
+        if (currentTurnUnit != null && !currentTurnUnit.isPlayerUnit)   return; // 적 유닛은 궁극기 사용 불가
+
+        Debug.Log($"[Ultimate] {unit.unitData.unitName} 궁극기 발동!");
+
+        // 1. 현재 턴 코루틴 중단
+        if (currentTurnCoroutine != null)
+            StopCoroutine(currentTurnCoroutine);
+
+        // 2. 중단된 유닛 저장 및 메뉴 숨김
+        interruptedTurnUnit = currentTurnUnit;
+        if (currentTurnUnit != null && currentTurnUnit.actionMenuUI != null)
+            currentTurnUnit.actionMenuUI.HideAllMenus();
+
+        // 3. Action Controller 하이라이트 클리어
+        actionController.ClearAllHighlights();
+
+        // 4. 궁극기 모드 설정
+        isUltimateActive = true;
+
+        // 5. 해당 유닛의 궁극기 턴 즉시 시작
+        StartCoroutine(ExecuteUltimateTurn(unit));
+    }
+
+    /// <summary>
+    /// 궁극기 턴 실행 코루틴
+    /// </summary>
+    private IEnumerator ExecuteUltimateTurn(Unit unit)
+    {
+        Debug.Log($"[Ultimate Turn] {unit.unitData.unitName} 궁극기 턴 시작!");
+
+        // 궁극기 전용 액션 컨트롤러 시작
+        actionController.StartUltimateTurn(unit);
+
+        // 궁극기 실행 완료 대기 (isTurnEnd로 체크)
+        isTurnEnd = false;
+        yield return new WaitUntil(() => isTurnEnd);
+
+        Debug.Log($"[Ultimate Turn] {unit.unitData.unitName} 궁극기 턴 종료!");
+
+        yield return new WaitForSeconds(0.5f);  // 잠시 대기
+
+        // 중단된 유닛의 턴 재개
+        if (interruptedTurnUnit != null)
+        {
+            Debug.Log($"[Ultimate] {interruptedTurnUnit.unitData.unitName}의 턴 재개!");
+            Unit resumeUnit = interruptedTurnUnit;
+            interruptedTurnUnit = null;
+            isUltimateActive = false;
+
+            // 중단된 유닛의 턴 다시 시작
+            isTurnEnd = false;
+            currentTurnCoroutine = StartCoroutine(ExecuteUnitTurn(resumeUnit));
+            yield return new WaitUntil(() => isTurnEnd);
+
+            // 턴 완료 후 게이지 소모
+            resumeUnit.turnGauge -= 100.0f;
+        }
+        else
+        {
+            interruptedTurnUnit = null;
+            isUltimateActive = false;
+            Debug.Log("[Ultimate] 메인 루프로 복귀");
+        }
+    }
+
+    /// <summary>
+    /// 궁극기 완료 콜백 - Action_Controller에서 호출 (더 이상 사용하지 않음)
+    /// </summary>
+    public void OnUltimateComplete()
+    {
+        // isTurnEnd = true로 처리됨
     }
 }

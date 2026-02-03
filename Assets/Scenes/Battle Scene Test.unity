@@ -150,8 +150,8 @@ Transform:
   m_Children:
   - {fileID: 344488814}
   - {fileID: 330585546}
-  - {fileID: 554410774}
-  - {fileID: 2115236621}
+  - {fileID: 964878566}
+  - {fileID: 1775648391}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &28973728
@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 28973732}
   - component: {fileID: 28973731}
   - component: {fileID: 28973730}
+  - component: {fileID: 28973734}
   m_Layer: 9
   m_Name: Enemy_Tile_0_3
   m_TagString: Untagged
@@ -311,6 +312,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &28973734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28973728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 1.58989, y: 0.0001, z: 5.3300695}
 --- !u!1 &50624661
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +338,7 @@ GameObject:
   - component: {fileID: 50624665}
   - component: {fileID: 50624664}
   - component: {fileID: 50624663}
+  - component: {fileID: 50624667}
   m_Layer: 9
   m_Name: Enemy_Tile_1_4
   m_TagString: Untagged
@@ -468,6 +483,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &50624667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50624661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 2.98989, y: 0.0001, z: 6.73007}
 --- !u!1 &114738586
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +616,7 @@ GameObject:
   - component: {fileID: 143427162}
   - component: {fileID: 143427161}
   - component: {fileID: 143427160}
+  - component: {fileID: 143427164}
   m_Layer: 9
   m_Name: Player_Tile_3_0
   m_TagString: Untagged
@@ -732,6 +761,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &143427164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143427158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -2.2501101, y: 0.0001, z: 1.13007}
 --- !u!1 &144145204
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +894,7 @@ GameObject:
   - component: {fileID: 148391082}
   - component: {fileID: 148391081}
   - component: {fileID: 148391080}
+  - component: {fileID: 148391084}
   m_Layer: 9
   m_Name: Player_Tile_4_1
   m_TagString: Untagged
@@ -996,6 +1039,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &148391084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148391078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -0.85011005, y: 0.0001, z: 2.5300698}
 --- !u!1 &204574717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +1065,7 @@ GameObject:
   - component: {fileID: 204574721}
   - component: {fileID: 204574720}
   - component: {fileID: 204574719}
+  - component: {fileID: 204574723}
   m_Layer: 9
   m_Name: Player_Tile_3_1
   m_TagString: Untagged
@@ -1153,6 +1210,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &204574723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204574717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -2.2501101, y: 0.0001, z: 2.5300698}
 --- !u!1 &226883133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1450,7 @@ GameObject:
   - component: {fileID: 270242916}
   - component: {fileID: 270242915}
   - component: {fileID: 270242914}
+  - component: {fileID: 270242918}
   m_Layer: 9
   m_Name: Enemy_Tile_2_2
   m_TagString: Untagged
@@ -1524,6 +1595,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &270242918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270242912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 4.3898897, y: 0.0001, z: 3.93007}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ada2b170db4aba24181e878b702c8495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
-  boardCam: {fileID: 554410778}
+  boardCam: {fileID: 964878568}
   boardPriority: 10
   focusPriority: 20
   canFocus: 1
@@ -1928,6 +2012,7 @@ GameObject:
   - component: {fileID: 366836462}
   - component: {fileID: 366836461}
   - component: {fileID: 366836460}
+  - component: {fileID: 366836464}
   m_Layer: 9
   m_Name: Enemy_Tile_2_4
   m_TagString: Untagged
@@ -2072,6 +2157,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &366836464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366836458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 4.3898897, y: 0.0001, z: 6.73007}
 --- !u!1 &380342629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2192,6 +2290,7 @@ GameObject:
   - component: {fileID: 386831750}
   - component: {fileID: 386831749}
   - component: {fileID: 386831748}
+  - component: {fileID: 386831752}
   m_Layer: 9
   m_Name: Enemy_Tile_2_0
   m_TagString: Untagged
@@ -2336,6 +2435,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &386831752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386831746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 4.3898897, y: 0.0001, z: 1.13007}
 --- !u!1 &407612196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,6 +2833,7 @@ GameObject:
   - component: {fileID: 480550014}
   - component: {fileID: 480550013}
   - component: {fileID: 480550012}
+  - component: {fileID: 480550016}
   m_Layer: 9
   m_Name: Enemy_Tile_4_4
   m_TagString: Untagged
@@ -2865,6 +2978,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &480550016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480550010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 7.1898894, y: 0.0001, z: 6.73007}
 --- !u!1 &492285284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2878,6 +3004,7 @@ GameObject:
   - component: {fileID: 492285288}
   - component: {fileID: 492285287}
   - component: {fileID: 492285286}
+  - component: {fileID: 492285290}
   m_Layer: 9
   m_Name: Player_Tile_0_0
   m_TagString: Untagged
@@ -3022,6 +3149,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &492285290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492285284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -6.45011, y: 0.0001, z: 1.13007}
 --- !u!1 &496598174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3035,6 +3175,7 @@ GameObject:
   - component: {fileID: 496598178}
   - component: {fileID: 496598177}
   - component: {fileID: 496598176}
+  - component: {fileID: 496598180}
   m_Layer: 9
   m_Name: Player_Tile_0_4
   m_TagString: Untagged
@@ -3179,6 +3320,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &496598180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496598174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -6.45011, y: 0.0001, z: 6.73007}
 --- !u!1 &498286159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,6 +3346,7 @@ GameObject:
   - component: {fileID: 498286163}
   - component: {fileID: 498286162}
   - component: {fileID: 498286161}
+  - component: {fileID: 498286165}
   m_Layer: 9
   m_Name: Player_Tile_2_1
   m_TagString: Untagged
@@ -3336,6 +3491,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &498286165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498286159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -3.65011, y: 0.0001, z: 2.5300698}
 --- !u!1 &530497486
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,6 +3647,7 @@ GameObject:
   - component: {fileID: 548654503}
   - component: {fileID: 548654502}
   - component: {fileID: 548654501}
+  - component: {fileID: 548654505}
   m_Layer: 9
   m_Name: Player_Tile_0_2
   m_TagString: Untagged
@@ -3623,112 +3792,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &554410773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 554410774}
-  - component: {fileID: 554410778}
-  - component: {fileID: 554410775}
-  m_Layer: 0
-  m_Name: MainCinemachineCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &554410774
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554410773}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 1.6, y: 5.2, z: -5.63}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9462221}
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!114 &554410775
+--- !u!114 &548654505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554410773}
+  m_GameObject: {fileID: 548654499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42b412c75a6821b4682298956106daa8, type: 3}
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainCameraController
-  cameraTransform: {fileID: 554410774}
-  vcam: {fileID: 554410778}
-  lookAtTarget: {fileID: 2115236621}
-  horizontalSensitivity: 0.004
-  verticalSensitivity: 0.01
-  minX: -6
-  maxX: 7
-  minYOffset: -2
-  maxYOffset: 2
-  minY: 0.5
-  zoomSensitivity: 0.03
-  zoomInY: 1
-  zoomOutY: 4
-  zoomInZ: 1
-  zoomOutZ: -4
-  positionDamping: 5
-  rotationDamping: 5
-  zoomDamping: 5
---- !u!114 &554410778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554410773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
-  Priority:
-    Enabled: 1
-    m_Value: 10
-  OutputChannel: 1
-  StandbyUpdate: 2
-  m_StreamingVersion: 20241001
-  m_LegacyPriority: 0
-  Target:
-    TrackingTarget: {fileID: 0}
-    LookAtTarget: {fileID: 0}
-    CustomLookAtTarget: 0
-  Lens:
-    FieldOfView: 60
-    OrthographicSize: 5
-    NearClipPlane: 0.3
-    FarClipPlane: 1000
-    Dutch: 0
-    ModeOverride: 0
-    PhysicalProperties:
-      GateFit: 2
-      SensorSize: {x: 21.946, y: 16.002}
-      LensShift: {x: 0, y: 0}
-      FocusDistance: 10
-      Iso: 200
-      ShutterSpeed: 0.005
-      Aperture: 16
-      BladeCount: 5
-      Curvature: {x: 2, y: 11}
-      BarrelClipping: 0.25
-      Anamorphism: 0
-  BlendHint: 0
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -6.45011, y: 0.0001, z: 3.93007}
 --- !u!1 &589426724
 GameObject:
   m_ObjectHideFlags: 0
@@ -3742,6 +3818,7 @@ GameObject:
   - component: {fileID: 589426728}
   - component: {fileID: 589426727}
   - component: {fileID: 589426726}
+  - component: {fileID: 589426730}
   m_Layer: 9
   m_Name: Player_Tile_4_2
   m_TagString: Untagged
@@ -3886,6 +3963,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &589426730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589426724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -0.85011005, y: 0.0001, z: 3.93007}
 --- !u!1 &595873233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3899,6 +3989,7 @@ GameObject:
   - component: {fileID: 595873237}
   - component: {fileID: 595873236}
   - component: {fileID: 595873235}
+  - component: {fileID: 595873239}
   m_Layer: 9
   m_Name: Player_Tile_1_1
   m_TagString: Untagged
@@ -4043,6 +4134,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &595873239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595873233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -5.05011, y: 0.0001, z: 2.5300698}
 --- !u!1 &596845576
 GameObject:
   m_ObjectHideFlags: 0
@@ -4056,6 +4160,7 @@ GameObject:
   - component: {fileID: 596845580}
   - component: {fileID: 596845579}
   - component: {fileID: 596845578}
+  - component: {fileID: 596845582}
   m_Layer: 9
   m_Name: Enemy_Tile_0_2
   m_TagString: Untagged
@@ -4200,6 +4305,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &596845582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596845576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 1.58989, y: 0.0001, z: 3.93007}
 --- !u!1 &600465458
 GameObject:
   m_ObjectHideFlags: 0
@@ -4213,6 +4331,7 @@ GameObject:
   - component: {fileID: 600465462}
   - component: {fileID: 600465461}
   - component: {fileID: 600465460}
+  - component: {fileID: 600465464}
   m_Layer: 9
   m_Name: Enemy_Tile_1_1
   m_TagString: Untagged
@@ -4357,6 +4476,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &600465464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600465458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 2.98989, y: 0.0001, z: 2.5300698}
 --- !u!1 &604792050
 GameObject:
   m_ObjectHideFlags: 0
@@ -4370,6 +4502,7 @@ GameObject:
   - component: {fileID: 604792054}
   - component: {fileID: 604792053}
   - component: {fileID: 604792052}
+  - component: {fileID: 604792056}
   m_Layer: 9
   m_Name: Player_Tile_4_0
   m_TagString: Untagged
@@ -4514,6 +4647,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &604792056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604792050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -0.85011005, y: 0.0001, z: 1.13007}
 --- !u!1 &629177026
 GameObject:
   m_ObjectHideFlags: 0
@@ -4634,6 +4780,7 @@ GameObject:
   - component: {fileID: 635916126}
   - component: {fileID: 635916125}
   - component: {fileID: 635916124}
+  - component: {fileID: 635916128}
   m_Layer: 9
   m_Name: Enemy_Tile_4_0
   m_TagString: Untagged
@@ -4778,6 +4925,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &635916128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635916122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 7.1898894, y: 0.0001, z: 1.13007}
 --- !u!1 &643918374
 GameObject:
   m_ObjectHideFlags: 0
@@ -4898,6 +5058,7 @@ GameObject:
   - component: {fileID: 683675882}
   - component: {fileID: 683675881}
   - component: {fileID: 683675880}
+  - component: {fileID: 683675884}
   m_Layer: 9
   m_Name: Player_Tile_0_3
   m_TagString: Untagged
@@ -5042,6 +5203,71 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &683675884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683675878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -6.45011, y: 0.0001, z: 5.3300695}
+--- !u!1 &687887168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 687887170}
+  - component: {fileID: 687887169}
+  m_Layer: 0
+  m_Name: VFX_Manager (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &687887169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687887168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfbff7d8b39e754f843c79723a2363e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VFX_Manager
+  preloadEffects:
+  - {fileID: 6310398124603915433, guid: 04ae43b09d07f98479db08bc215441af, type: 3}
+  - {fileID: 6094103258328896732, guid: 40301bfc90627dd45a8cce0760dd5e70, type: 3}
+  - {fileID: 4753295997710515804, guid: 6bdfac951eb77494db80ea057f068a30, type: 3}
+  - {fileID: 7085911728022251758, guid: 9e1118675165ea74487633e3f7206250, type: 3}
+  initialPoolSize: 3
+  damageTextPrefab: {fileID: 7903815272837281176, guid: 48e33879b8758f141b149f58d9894ec1, type: 3}
+  damageTextPoolSize: 30
+--- !u!4 &687887170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687887168}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &765617256
 GameObject:
   m_ObjectHideFlags: 0
@@ -5055,6 +5281,7 @@ GameObject:
   - component: {fileID: 765617260}
   - component: {fileID: 765617259}
   - component: {fileID: 765617258}
+  - component: {fileID: 765617262}
   m_Layer: 9
   m_Name: Player_Tile_3_4
   m_TagString: Untagged
@@ -5199,6 +5426,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &765617262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765617256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -2.2501101, y: 0.0001, z: 6.73007}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5261,6 +5501,7 @@ GameObject:
   - component: {fileID: 838729395}
   - component: {fileID: 838729394}
   - component: {fileID: 838729393}
+  - component: {fileID: 838729397}
   m_Layer: 9
   m_Name: Player_Tile_2_4
   m_TagString: Untagged
@@ -5405,6 +5646,98 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &838729397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838729391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -3.65011, y: 0.0001, z: 6.73007}
+--- !u!1 &844774487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 844774490}
+  - component: {fileID: 844774489}
+  - component: {fileID: 844774488}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &844774488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844774487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &844774489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844774487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &844774490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844774487}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &847880366
 GameObject:
   m_ObjectHideFlags: 0
@@ -5418,6 +5751,7 @@ GameObject:
   - component: {fileID: 847880370}
   - component: {fileID: 847880369}
   - component: {fileID: 847880368}
+  - component: {fileID: 847880372}
   m_Layer: 9
   m_Name: Enemy_Tile_1_2
   m_TagString: Untagged
@@ -5562,6 +5896,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &847880372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847880366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 2.98989, y: 0.0001, z: 3.93007}
 --- !u!1 &852595409
 GameObject:
   m_ObjectHideFlags: 0
@@ -5575,6 +5922,7 @@ GameObject:
   - component: {fileID: 852595413}
   - component: {fileID: 852595412}
   - component: {fileID: 852595411}
+  - component: {fileID: 852595415}
   m_Layer: 9
   m_Name: Enemy_Tile_3_1
   m_TagString: Untagged
@@ -5719,6 +6067,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &852595415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852595409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 5.78989, y: 0.0001, z: 2.5300698}
 --- !u!1 &885149225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5732,6 +6093,7 @@ GameObject:
   - component: {fileID: 885149229}
   - component: {fileID: 885149228}
   - component: {fileID: 885149227}
+  - component: {fileID: 885149231}
   m_Layer: 9
   m_Name: Player_Tile_3_3
   m_TagString: Untagged
@@ -5876,6 +6238,85 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &885149231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885149225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -2.2501101, y: 0.0001, z: 5.3300695}
+--- !u!1001 &897692576
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1597274008}
+    m_Modifications:
+    - target: {fileID: 216218293846935926, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_Name
+      value: Hong Yeon (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.86602545
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.49999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+--- !u!4 &897692577 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+  m_PrefabInstance: {fileID: 897692576}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &925496099
 GameObject:
   m_ObjectHideFlags: 0
@@ -5907,6 +6348,112 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &964878565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 964878566}
+  - component: {fileID: 964878568}
+  - component: {fileID: 964878567}
+  m_Layer: 0
+  m_Name: MainCinemachineCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &964878566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964878565}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
+  m_LocalPosition: {x: 1.6, y: 5.2, z: -5.63}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9462221}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!114 &964878567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964878565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b412c75a6821b4682298956106daa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainCameraController
+  cameraTransform: {fileID: 964878566}
+  vcam: {fileID: 964878568}
+  lookAtTarget: {fileID: 1775648391}
+  horizontalSensitivity: 0.004
+  verticalSensitivity: 0.01
+  minX: -6
+  maxX: 7
+  minYOffset: -2
+  maxYOffset: 2
+  minY: 0.5
+  zoomSensitivity: 0.03
+  zoomInY: 1
+  zoomOutY: 4
+  zoomInZ: 1
+  zoomOutZ: -4
+  positionDamping: 5
+  rotationDamping: 5
+  zoomDamping: 5
+--- !u!114 &964878568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964878565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 1
+    m_Value: 10
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
 --- !u!1 &990985038
 GameObject:
   m_ObjectHideFlags: 0
@@ -5920,6 +6467,7 @@ GameObject:
   - component: {fileID: 990985042}
   - component: {fileID: 990985041}
   - component: {fileID: 990985040}
+  - component: {fileID: 990985044}
   m_Layer: 9
   m_Name: Enemy_Tile_3_4
   m_TagString: Untagged
@@ -6064,6 +6612,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &990985044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990985038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 5.78989, y: 0.0001, z: 6.73007}
 --- !u!1 &1008203415
 GameObject:
   m_ObjectHideFlags: 0
@@ -6077,6 +6638,7 @@ GameObject:
   - component: {fileID: 1008203419}
   - component: {fileID: 1008203418}
   - component: {fileID: 1008203417}
+  - component: {fileID: 1008203421}
   m_Layer: 9
   m_Name: Player_Tile_2_2
   m_TagString: Untagged
@@ -6221,6 +6783,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1008203421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008203415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -3.65011, y: 0.0001, z: 3.93007}
 --- !u!1 &1014318878
 GameObject:
   m_ObjectHideFlags: 0
@@ -6234,6 +6809,7 @@ GameObject:
   - component: {fileID: 1014318882}
   - component: {fileID: 1014318881}
   - component: {fileID: 1014318880}
+  - component: {fileID: 1014318884}
   m_Layer: 9
   m_Name: Player_Tile_1_0
   m_TagString: Untagged
@@ -6378,6 +6954,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1014318884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014318878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -5.05011, y: 0.0001, z: 1.13007}
 --- !u!1 &1027333561
 GameObject:
   m_ObjectHideFlags: 0
@@ -6391,6 +6980,7 @@ GameObject:
   - component: {fileID: 1027333565}
   - component: {fileID: 1027333564}
   - component: {fileID: 1027333563}
+  - component: {fileID: 1027333567}
   m_Layer: 9
   m_Name: Player_Tile_1_4
   m_TagString: Untagged
@@ -6535,6 +7125,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1027333567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027333561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -5.05011, y: 0.0001, z: 6.73007}
 --- !u!1 &1031368552
 GameObject:
   m_ObjectHideFlags: 0
@@ -6548,6 +7151,7 @@ GameObject:
   - component: {fileID: 1031368556}
   - component: {fileID: 1031368555}
   - component: {fileID: 1031368554}
+  - component: {fileID: 1031368558}
   m_Layer: 9
   m_Name: Enemy_Tile_4_3
   m_TagString: Untagged
@@ -6692,6 +7296,50 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1031368558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031368552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 7.1898894, y: 0.0001, z: 5.3300695}
+--- !u!1 &1044253933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1044253934}
+  m_Layer: 0
+  m_Name: -----------------UI ---------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1044253934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044253933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.12011, y: -0, z: 1.13007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1050135121
 GameObject:
   m_ObjectHideFlags: 0
@@ -6705,6 +7353,7 @@ GameObject:
   - component: {fileID: 1050135125}
   - component: {fileID: 1050135124}
   - component: {fileID: 1050135123}
+  - component: {fileID: 1050135127}
   m_Layer: 9
   m_Name: Enemy_Tile_3_0
   m_TagString: Untagged
@@ -6849,6 +7498,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1050135127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050135121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 5.78989, y: 0.0001, z: 1.13007}
 --- !u!1 &1058239212
 GameObject:
   m_ObjectHideFlags: 0
@@ -6862,6 +7524,7 @@ GameObject:
   - component: {fileID: 1058239216}
   - component: {fileID: 1058239215}
   - component: {fileID: 1058239214}
+  - component: {fileID: 1058239218}
   m_Layer: 9
   m_Name: Player_Tile_4_4
   m_TagString: Untagged
@@ -7006,6 +7669,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1058239218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058239212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -0.85011005, y: 0.0001, z: 6.73007}
 --- !u!1 &1058958039
 GameObject:
   m_ObjectHideFlags: 0
@@ -7126,6 +7802,7 @@ GameObject:
   - component: {fileID: 1110861306}
   - component: {fileID: 1110861305}
   - component: {fileID: 1110861304}
+  - component: {fileID: 1110861308}
   m_Layer: 9
   m_Name: Enemy_Tile_2_3
   m_TagString: Untagged
@@ -7270,6 +7947,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1110861308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110861302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 4.3898897, y: 0.0001, z: 5.3300695}
 --- !u!1 &1125838618
 GameObject:
   m_ObjectHideFlags: 0
@@ -7314,6 +8004,7 @@ GameObject:
   - component: {fileID: 1129310946}
   - component: {fileID: 1129310945}
   - component: {fileID: 1129310944}
+  - component: {fileID: 1129310948}
   m_Layer: 9
   m_Name: Enemy_Tile_0_4
   m_TagString: Untagged
@@ -7458,6 +8149,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1129310948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129310942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 1.58989, y: 0.0001, z: 6.73007}
 --- !u!1 &1144444304
 GameObject:
   m_ObjectHideFlags: 0
@@ -7685,6 +8389,7 @@ GameObject:
   - component: {fileID: 1171389979}
   - component: {fileID: 1171389978}
   - component: {fileID: 1171389977}
+  - component: {fileID: 1171389981}
   m_Layer: 9
   m_Name: Enemy_Tile_4_2
   m_TagString: Untagged
@@ -7829,6 +8534,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1171389981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171389975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 7.1898894, y: 0.0001, z: 3.93007}
 --- !u!1 &1188574307
 GameObject:
   m_ObjectHideFlags: 0
@@ -8197,6 +8915,7 @@ GameObject:
   - component: {fileID: 1344783742}
   - component: {fileID: 1344783741}
   - component: {fileID: 1344783740}
+  - component: {fileID: 1344783744}
   m_Layer: 9
   m_Name: Enemy_Tile_1_0
   m_TagString: Untagged
@@ -8341,6 +9060,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1344783744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344783738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 2.98989, y: 0.0001, z: 1.13007}
 --- !u!1 &1348622437
 GameObject:
   m_ObjectHideFlags: 0
@@ -8354,6 +9086,7 @@ GameObject:
   - component: {fileID: 1348622441}
   - component: {fileID: 1348622440}
   - component: {fileID: 1348622439}
+  - component: {fileID: 1348622443}
   m_Layer: 9
   m_Name: Player_Tile_2_0
   m_TagString: Untagged
@@ -8498,6 +9231,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1348622443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348622437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -3.65011, y: 0.0001, z: 1.13007}
 --- !u!1 &1369006857
 GameObject:
   m_ObjectHideFlags: 0
@@ -8511,6 +9257,7 @@ GameObject:
   - component: {fileID: 1369006861}
   - component: {fileID: 1369006860}
   - component: {fileID: 1369006859}
+  - component: {fileID: 1369006863}
   m_Layer: 9
   m_Name: Enemy_Tile_0_1
   m_TagString: Untagged
@@ -8655,6 +9402,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1369006863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369006857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 1.58989, y: 0.0001, z: 2.5300698}
 --- !u!1 &1409100911
 GameObject:
   m_ObjectHideFlags: 0
@@ -8775,6 +9535,7 @@ GameObject:
   - component: {fileID: 1432124983}
   - component: {fileID: 1432124982}
   - component: {fileID: 1432124981}
+  - component: {fileID: 1432124985}
   m_Layer: 9
   m_Name: Player_Tile_0_1
   m_TagString: Untagged
@@ -8919,6 +9680,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1432124985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432124979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -6.45011, y: 0.0001, z: 2.5300698}
 --- !u!1 &1447520126
 GameObject:
   m_ObjectHideFlags: 0
@@ -8932,6 +9706,7 @@ GameObject:
   - component: {fileID: 1447520130}
   - component: {fileID: 1447520129}
   - component: {fileID: 1447520128}
+  - component: {fileID: 1447520132}
   m_Layer: 9
   m_Name: Enemy_Tile_1_3
   m_TagString: Untagged
@@ -9076,6 +9851,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1447520132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447520126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 2.98989, y: 0.0001, z: 5.3300695}
 --- !u!1 &1468312941
 GameObject:
   m_ObjectHideFlags: 0
@@ -9089,6 +9877,7 @@ GameObject:
   - component: {fileID: 1468312945}
   - component: {fileID: 1468312944}
   - component: {fileID: 1468312943}
+  - component: {fileID: 1468312947}
   m_Layer: 9
   m_Name: Enemy_Tile_2_1
   m_TagString: Untagged
@@ -9233,6 +10022,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1468312947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468312941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 4.3898897, y: 0.0001, z: 2.5300698}
 --- !u!1 &1525741679
 GameObject:
   m_ObjectHideFlags: 0
@@ -9246,6 +10048,7 @@ GameObject:
   - component: {fileID: 1525741683}
   - component: {fileID: 1525741682}
   - component: {fileID: 1525741681}
+  - component: {fileID: 1525741685}
   m_Layer: 9
   m_Name: Player_Tile_3_2
   m_TagString: Untagged
@@ -9390,6 +10193,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1525741685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525741679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -2.2501101, y: 0.0001, z: 3.93007}
 --- !u!1 &1590471531
 GameObject:
   m_ObjectHideFlags: 0
@@ -9403,6 +10219,7 @@ GameObject:
   - component: {fileID: 1590471535}
   - component: {fileID: 1590471534}
   - component: {fileID: 1590471533}
+  - component: {fileID: 1590471537}
   m_Layer: 9
   m_Name: Player_Tile_4_3
   m_TagString: Untagged
@@ -9547,6 +10364,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1590471537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590471531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -0.85011005, y: 0.0001, z: 5.3300695}
 --- !u!1 &1597274007
 GameObject:
   m_ObjectHideFlags: 0
@@ -9560,13 +10390,14 @@ GameObject:
   - component: {fileID: 1597274011}
   - component: {fileID: 1597274010}
   - component: {fileID: 1597274009}
+  - component: {fileID: 1597274013}
   m_Layer: 9
   m_Name: Enemy_Tile_0_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1597274008
 Transform:
   m_ObjectHideFlags: 0
@@ -9579,7 +10410,8 @@ Transform:
   m_LocalPosition: {x: 1.58989, y: 0.0001, z: 1.13007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 897692577}
   m_Father: {fileID: 531974469}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!54 &1597274009
@@ -9704,6 +10536,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1597274013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597274007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 1.58989, y: 0.0001, z: 1.13007}
 --- !u!1 &1606452683
 GameObject:
   m_ObjectHideFlags: 0
@@ -9717,6 +10562,7 @@ GameObject:
   - component: {fileID: 1606452687}
   - component: {fileID: 1606452686}
   - component: {fileID: 1606452685}
+  - component: {fileID: 1606452689}
   m_Layer: 9
   m_Name: Enemy_Tile_4_1
   m_TagString: Untagged
@@ -9861,6 +10707,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1606452689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606452683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 7.1898894, y: 0.0001, z: 2.5300698}
 --- !u!1 &1624766429
 GameObject:
   m_ObjectHideFlags: 0
@@ -9981,6 +10840,7 @@ GameObject:
   - component: {fileID: 1651090298}
   - component: {fileID: 1651090297}
   - component: {fileID: 1651090296}
+  - component: {fileID: 1651090300}
   m_Layer: 9
   m_Name: Enemy_Tile_3_3
   m_TagString: Untagged
@@ -10125,6 +10985,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1651090300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651090294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 5.78989, y: 0.0001, z: 5.3300695}
 --- !u!1 &1685505778
 GameObject:
   m_ObjectHideFlags: 0
@@ -10339,6 +11212,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1775648390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1775648391}
+  m_Layer: 0
+  m_Name: LookAtPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1775648391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775648390}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.6, y: -1, z: 7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9462221}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799544952
 GameObject:
   m_ObjectHideFlags: 0
@@ -10553,6 +11457,63 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1001 &1848232883
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 216218293846935926, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_Name
+      value: Hong Yeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9659258
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2588191
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713058677970949879, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a664d413da27d49438557b6b0cd92dfd, type: 3}
 --- !u!1 &1848794310
 GameObject:
   m_ObjectHideFlags: 0
@@ -10694,6 +11655,7 @@ GameObject:
   - component: {fileID: 1869022484}
   - component: {fileID: 1869022483}
   - component: {fileID: 1869022482}
+  - component: {fileID: 1869022486}
   m_Layer: 9
   m_Name: Player_Tile_1_2
   m_TagString: Untagged
@@ -10838,6 +11800,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1869022486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869022480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -5.05011, y: 0.0001, z: 3.93007}
 --- !u!1 &1892866201
 GameObject:
   m_ObjectHideFlags: 0
@@ -10851,6 +11826,7 @@ GameObject:
   - component: {fileID: 1892866205}
   - component: {fileID: 1892866204}
   - component: {fileID: 1892866203}
+  - component: {fileID: 1892866207}
   m_Layer: 9
   m_Name: Player_Tile_1_3
   m_TagString: Untagged
@@ -10995,6 +11971,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1892866207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892866201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -5.05011, y: 0.0001, z: 5.3300695}
 --- !u!1 &1923060218
 GameObject:
   m_ObjectHideFlags: 0
@@ -11008,6 +11997,7 @@ GameObject:
   - component: {fileID: 1923060222}
   - component: {fileID: 1923060221}
   - component: {fileID: 1923060220}
+  - component: {fileID: 1923060224}
   m_Layer: 9
   m_Name: Enemy_Tile_3_2
   m_TagString: Untagged
@@ -11152,6 +12142,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1923060224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923060218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: 5.78989, y: 0.0001, z: 3.93007}
 --- !u!1 &1981824119
 GameObject:
   m_ObjectHideFlags: 0
@@ -11376,6 +12379,7 @@ GameObject:
   - component: {fileID: 2040142124}
   - component: {fileID: 2040142123}
   - component: {fileID: 2040142122}
+  - component: {fileID: 2040142126}
   m_Layer: 9
   m_Name: Player_Tile_2_3
   m_TagString: Untagged
@@ -11520,6 +12524,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2040142126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040142120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f5e754787bd941ae7a36530af7796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldPositionDisplay
+  worldPosition: {x: -3.65011, y: 0.0001, z: 5.3300695}
 --- !u!1 &2047146468
 GameObject:
   m_ObjectHideFlags: 0
@@ -11911,37 +12928,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &2115236620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2115236621}
-  m_Layer: 0
-  m_Name: LookAtPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2115236621
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115236620}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6, y: -1, z: 7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9462221}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -11951,8 +12937,12 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 2033914083}
   - {fileID: 1125838619}
+  - {fileID: 1044253934}
+  - {fileID: 844774490}
   - {fileID: 925496100}
   - {fileID: 334692314}
   - {fileID: 2073291981}
   - {fileID: 1244995557}
   - {fileID: 467555203}
+  - {fileID: 1848232883}
+  - {fileID: 687887170}

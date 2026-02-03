@@ -230,7 +230,7 @@ public static class Method
         if(currentTile.isPlayerTile)
             return attackableTiles;
         // 유닛 타입에 따라 타일 배열 선택
-        Tile[,] tiles = unit.isPlayerUnit
+        Tile[,] tiles = !unit.isPlayerUnit
             ? Battle_Manager.instance.playerTiles
             : Battle_Manager.instance.enemyTiles;
 
@@ -255,6 +255,7 @@ public static class Method
     public static List<Tile> GetTilesAreaTarget(Tile currentTile, List<Vector2Int> area, Tile[,] tiles)
     {
         List<Tile> areaTiles = new List<Tile>();
+        areaTiles.Add(currentTile); // 중심 타일 포함
         foreach (var offset in area)
         {
             Vector2Int targetPos = currentTile.GridPosition + offset;

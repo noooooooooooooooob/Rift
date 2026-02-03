@@ -26,7 +26,7 @@ public class SkillData : ScriptableObject
     public Sprite icon;
 
     [Header("Costs & Cooldown")]
-    public int cost;           // SP 소모량
+    public int cost;           // AP 소모량
 
     [Header("Range & Target")]
     public SkillTargetType skillTargetType; // 스킬 사거리 타입

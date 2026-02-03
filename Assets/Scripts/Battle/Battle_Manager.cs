@@ -17,6 +17,10 @@ public class Battle_Manager : MonoBehaviour
     public Tile[,] enemyTiles;
     public List<Unit> playerUnits;  // 플레이어 유닛 목록
     public List<Unit> enemyUnits;  // 적 유닛 목록
+    public List<Active_Point> playerActivePoints;
+    public List<Active_Point> enemyActivePoints;
+    public int playerActivePoint = 2;
+    public int enemyActivePoint = 2;
     public Button gameEndButton;
 
     /// <summary>
@@ -35,6 +39,7 @@ public class Battle_Manager : MonoBehaviour
         playerTiles = new Tile[GridWidth, GridHeight];
         enemyTiles = new Tile[GridWidth, GridHeight];
         tileInit();
+        UpdateActivePoints();
     }
 
     /// <summary>
@@ -99,6 +104,52 @@ public class Battle_Manager : MonoBehaviour
             {
                 Debug.LogWarning($"[Battle_Manager] Attempted to remove {unit.unitData.unitName} from enemyUnits, but it was not found.");
             }
+        }
+    }
+
+    public void AddPlayerActivePoint(int amount)
+    {
+        playerActivePoint += amount;
+        if (playerActivePoint > playerActivePoints.Count)
+            playerActivePoint = playerActivePoints.Count;
+        UpdateActivePoints();
+    }
+    public void AddEnemyActivePoint(int amount)
+    {
+        enemyActivePoint += amount;
+        if (enemyActivePoint > enemyActivePoints.Count)
+            enemyActivePoint = enemyActivePoints.Count;
+        UpdateActivePoints();
+    }
+    public bool UsePlayerActivePoint(int amount)
+    {
+        if(playerActivePoint >= amount)
+        {
+            playerActivePoint -= amount;
+            UpdateActivePoints();
+            return true;
+        }
+        return false;
+    }
+    public bool UseEnemyActivePoint(int amount)
+    {
+        if (enemyActivePoint >= amount)
+        {
+            enemyActivePoint -= amount;
+            UpdateActivePoints();
+            return true;
+        }
+        return false;
+    }
+    public void UpdateActivePoints()
+    {
+        for (int i = 0; i < playerActivePoints.Count; i++)
+        {
+            playerActivePoints[i].SetActivePoint(i < playerActivePoint);
+        }
+        for (int i = 0; i < enemyActivePoints.Count; i++)
+        {
+            enemyActivePoints[i].SetActivePoint(i < enemyActivePoint);
         }
     }
 

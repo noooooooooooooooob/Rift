@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuffData
   buffName: test
   description: test
-  icon: {fileID: 0}
-  duration: 0
-  maxStacks: 1
-  effects:
-  - {fileID: 11400000, guid: 8683e45657dfac64cb456cb10ad5363d, type: 2}
+  icon: {fileID: 21300000, guid: f52252dbaa1a10348820ab607ab2ff27, type: 3}
+  duration: 3
+  maxStacks: 3
+  effects: []

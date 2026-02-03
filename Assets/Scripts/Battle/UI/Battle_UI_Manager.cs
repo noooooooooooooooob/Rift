@@ -17,6 +17,23 @@ public class Battle_UI_Manager : MonoBehaviour
     public Turn_Gauge turnGaugeUI;
     public RectTransform[] playerUI_Anchors; // 플레이어 유닛 UI 앵커들
     public RectTransform[] enemyUI_Anchors;  // 적 유닛 UI
+    public Unit_Description unitDescriptionUI;
+    private bool isClickInteractable = false;
+    public bool IsClickInteractable
+    {
+        get
+        {
+            return isClickInteractable;
+        }
+        set
+        {
+            isClickInteractable = value;
+            if(isClickInteractable == false)
+            {
+                HideUnitDescription();
+            }
+        }
+    }
     void Awake()
     {
         if(instance == null)
@@ -63,6 +80,16 @@ public class Battle_UI_Manager : MonoBehaviour
                 unit.uiAnchor.gameObject.SetActive(false);
             }
         }
+    }
+    public void ShowUnitDescription(Unit unit)
+    {
+        if(!isClickInteractable)
+            return;
+        unitDescriptionUI.ShowDescription(unit);
+    }
+    public void HideUnitDescription()
+    {
+        unitDescriptionUI.HideDescription();
     }
 
     public void OnBattlePhaseStart()

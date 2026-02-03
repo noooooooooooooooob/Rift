@@ -42,11 +42,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Effect
-    uniqueID: 2716787287
+  - name: Unit_AfterImage
+    uniqueID: 4139823177
     locked: 0
   - name: Unit
     uniqueID: 3625989031
+    locked: 0
+  - name: Effect
+    uniqueID: 2716787287
+    locked: 0
+  - name: UI
+    uniqueID: 387441235
     locked: 0
   m_RenderingLayers:
   - Default

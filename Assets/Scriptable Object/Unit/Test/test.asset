@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: test
   description: test
+  icon: {fileID: 0}
   cost: 0
+  skillTargetType: 0
   targetType: 0
-  range: 3
-  minRange: 0
   area: []

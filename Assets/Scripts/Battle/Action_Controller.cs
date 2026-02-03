@@ -123,18 +123,15 @@ public class Action_Controller : MonoBehaviour
         // 호버 하이라이트 처리
         if (hoveredTile != currentHoveredTile)
         {
-            // 이전 타일 하이라이트 복원
-            if (hoveredTile != null)
-            {
-                RestoreTileHighlight(hoveredTile);
-            }
+            // 이전 공격 범위 하이라이트 제거
+            ClearAvailableTiles();
 
             hoveredTile = currentHoveredTile;
 
-            // 새 타일 하이라이트
+            // 새 타일이 선택 가능한 타일이면 공격 범위 표시
             if (hoveredTile != null && highlightedTiles.Contains(hoveredTile))
             {
-                hoveredTile.SetHighlight(HighlightType.Deployment);
+                ShowAttackRangeOnHover();
             }
         }
 
@@ -184,8 +181,6 @@ public class Action_Controller : MonoBehaviour
             actionMenuUI.downButton.onClick.AddListener(OnDownButton);
         if (actionMenuUI.confirmButton != null)
             actionMenuUI.confirmButton.onClick.AddListener(OnConfirmAction);
-        if (actionMenuUI.cancelButton != null)
-            actionMenuUI.cancelButton.onClick.AddListener(OnCancelAction);
 
         // Return 패널의 버튼 리스너
         if (actionMenuUI.returnButton != null)
@@ -204,8 +199,6 @@ public class Action_Controller : MonoBehaviour
             actionMenuUI.downButton.onClick.RemoveListener(OnDownButton);
         if (actionMenuUI.confirmButton != null)
             actionMenuUI.confirmButton.onClick.RemoveListener(OnConfirmAction);
-        if (actionMenuUI.cancelButton != null)
-            actionMenuUI.cancelButton.onClick.RemoveListener(OnCancelAction);
         if (actionMenuUI.returnButton != null)
             actionMenuUI.returnButton.onClick.RemoveListener(OnCancelAction);
     }
@@ -232,14 +225,66 @@ public class Action_Controller : MonoBehaviour
         }
     }
 
-    private void ShowAttackableTiles()
+    private void ShowAttackAvailableTiles()
     {
         ClearHighlights();
+
+        // 모든 적 타일을 선택 가능 타일로 표시
         foreach (var tile in Battle_Manager.instance.enemyTiles)
         {
             tile.SetHighlight(HighlightType.Attackable);
             highlightedTiles.Add(tile);
         }
+    }
+
+    private void ShowAttackRangeOnHover()
+    {
+        if (currentMode == ActionType.Move) return;
+
+        // currentMode에 따라 적절한 스킬 데이터 선택
+        SkillData skillData = null;
+        switch (currentMode)
+        {
+            case ActionType.Attack:
+                skillData = currentUnit.attackAction?.attackSkillData;
+                break;
+            case ActionType.Skill1:
+                skillData = currentUnit.skill1Action?.skill1Data;
+                break;
+            case ActionType.Skill2:
+                skillData = currentUnit.skill2Action?.skill2Data;
+                break;
+            case ActionType.Ultimate:
+                skillData = currentUnit.ultimateAction?.ultimateSkillData;
+                break;
+        }
+
+        if (skillData == null) return;
+
+        // 호버된 타일 기준 실제 공격 범위 표시
+        List<Tile> tiles = Method.GetAttackableTiles(currentUnit, skillData, hoveredTile);
+        foreach (var tile in tiles)
+        {
+            tile.SetHighlight(HighlightType.Deployment);
+            availableTiles.Add(tile);
+        }
+    }
+
+    private void ClearAvailableTiles()
+    {
+        foreach (var tile in availableTiles)
+        {
+            // highlightedTiles에 포함되어 있으면 원래 하이라이트로 복원
+            if (highlightedTiles.Contains(tile))
+            {
+                tile.SetHighlight(HighlightType.Attackable);
+            }
+            else
+            {
+                tile.SetHighlight(HighlightType.None);
+            }
+        }
+        availableTiles.Clear();
     }
 
     private void HandleTileClick(Tile tile)
@@ -292,7 +337,7 @@ public class Action_Controller : MonoBehaviour
         actionMenuUI.HideAllMenus();
 
         currentUnit.moveAction.MoveToTile(tile);
-        yield return new WaitForSeconds(currentUnit.moveAction.animationDuration);
+        yield return new WaitUntil(() => !currentUnit.unitAnimation.isMoving);
         turnManager.isTurnEnd = true;
     }
 
@@ -301,13 +346,17 @@ public class Action_Controller : MonoBehaviour
         if (tile == null || !highlightedTiles.Contains(tile))
             yield break;
 
+        List<Tile> attackableTiles = Method.GetAttackableTiles(currentUnit, currentUnit.attackAction.attackSkillData, tile);
+
+        // 타겟 유닛이 없으면 실행 안함
+        if (!attackableTiles.Exists(t => t.occupant != null))
+            yield break;
+
         ClearHighlights();
         actionMenuUI.HideAllMenus();
 
-        List<Tile> attackableTiles = Method.GetAttackableTiles(currentUnit, currentUnit.attackAction.attackSkillData, tile);
-
-        currentUnit.attackAction.ExecuteAttack(attackableTiles);
-        yield return new WaitForSeconds(currentUnit.attackAction.animationDuration);
+        StartCoroutine(currentUnit.attackAction.ExecuteAttack(attackableTiles));
+        yield return new WaitUntil(() => !currentUnit.unitAnimation.isAttacking);
         turnManager.isTurnEnd = true;
     }
 
@@ -316,9 +365,18 @@ public class Action_Controller : MonoBehaviour
         if (tile == null || !highlightedTiles.Contains(tile))
             yield break;
 
+        List<Tile> attackableTiles = Method.GetAttackableTiles(currentUnit, currentUnit.skill1Action.skill1Data, tile);
+
+        // 타겟 유닛이 없으면 실행 안함
+        if (!attackableTiles.Exists(t => t.occupant != null))
+            yield break;
+
         ClearHighlights();
-        actionMenuUI.HideReturnMenu();
-        actionMenuUI.ShowActionMenu();
+        actionMenuUI.HideAllMenus();
+
+        // StartCoroutine(currentUnit.skill1Action.ExecuteSkill1(attackableTiles));
+        yield return new WaitUntil(() => !currentUnit.unitAnimation.isAttacking);
+        turnManager.isTurnEnd = true;
         yield return null;
     }
 
@@ -327,9 +385,19 @@ public class Action_Controller : MonoBehaviour
         if (tile == null || !highlightedTiles.Contains(tile))
             yield break;
 
+        List<Tile> attackableTiles = Method.GetAttackableTiles(currentUnit, currentUnit.skill2Action.skill2Data, tile);
+
+        // 타겟 유닛이 없으면 실행 안함
+        if (!attackableTiles.Exists(t => t.occupant != null))
+            yield break;
+
         ClearHighlights();
-        actionMenuUI.HideReturnMenu();
-        actionMenuUI.ShowActionMenu();
+        actionMenuUI.HideAllMenus();
+
+        StartCoroutine(currentUnit.skill2Action.ExecuteAttack(attackableTiles));
+        yield return new WaitUntil(() => !currentUnit.unitAnimation.isAttacking);
+        turnManager.isTurnEnd = true;
+
         yield return null;
     }
 
@@ -346,10 +414,29 @@ public class Action_Controller : MonoBehaviour
         if (tile == null || !highlightedTiles.Contains(tile))
             yield break;
 
+        // 궁극기 스킬 실행
+        List<Tile> attackableTiles = Method.GetAttackableTiles(
+            currentUnit,
+            currentUnit.ultimateAction.ultimateSkillData,
+            tile
+        );
+
+        // 타겟 유닛이 없으면 실행 안함
+        if (!attackableTiles.Exists(t => t.occupant != null))
+            yield break;
+
         ClearHighlights();
-        actionMenuUI.HideReturnMenu();
-        actionMenuUI.ShowActionMenu();
-        yield return null;
+        actionMenuUI.HideAllMenus();
+
+        currentUnit.ultimateAction.ExecuteUltimate(attackableTiles);
+        yield return new WaitUntil(() => !currentUnit.unitAnimation.isAttacking);
+
+        // Return 버튼 다시 활성화
+        if (actionMenuUI.returnButton != null)
+            actionMenuUI.returnButton.gameObject.SetActive(true);
+
+        // 궁극기 턴 종료 (Turn_Manager가 원래 유닛 턴 재개 처리)
+        turnManager.isTurnEnd = true;
     }
 
     private void ClearHighlights()
@@ -367,31 +454,11 @@ public class Action_Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 타일의 원래 하이라이트 복원
+    /// 외부에서 호출 가능한 하이라이트 클리어
     /// </summary>
-    private void RestoreTileHighlight(Tile tile)
+    public void ClearAllHighlights()
     {
-        if (!highlightedTiles.Contains(tile))
-        {
-            tile.SetHighlight(HighlightType.None);
-            return;
-        }
-
-        // currentMode에 따라 원래 색상 복원
-        switch (currentMode)
-        {
-            case ActionType.Move:
-                tile.SetHighlight(HighlightType.Movable);
-                break;
-            case ActionType.Attack:
-                tile.SetHighlight(HighlightType.Attackable);
-                break;
-            case ActionType.Skill1:
-            case ActionType.Skill2:
-            case ActionType.Ultimate:
-                tile.SetHighlight(HighlightType.Attackable);
-                break;
-        }
+        ClearHighlights();
     }
 
     // 위 버튼 클릭
@@ -417,6 +484,8 @@ public class Action_Controller : MonoBehaviour
     {
         if (currentUnit == null || actionMenuUI == null) return;
 
+        Battle_UI_Manager.instance.IsClickInteractable = false;
+
         ActionType selectedAction = actionMenuUI.GetCurrentActionType();
         Debug.Log($"Confirm action: {selectedAction}");
 
@@ -430,13 +499,13 @@ public class Action_Controller : MonoBehaviour
                 ShowMovableTiles();
                 break;
             case ActionType.Attack:
-                ShowAttackableTiles();
+                ShowAttackAvailableTiles();
                 break;
             case ActionType.Skill1:
-                ShowAttackableTiles();
+                ShowAttackAvailableTiles();
                 break;
             case ActionType.Skill2:
-                ShowAttackableTiles();
+                ShowAttackAvailableTiles();
                 break;
             case ActionType.Guard:
                 // 방어는 즉시 실행 (타일 선택 불필요)
@@ -451,7 +520,7 @@ public class Action_Controller : MonoBehaviour
                     actionMenuUI.ShowActionMenu();
                     return;
                 }
-                ShowAttackableTiles();
+                ShowAttackAvailableTiles();
                 break;
         }
     }
@@ -468,8 +537,34 @@ public class Action_Controller : MonoBehaviour
     // 취소 버튼 - 타일 선택 모드에서 메뉴로 복귀
     public void OnCancelAction()
     {
+        // 궁극기 모드에서는 취소 불가
+        if (currentMode == ActionType.Ultimate)
+            return;
+
+        Battle_UI_Manager.instance.IsClickInteractable = true;
+
         ClearHighlights();
         actionMenuUI.HideReturnMenu();
         actionMenuUI.ShowActionMenu();
+    }
+
+    /// <summary>
+    /// 궁극기 전용 턴 시작 (취소 불가)
+    /// </summary>
+    public void StartUltimateTurn(Unit unit)
+    {
+        currentUnit = unit;
+        actionMenuUI = currentUnit.actionMenuUI;
+        currentMode = ActionType.Ultimate;
+
+        // 메뉴 숨기고 바로 타일 선택 모드
+        actionMenuUI.HideAllMenus();
+        ShowAttackAvailableTiles();
+
+        // Return 버튼 비활성화 (취소 불가)
+        if (actionMenuUI.returnButton != null)
+            actionMenuUI.returnButton.gameObject.SetActive(false);
+        
+        
     }
 }

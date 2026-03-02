@@ -7,7 +7,9 @@
       "Bash(powershell -Command:*)",
       "Bash(git checkout:*)",
       "Bash(perl -i -p0e:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(Select-String \"Amatsu_\")",
+      "Bash(Sort-Object -Unique)"
     ]
   }
 }

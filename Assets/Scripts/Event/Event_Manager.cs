@@ -57,7 +57,7 @@ public class Event_Manager : MonoBehaviour
             descriptionText.text = eventData.description;
 
         // 선택지 버튼 설정
-        for (int i = choiceButtons.Length - 1; i >= 0; i--)
+        for (int i = 0; i < choiceButtons.Length; i++)
         {
             if (i < eventData.choices.Length)
             {
@@ -73,25 +73,42 @@ public class Event_Manager : MonoBehaviour
                 choiceButtons[i].gameObject.SetActive(false);
             }
         }
-        for(int i = eventData.choices.Length; i < choiceButtons.Length; i++)
-        {
-            choiceButtons[i].gameObject.SetActive(false);
-        }
     }
 
     public void OnChoiceSelected(int choiceIndex)
     {
         if (currentEvent == null || choiceIndex >= currentEvent.choices.Length) return;
-        
-        for(int i = 0; i < choiceButtons.Length; i++)
+
+        // 선택지 버튼 숨김
+        for (int i = 0; i < choiceButtons.Length; i++)
         {
             choiceButtons[i].gameObject.SetActive(false);
         }
-        descriptionText.text = currentEvent.endDescription;
-        eventImage.sprite = currentEvent.endImage;
 
         EventChoice choice = currentEvent.choices[choiceIndex];
-        ApplyEffect(choice.effectType, choice.value);
+
+        // 비용 먼저 적용 (무조건)
+        if (choice.costType != EventEffectType.None)
+        {
+            ApplyEffect(choice.costType, choice.costValue);
+        }
+
+        // 확률 판정
+        bool isSuccess = Random.value <= choice.successRate;
+
+        if (isSuccess)
+        {
+            // 성공
+            descriptionText.text = choice.successText;
+            ApplyEffect(choice.successEffectType, choice.successValue);
+        }
+        else
+        {
+            // 실패
+            descriptionText.text = choice.failText;
+            ApplyEffect(choice.failEffectType, choice.failValue);
+        }
+
         endButton.gameObject.SetActive(true);
     }
 
@@ -110,6 +127,9 @@ public class Event_Manager : MonoBehaviour
                 break;
             case EventEffectType.DamageFixed:
                 Party_Manager.instance.DamagePartyFixed(value);
+                break;
+            case EventEffectType.Gold:
+                Party_Manager.instance.GainMoney(value);
                 break;
             case EventEffectType.None:
             default:

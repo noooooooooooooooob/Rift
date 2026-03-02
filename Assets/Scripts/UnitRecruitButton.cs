@@ -22,6 +22,7 @@ public class UnitRecruitButton : MonoBehaviour
     private const int MAX_PARTY_SIZE = 3;
     private bool isSelected = false;
     public List<Transform> spawnPoints;
+    public Character_Select_Scene_Manager characterSelectSceneManager;
     void Start()
     {
         button.onClick.AddListener(OnButtonClicked);
@@ -52,6 +53,7 @@ public class UnitRecruitButton : MonoBehaviour
         {
             AddToParty();
         }
+        characterSelectSceneManager.CheckCanContinue();
     }
 
     /// <summary>

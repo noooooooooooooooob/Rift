@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using System;
 
 /// <summary>
 /// 유닛을 클릭 가능하게 만드는 컴포넌트
@@ -8,6 +9,8 @@ using Unity.Cinemachine;
 /// </summary>
 public class UnitClickable : MonoBehaviour, IClickable
 {
+    public Action<Unit> onClickCallback;
+
     /// <summary>
     /// 유닛 클릭 시 호출
     /// 카메라를 해당 유닛에 포커스하고 UI 패널 표시 (TODO)
@@ -16,6 +19,13 @@ public class UnitClickable : MonoBehaviour, IClickable
     {
         Debug.Log($"Clicked on unit: {gameObject.name}");
 
-        Battle_UI_Manager.instance.ShowUnitDescription(GetComponent<Unit>());
+        if (onClickCallback != null)
+        {
+            onClickCallback.Invoke(GetComponent<Unit>());
+            return;
+        }
+
+        if(Battle_UI_Manager.instance != null)
+            Battle_UI_Manager.instance.ShowUnitDescription(GetComponent<Unit>());
     }
 }

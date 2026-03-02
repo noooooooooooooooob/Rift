@@ -149,8 +149,8 @@ public class Deployment_Controller : MonoBehaviour
 
             if (tile != null && CanPlaceOnTile(tile))
             {
-                // 타일 위치로 스냅
-                draggingUnit.transform.position = tile.WorldPosition;
+                // 타일 위치로 스냅 (유닛 오프셋 적용)
+                draggingUnit.transform.position = tile.WorldPosition + draggingUnit.unitOffset;
                 UpdateHoverTile(tile);
                 return;
             }
@@ -221,8 +221,8 @@ public class Deployment_Controller : MonoBehaviour
     /// </summary>
     void PlaceUnit(Unit unit, Tile tile)
     {
-        // 유닛을 타일에 배치
-        unit.transform.position = tile.WorldPosition;
+        // 유닛을 타일에 배치 (유닛 오프셋 적용)
+        unit.transform.position = tile.WorldPosition + unit.unitOffset;
         unit.currentTile = tile;
         tile.occupant = unit.gameObject;
 

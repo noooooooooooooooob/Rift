@@ -130,6 +130,38 @@ public class EffectHandler : MonoBehaviour
         buffContainerUI?.ClearAll();
     }
 
+    /// <summary>
+    /// 전투 버프만 제거 (Stage, Permanent는 유지)
+    /// </summary>
+    public void ClearBattleBuffs()
+    {
+        for (int i = activeBuffs.Count - 1; i >= 0; i--)
+        {
+            if (activeBuffs[i].buffData.buffType == BuffType.Battle)
+            {
+                activeBuffs[i].buffData.RemovePassiveEffects(unit, activeBuffs[i].stacks);
+                activeBuffs.RemoveAt(i);
+            }
+        }
+        buffContainerUI?.RefreshBuffs();
+    }
+
+    /// <summary>
+    /// 스테이지 버프 제거 (Permanent는 유지)
+    /// </summary>
+    public void ClearStageBuffs()
+    {
+        for (int i = activeBuffs.Count - 1; i >= 0; i--)
+        {
+            if (activeBuffs[i].buffData.buffType == BuffType.Stage)
+            {
+                activeBuffs[i].buffData.RemovePassiveEffects(unit, activeBuffs[i].stacks);
+                activeBuffs.RemoveAt(i);
+            }
+        }
+        buffContainerUI?.RefreshBuffs();
+    }
+
     public bool HasBuff(BuffData buffData)
     {
         return activeBuffs.Exists(b => b.buffData == buffData);

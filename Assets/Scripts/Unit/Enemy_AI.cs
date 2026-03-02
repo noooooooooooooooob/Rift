@@ -11,6 +11,8 @@ using System.Transactions;
 public class Enemy_AI : MonoBehaviour
 {
     public Unit unit;
+    List<Tile> movableTiles = new List<Tile>();
+    List<Tile> attackableTiles = new List<Tile>();
     [Header("AI Settings")]
     public float actionDelay = 0.5f;  // 행동 간 딜레이
     [Header("Action")]
@@ -38,49 +40,65 @@ public class Enemy_AI : MonoBehaviour
     /// <summary>
     /// AI 턴 실행 (코루틴)
     /// </summary>
-    public IEnumerator ExecuteTurn()
+    public virtual IEnumerator ExecuteTurn()
     {
         Debug.Log($"[Enemy_AI] {unit.unitData.unitName} AI 턴 시작");
 
         yield return new WaitForSeconds(actionDelay);
 
-        Unit target = FindBestTarget();
         while (true)
         {
             int ran = Random.Range(0, (int)weightSum);
             if(ran < attackWeight && canAttack)
             {
-                if(unit.attackAction.attackSkillData.cost > Battle_Manager.instance.enemyActivePoint)   continue;
-                // 공격
+                if(unit.attackAction.attackSkillData.cost > Battle_Manager.instance.enemyActivePoint) continue;
+
+                // 공격 - 스킬 타겟 타입에 따라 타겟 선택
+                Unit target = FindTarget(unit.attackAction.attackSkillData);
                 if (target != null)
                 {
-                    yield return ExecuteAttack(target);
+                    attackableTiles = Method.GetAttackableTiles(unit, unit.attackAction.attackSkillData, target.currentTile);
+                    HighlightTiles(attackableTiles, HighlightType.Attackable);
+                    yield return new WaitForSeconds(0.3f);
+                    yield return unit.attackAction.ExecuteAttack(attackableTiles);
+                    ClearHighlights(attackableTiles);
                     break;
                 }
             }
             else if(ran < attackWeight + moveWeight && canMove)
             {
                 // 이동
-                if (target != null)
+                movableTiles = Method.GetMovableTiles(unit, unit.stats.AGI);
+                if (movableTiles.Count > 0)
                 {
-                    yield return ExecuteMove(target);
+                    int ranidx = Random.Range(0, movableTiles.Count);
+                    Tile bestTile = movableTiles[ranidx];
+                    unit.moveAction.MoveToTile(bestTile);
                     break;
                 }
             }
             else if(ran < attackWeight + moveWeight + skill1Weight && canUseSkill1)
             {
-                if(unit.skill1Action.skill1Data.cost > Battle_Manager.instance.enemyActivePoint)   continue;
-                // 스킬1 사용
+                if(unit.skill1Action.skill1Data.cost > Battle_Manager.instance.enemyActivePoint) continue;
+
+                // 스킬1 - 스킬 타겟 타입에 따라 타겟 선택
+                Unit target = FindTarget(unit.skill1Action.skill1Data);
                 if (target != null)
                 {
-                    yield return ExecuteSkill1(target);
+                    attackableTiles = Method.GetAttackableTiles(unit, unit.skill1Action.skill1Data, target.currentTile);
+                    HighlightTiles(attackableTiles, HighlightType.Attackable);
+                    yield return new WaitForSeconds(0.3f);
+                    yield return unit.skill1Action.ExecuteSkill1(attackableTiles);
+                    ClearHighlights(attackableTiles);
                     break;
                 }
             }
             else if(ran < attackWeight + moveWeight + skill1Weight + skill2Weight && canUseSkill2)
             {
-                if(unit.skill2Action.skill2Data.cost > Battle_Manager.instance.enemyActivePoint)   continue;
-                // 스킬2 사용
+                if(unit.skill2Action.skill2Data.cost > Battle_Manager.instance.enemyActivePoint) continue;
+
+                // 스킬2 - 스킬 타겟 타입에 따라 타겟 선택
+                Unit target = FindTarget(unit.skill2Action.skill2Data);
                 if (target != null)
                 {
                     yield return ExecuteSkill2(target);
@@ -90,7 +108,7 @@ public class Enemy_AI : MonoBehaviour
             else if(ran < attackWeight + moveWeight + skill1Weight + skill2Weight + guardWeight && canGuard)
             {
                 // 가드
-                yield return ExecuteGuard();
+                unit.guardAction.ExecuteGuard();
                 break;
             }
         }
@@ -100,10 +118,31 @@ public class Enemy_AI : MonoBehaviour
     }
 
     /// <summary>
-    /// 최적의 공격 타겟 선택
-    /// 우선순위: 가장 HP가 낮은 유닛
+    /// 스킬 타겟 타입에 따른 타겟 선택
     /// </summary>
-    private Unit FindBestTarget()
+    protected Unit FindTarget(SkillData skillData)
+    {
+        List<Unit> targets;
+
+        // 스킬의 targetType에 따라 타겟 목록 결정
+        if (skillData.targetType == targetType.Enemy || skillData.targetType == targetType.Self)
+            targets = Battle_Manager.instance.enemyUnits;  // 아군 (적 유닛들)
+        else
+            targets = Battle_Manager.instance.playerUnits; // 적 (플레이어 유닛들)
+
+        targets = targets.Where(u => u != null && !u.isDead).ToList();
+
+        if (targets.Count == 0)
+            return null;
+
+        int randomIndex = Random.Range(0, targets.Count);
+        return targets[randomIndex];
+    }
+
+    /// <summary>
+    /// 최적의 공격 타겟 선택 (기본: 플레이어 유닛)
+    /// </summary>
+    protected Unit FindBestTarget()
     {
         List<Unit> playerUnits = Battle_Manager.instance.playerUnits
             .Where(u => u != null && !u.isDead)
@@ -112,62 +151,8 @@ public class Enemy_AI : MonoBehaviour
         if (playerUnits.Count == 0)
             return null;
 
-        // HP가 가장 낮은 유닛 선택
-        Unit weakestTarget = playerUnits
-            .OrderBy(u => u.currentHP)
-            .FirstOrDefault();
-
-        return weakestTarget;
-    }
-
-    /// <summary>
-    /// 공격 실행
-    /// </summary>
-    private IEnumerator ExecuteAttack(Unit target)
-    {
-        if (unit.attackAction == null)
-        {
-            Debug.LogWarning($"[Enemy_AI] {unit.unitData.unitName} attackAction이 없습니다!");
-            yield break;
-        }
-
-        // 공격 애니메이션 재생
-        if (unit.unitAnimation != null)
-        {
-            // unit.unitAnimation.PlayAttackAnimation();
-        }
-
-        yield return new WaitForSeconds(0.3f);
-
-        // 데미지 계산 및 적용
-        int damage = Method.CalculateDamage(unit, target);
-
-        // 명중 판정
-        if (Method.IsHit(unit, target))
-        {
-            target.TakeDamage(damage);
-            Debug.Log($"[Enemy_AI] {target.unitData.unitName}에게 {damage} 데미지!");
-        }
-        else
-        {
-            Debug.Log($"[Enemy_AI] {target.unitData.unitName} 회피!");
-        }
-
-        yield return new WaitForSeconds(0.5f);
-    }
-
-    private IEnumerator ExecuteSkill1(Unit target)
-    {
-        if (unit.skill1Action == null)
-        {
-            Debug.LogWarning($"[Enemy_AI] {unit.unitData.unitName} skill1Action이 없습니다!");
-            yield break;
-        }
-
-        // 스킬1 사용 로직 (임시)
-        Debug.Log($"[Enemy_AI] {unit.unitData.unitName}가 스킬1을 사용합니다!");
-
-        yield return new WaitForSeconds(0.5f);
+        int randomIndex = Random.Range(0, playerUnits.Count);
+        return playerUnits[randomIndex];
     }
     private IEnumerator ExecuteSkill2(Unit target)
     {
@@ -197,43 +182,18 @@ public class Enemy_AI : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
     }
-
-    /// <summary>
-    /// 타겟 방향으로 이동
-    /// </summary>
-    private IEnumerator ExecuteMove(Unit target)
+    private void HighlightTiles(List<Tile> tiles, HighlightType highlightType)
     {
-        if (unit.moveAction == null)
+        foreach (var tile in tiles)
         {
-            Debug.LogWarning($"[Enemy_AI] {unit.unitData.unitName} moveAction이 없습니다!");
-            yield break;
+            tile.SetHighlight(highlightType);
         }
-
-        // 이동 가능한 타일 목록
-        List<Tile> movableTiles = Method.GetMovableTiles(unit, unit.stats.AGI);
-
-        if (movableTiles.Count == 0)
+    }
+    private void ClearHighlights(List<Tile> tiles)
+    {
+        foreach (var tile in tiles)
         {
-            Debug.Log($"[Enemy_AI] {unit.unitData.unitName} 이동 가능한 타일 없음");
-            yield break;
-        }
-
-        int randomIdx = Random.Range(0, movableTiles.Count);
-        Tile bestTile = movableTiles[randomIdx];
-
-        if (bestTile != null)
-        {
-            unit.moveAction.MoveToTile(bestTile);
-
-            // 이동 애니메이션 대기
-            if (unit.unitAnimation != null)
-            {
-                yield return new WaitUntil(() => !unit.unitAnimation.isMoving);
-            }
-            else
-            {
-                yield return new WaitForSeconds(0.5f);
-            }
+            tile.SetHighlight(HighlightType.None);
         }
     }
 }

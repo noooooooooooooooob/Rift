@@ -7,7 +7,7 @@ public class Unit_Attack : MonoBehaviour
     public Unit unit;
     public SkillData attackSkillData; // 기본 공격 스킬 데이터
     
-    List<Unit> targetUnits = new List<Unit>();
+    protected List<Unit> targetUnits = new List<Unit>();
 
     private void Awake()
     {
@@ -17,6 +17,11 @@ public class Unit_Attack : MonoBehaviour
 
     public virtual IEnumerator ExecuteAttack(List<Tile> tiles)
     {
+        if (tiles == null || tiles.Count == 0)
+        {
+            Debug.LogWarning("공격할 타일이 없습니다!");
+            yield break;
+        }
         if (attackSkillData == null)
         {
             Debug.LogWarning("기본 공격 스킬 데이터가 할당되지 않았습니다!");
@@ -37,10 +42,13 @@ public class Unit_Attack : MonoBehaviour
             }
         }
 
+        // OnAttack 트리거
+        unit.effectHandler?.OnAttack(targetUnits.Count > 0 ? targetUnits[0] : null);
+
         yield return StartCoroutine(unit.unitAnimation.PlayAttackAnimation(tiles[0].transform));
         unit.AddUP(1);
     }
-    public void Attack()
+    public virtual void Attack()
     {
         foreach (var targetUnit in targetUnits)
         {
@@ -48,8 +56,12 @@ public class Unit_Attack : MonoBehaviour
             {
                 int damage = Method.CalculateDamage(unit, targetUnit, 1.0f);
                 targetUnit.TakeDamage(damage);
+
+                // OnHit 트리거
+                unit.effectHandler?.OnHit(targetUnit, damage);
+
                 unit.Heal(damage / 10);
-                Method.CalculateLifeSteal(unit, damage);
+                unit.Heal(Method.CalculateLifeSteal(unit, damage));
             }
         }
     }

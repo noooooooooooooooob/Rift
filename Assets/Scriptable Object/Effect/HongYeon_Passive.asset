@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8f2dfa50a16264ba1d7ea33f38eee6, type: 3}
+  m_Name: HongYeon_Passive
+  m_EditorClassIdentifier: Assembly-CSharp::HPBasedLSEffect
+  effectName: "\uD761\uD608\uAC08\uB9DD"
+  description: "\uD604\uC81C\uCCB4\uB825\uACFC \uCD5C\uB300\uCCB4\uB825\uC5D0 \uBE44\uB840\uD574
+    LS\uAC00 0~30% \uAE4C\uC9C0 \uC99D\uAC00\uD55C\uB2E4."
+  trigger: 41
+  icon: {fileID: 0}
+  maxBonus: 0.3
+  savedBonus: 0

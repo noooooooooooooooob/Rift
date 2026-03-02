@@ -1,6 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum BuffType
+{
+    Battle,     // 전투 중에만 (전투 끝나면 제거)
+    Stage,      // 스테이지 동안 (여러 전투 유지)
+    Permanent   // 영구 (유닛 고유 패시브)
+}
+
 /// <summary>
 /// 버프/디버프 데이터
 /// 지속 시간과 여러 이펙트를 가짐
@@ -14,6 +21,7 @@ public class BuffData : ScriptableObject
     public Sprite icon;
 
     [Header("Buff Settings")]
+    public BuffType buffType = BuffType.Battle;  // 버프 지속 타입
     public int duration;            // 지속 턴 수 (0 = 영구)
     public int maxStacks = 1;       // 최대 중첩 수
 
@@ -29,7 +37,7 @@ public class BuffData : ScriptableObject
         {
             foreach (var effect in effects)
             {
-                if (effect != null && effect.Trigger == EffectTrigger.Passive)
+                if (effect != null && effect.Trigger.HasFlag(EffectTrigger.Passive))
                 {
                     effect.Apply(unit);
                 }
@@ -46,7 +54,7 @@ public class BuffData : ScriptableObject
         {
             foreach (var effect in effects)
             {
-                if (effect != null && effect.Trigger == EffectTrigger.Passive)
+                if (effect != null && effect.Trigger.HasFlag(EffectTrigger.Passive))
                 {
                     effect.Remove(unit);
                 }
@@ -61,7 +69,7 @@ public class BuffData : ScriptableObject
     {
         foreach (var effect in effects)
         {
-            if (effect != null && effect.Trigger == trigger)
+            if (effect != null && effect.Trigger.HasFlag(trigger))
             {
                 effect.Apply(source, target);
             }

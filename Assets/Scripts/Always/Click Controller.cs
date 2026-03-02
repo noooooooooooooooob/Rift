@@ -51,7 +51,8 @@ public class ClickController : MonoBehaviour
                 }
                 else
                 {
-                    Battle_UI_Manager.instance.HideUnitDescription();
+                    if(Battle_UI_Manager.instance != null)
+                        Battle_UI_Manager.instance.HideUnitDescription();
                 }
             }
             

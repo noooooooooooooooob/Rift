@@ -38,7 +38,8 @@ public class Audio_Manager : MonoBehaviour
     {
         get
         {
-            if (instance == null) instance = new Audio_Manager();
+            if (instance == null)
+                instance = FindFirstObjectByType<Audio_Manager>();
             return instance;
         }
     }
@@ -48,6 +49,14 @@ public class Audio_Manager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // 딕셔너리와 리스트 초기화 (다른 스크립트의 Start보다 먼저 실행되도록)
+            clipsDictionary = new Dictionary<string, AudioClip>();
+            foreach (AudioClip clip in preloadClips)
+            {
+                clipsDictionary.Add(clip.name, clip);
+            }
+            instantiatedSounds = new List<TemporarySoundPlayer>();
         }
         else
         {
@@ -56,14 +65,6 @@ public class Audio_Manager : MonoBehaviour
     }
     private void Start()
     {
-        clipsDictionary = new Dictionary<string, AudioClip>();
-        foreach (AudioClip clip in preloadClips)
-        {
-            clipsDictionary.Add(clip.name, clip);
-        }
-
-        instantiatedSounds = new List<TemporarySoundPlayer>();
-
         // 슬라이더의 초기값을 설정
         if (masterSlider != null)
         {
@@ -150,4 +151,9 @@ public class Audio_Manager : MonoBehaviour
         SetVolume(SoundType.SFX, result);
         currentEffectVolume = result;
     }
+
+    // 현재 볼륨 값을 슬라이더 값(0~1)으로 반환
+    public float GetMasterSliderValue() => Mathf.Pow(10, currentMasterVolume / 20);
+    public float GetBGMSliderValue() => Mathf.Pow(10, currentBGMVolume / 20);
+    public float GetSFXSliderValue() => Mathf.Pow(10, currentEffectVolume / 20);
 }

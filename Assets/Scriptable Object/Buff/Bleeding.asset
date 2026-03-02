@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c34aaaa23dd3e04ca41ea5935e51843, type: 3}
+  m_Name: Bleeding
+  m_EditorClassIdentifier: Assembly-CSharp::BuffData
+  buffName: "\uCD9C\uD608"
+  description: "stack \uB9CC\uD07C\uC758 \uACE0\uC815 \uB300\uBBF8\uC9C0\uB97C \uBD80\uC5EC"
+  icon: {fileID: 374495580, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
+  buffType: 0
+  duration: 3
+  maxStacks: 99
+  effects:
+  - {fileID: 11400000, guid: 658e1856aaf1c6040966c2ddceb92637, type: 2}

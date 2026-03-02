@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(fileName = "UnitData", menuName = "Scriptable Objects/UnitData")]
 public class UnitData : ScriptableObject
@@ -16,4 +17,9 @@ public class UnitData : ScriptableObject
 
     [Header("Stats")]
     public UnitStat baseStat;
+
+    [Header("Passive")]
+    public List<BuffData> innatePassives = new List<BuffData>();  // 유닛 고유 패시브
+    public String passiveName;
+    public String passiveDescription;
 }

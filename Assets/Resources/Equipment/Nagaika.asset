@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cf3cb6d14f8d641a5affe751fbfbcc, type: 3}
+  m_Name: Nagaika
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  equipmentName: "\uB098\uAC00\uC774\uCE74"
+  description: "\uD130\uD0A4\uC5D0\uC11C \uC720\uB798\uB41C \uC791\uC740 \uCC44\uCC0D\nATK
+    + 40, SPD + 2"
+  slot: 0
+  icon: {fileID: 21300000, guid: 121d8c460c3b097408dc22eef5199c38, type: 3}
+  price: 42
+  effects:
+  - {fileID: 11400000, guid: ee671c7126617e8469b160c2c0d6a862, type: 2}
+  - {fileID: 11400000, guid: c9091ef71596afc4fa447108c0b33a2a, type: 2}

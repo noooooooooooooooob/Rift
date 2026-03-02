@@ -12,12 +12,13 @@ public class Action_Menu_UI : MonoBehaviour
     public GameObject ReturnMenuPanel;
 
     [Header("Action Display - Icons")]
-    public Image prevActionIcon;      // 위쪽 (이전 액션, 투명)
+    public Image prevActionIcon;      // 위쪽 (다음 액션 표시, 투명)
     public Image currentActionIcon;   // 중앙 (현재 선택)
-    public Image nextActionIcon;      // 아래쪽 (다음 액션, 투명)
+    public Image nextActionIcon;      // 아래쪽 (이전 액션 표시, 투명)
 
     [Header("Action Display - Text")]
     public TMP_Text currentActionName; // 중앙만 텍스트 표시
+    public TMP_Text currentActionShortDescription;
     public TMP_Text actionCostText;
 
     [Header("Navigation Buttons")]
@@ -97,6 +98,19 @@ public class Action_Menu_UI : MonoBehaviour
     }
 
     /// <summary>
+    /// 현재 선택된 액션을 실행할 수 있는지 (Active Point 체크)
+    /// </summary>
+    public bool CanConfirmCurrentAction()
+    {
+        if (actionDataList.Count == 0)
+            return false;
+
+        int cost = actionDataList[currentIndex].actionCost;
+        int currentActivePoint = Battle_Manager.instance.playerActivePoint;
+        return currentActivePoint >= cost;
+    }
+
+    /// <summary>
     /// 다음 액션으로 이동 (아래 방향)
     /// </summary>
     public void SelectNext()
@@ -131,19 +145,19 @@ public class Action_Menu_UI : MonoBehaviour
         // 모든 아이콘 이동 애니메이션
         Sequence sequence = DOTween.Sequence();
 
-        // 위 슬롯: 이동 + 페이드
+        // 위 슬롯 (prevActionIcon은 화면 위쪽): 이동 + 페이드
         if (prevActionIcon != null)
         {
             sequence.Join(prevActionIcon.transform.DOLocalMoveY(
                 prevOriginalPos.y - moveDistance, transitionDuration));
 
-            if (direction > 0) // 아래로 이동 시, 위 슬롯은 사라짐
-            {
-                sequence.Join(prevActionIcon.DOFade(0f, transitionDuration));
-            }
-            else // 위로 이동 시, 위 슬롯은 현재 슬롯이 됨
+            if (direction > 0) // 아래로 이동 시, 위 슬롯은 현재 슬롯이 됨
             {
                 sequence.Join(prevActionIcon.DOFade(1f, transitionDuration));
+            }
+            else // 위로 이동 시, 위 슬롯은 사라짐
+            {
+                sequence.Join(prevActionIcon.DOFade(0f, transitionDuration));
             }
         }
 
@@ -157,19 +171,19 @@ public class Action_Menu_UI : MonoBehaviour
             sequence.Join(currentActionIcon.DOFade(previewAlpha, transitionDuration));
         }
 
-        // 아래 슬롯: 이동 + 페이드
+        // 아래 슬롯 (nextActionIcon은 화면 아래쪽): 이동 + 페이드
         if (nextActionIcon != null)
         {
             sequence.Join(nextActionIcon.transform.DOLocalMoveY(
                 nextOriginalPos.y - moveDistance, transitionDuration));
 
-            if (direction > 0) // 아래로 이동 시, 아래 슬롯은 현재 슬롯이 됨
-            {
-                sequence.Join(nextActionIcon.DOFade(1f, transitionDuration));
-            }
-            else // 위로 이동 시, 아래 슬롯은 사라짐
+            if (direction > 0) // 아래로 이동 시, 아래 슬롯은 사라짐
             {
                 sequence.Join(nextActionIcon.DOFade(0f, transitionDuration));
+            }
+            else // 위로 이동 시, 아래 슬롯은 현재 슬롯이 됨
+            {
+                sequence.Join(nextActionIcon.DOFade(1f, transitionDuration));
             }
         }
 
@@ -210,10 +224,10 @@ public class Action_Menu_UI : MonoBehaviour
         int prevIndex = (currentIndex - 1 + actionDataList.Count) % actionDataList.Count;
         int nextIndex = (currentIndex + 1) % actionDataList.Count;
 
-        // 이전 액션 (위쪽, 투명)
+        // 다음 액션 (위쪽, 투명) - prevActionIcon은 화면 위쪽에 위치
         if (prevActionIcon != null && actionDataList.Count > 1)
         {
-            prevActionIcon.sprite = actionDataList[prevIndex].actionIcon;
+            prevActionIcon.sprite = actionDataList[nextIndex].actionIcon;
             SetImageAlpha(prevActionIcon, previewAlpha);
             prevActionIcon.gameObject.SetActive(true);
         }
@@ -239,10 +253,32 @@ public class Action_Menu_UI : MonoBehaviour
             actionCostText.text = actionDataList[currentIndex].actionCost.ToString();
         }
 
-        // 다음 액션 (아래쪽, 투명)
+        if (currentActionShortDescription != null)
+        {
+            currentActionShortDescription.text = actionDataList[currentIndex].shortDescription;
+        }
+
+        // Active Point 체크하여 Confirm 버튼 활성화/비활성화
+        if (confirmButton != null)
+        {
+            int cost = actionDataList[currentIndex].actionCost;
+            int currentActivePoint = Battle_Manager.instance.playerActivePoint;
+            bool isInteratible = currentActivePoint >= cost;
+            confirmButton.interactable = isInteratible;
+            if (!isInteratible)
+            {
+                actionCostText.color = Color.red;
+            }
+            else
+            {
+                actionCostText.color = Color.white;
+            }
+        }
+
+        // 이전 액션 (아래쪽, 투명) - nextActionIcon은 화면 아래쪽에 위치
         if (nextActionIcon != null && actionDataList.Count > 1)
         {
-            nextActionIcon.sprite = actionDataList[nextIndex].actionIcon;
+            nextActionIcon.sprite = actionDataList[prevIndex].actionIcon;
             SetImageAlpha(nextActionIcon, previewAlpha);
             nextActionIcon.gameObject.SetActive(true);
         }

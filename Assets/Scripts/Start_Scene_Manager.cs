@@ -13,4 +13,9 @@ public class Start_Scene_Manager : MonoBehaviour
             Application.Quit();
         #endif
     }
+    private void Start()
+    {
+        
+        Audio_Manager.Instance.PlaySound("Start Scene BGM",0,true,SoundType.BGM);
+    }
 }

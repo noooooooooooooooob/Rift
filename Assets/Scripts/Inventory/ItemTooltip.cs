@@ -24,6 +24,12 @@ public class ItemTooltip : MonoBehaviour
 
     void Awake()
     {
+        // 이미 instance가 있고 파괴되지 않았으면 중복 방지
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         instance = this;
 
         if (tooltipPanel != null)

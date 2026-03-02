@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76209c3e3e425824cb6d61dbce761e59, type: 3}
+  m_Name: BattleMapData1
+  m_EditorClassIdentifier: Assembly-CSharp::BattleMap
+  enemies:
+  - enemyPrefab: {fileID: 8585327815659334757, guid: f0165be5a524f374bafcf3890d2ddfb3, type: 3}
+    positions: {x: -1, y: -1}
+  - enemyPrefab: {fileID: 3162151923283623944, guid: 725852b8a1a9ef04eac9b706e3812ecd, type: 3}
+    positions: {x: -1, y: -1}
+  awardGold: 99

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12209eee19e5d2149b4b12520f0f9f3b, type: 3}
+  m_Name: Amatsu
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitName: "\uC544\uB9C8\uCE20"
+  unitClass: "\uD574\uC758 \uC5EC\uC2E0"
+  unitDescription: "\uD574\uC5EC"
+  unitTurnGaugePrefab: {fileID: 3832225556833539316, guid: cd6986e97e84b8240894dd6ea92ecc50, type: 3}
+  unitPortrait: {fileID: 21300000, guid: 358b90c3a9399ba4b9a50d4a1f020b35, type: 3}
+  turnGaugeIcon: {fileID: 21300000, guid: 358b90c3a9399ba4b9a50d4a1f020b35, type: 3}
+  baseStat:
+    HP: 7800
+    UP: 0
+    ATK: 864
+    DEF: 43
+    SPD: 15
+    AGI: 3
+    LS: 0
+    RST: 0
+    EV: 0
+    CA: 0
+    DR: 0
+    AP: 0
+  innatePassives: []
+  passiveName: "\uD574\uC758 \uC5EC\uC2E0"
+  passiveDescription: "\uACF5\uACA9 \uC2DC \uD654\uC0C1\uD6A8\uACFC\uB97C \uC801\uACFC
+    \uC790\uC2E0\uC5D0\uAC8C \uBD80\uC5EC\uD55C\uB2E4."

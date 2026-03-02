@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cf3cb6d14f8d641a5affe751fbfbcc, type: 3}
+  m_Name: Sabel
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  equipmentName: "\uC0E4\uBCA0\uB974"
+  description: "\uBCA0\uAE30\uC640 \uCC0C\uB974\uAE30 \uBAA8\uB450 \uB2A5\uD55C \uBB34\uAE30.\nATK
+    + 44"
+  slot: 0
+  icon: {fileID: 21300000, guid: 6b4c4f5f8b3f8814d9c6123e772dafb1, type: 3}
+  price: 30
+  effects:
+  - {fileID: 11400000, guid: 7f20f24ce2190204a9492113f559a20a, type: 2}

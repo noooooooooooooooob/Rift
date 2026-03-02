@@ -31,7 +31,7 @@ public class EquipmentData : ScriptableObject
     {
         foreach (var effect in effects)
         {
-            if (effect != null && effect.Trigger == EffectTrigger.Passive)
+            if (effect != null && effect.Trigger.HasFlag(EffectTrigger.Passive))
             {
                 effect.Apply(unit);
             }
@@ -45,7 +45,7 @@ public class EquipmentData : ScriptableObject
     {
         foreach (var effect in effects)
         {
-            if (effect != null && effect.Trigger == EffectTrigger.Passive)
+            if (effect != null && effect.Trigger.HasFlag(EffectTrigger.Passive))
             {
                 effect.Remove(unit);
             }
@@ -57,6 +57,6 @@ public class EquipmentData : ScriptableObject
     /// </summary>
     public List<EffectData> GetEffectsByTrigger(EffectTrigger trigger)
     {
-        return effects.FindAll(e => e != null && e.Trigger == trigger);
+        return effects.FindAll(e => e != null && e.Trigger.HasFlag(trigger));
     }
 }

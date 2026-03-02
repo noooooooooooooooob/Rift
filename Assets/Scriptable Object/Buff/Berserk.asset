@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c34aaaa23dd3e04ca41ea5935e51843, type: 3}
+  m_Name: Berserk
+  m_EditorClassIdentifier: Assembly-CSharp::BuffData
+  buffName: "\uAD11\uD3ED\uD654"
+  description: "\uACF5\uACA9\uB825 100% \uC99D\uAC00"
+  icon: {fileID: 21300000, guid: d83d96dc65f806549b77002e764a59cd, type: 3}
+  buffType: 0
+  duration: 3
+  maxStacks: 1
+  effects:
+  - {fileID: 11400000, guid: f8b2f642905df2d45b8dde5d4eb95178, type: 2}

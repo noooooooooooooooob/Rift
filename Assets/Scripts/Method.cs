@@ -235,14 +235,17 @@ public static class Method
         List<Tile> attackableTiles = new List<Tile>();
         if (unit.currentTile == null || skillData == null)
             return attackableTiles;
-
-        if(currentTile.isPlayerTile)
-            return attackableTiles;
         // 유닛 타입에 따라 타일 배열 선택
-        Tile[,] tiles = !unit.isPlayerUnit
-            ? Battle_Manager.instance.playerTiles
-            : Battle_Manager.instance.enemyTiles;
+        Tile[,] tiles = skillData.targetType == targetType.Enemy
+            ? Battle_Manager.instance.enemyTiles
+            : Battle_Manager.instance.playerTiles;
 
+        if(skillData.targetType == targetType.Self)
+        {
+            attackableTiles.Add(currentTile);
+            return attackableTiles;
+        }
+        
         switch(skillData.skillTargetType)
         {
             case SkillTargetType.Solo:

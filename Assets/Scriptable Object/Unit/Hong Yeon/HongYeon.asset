@@ -31,3 +31,8 @@ MonoBehaviour:
     CA: 0
     DR: 0
     AP: 0
+  innatePassives:
+  - {fileID: 11400000, guid: aa1f08da0159e8143bac0eb413e20a51, type: 2}
+  passiveName: "\uD761\uD608\uAC08\uB9DD"
+  passiveDescription: "\uD604\uC81C\uCCB4\uB825\uACFC \uCD5C\uB300\uCCB4\uB825\uC5D0
+    \uBE44\uB840\uD574 LS\uAC00 0~30% \uAE4C\uC9C0 \uC99D\uAC00\uD55C\uB2E4."

@@ -1,5 +1,7 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// Cinemachine 카메라 전환 관리자 (싱글톤)
@@ -12,6 +14,8 @@ public class CameraManager : MonoBehaviour
 
     public CinemachineCamera boardCam;           // 기본 보드 카메라 (전체 전장 뷰)
     CinemachineCamera currentCharCam = null;     // 현재 포커스 중인 캐릭터 카메라 (null이면 보드 뷰)
+    LayerMask focusMask;
+    public Volume focusVolume;
 
     [Header("Priority")]
     public int boardPriority = 10;    // 보드 카메라 우선순위
@@ -24,6 +28,7 @@ public class CameraManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        focusMask = LayerMask.GetMask("Focus");
         SetBoardView();
     }
 
@@ -40,22 +45,48 @@ public class CameraManager : MonoBehaviour
         currentCharCam = null;
     }
 
-    /// <summary>
-    /// 특정 캐릭터에 포커스
-    /// 캐릭터 카메라 우선순위를 높여서 해당 유닛을 클로즈업
-    /// </summary>
-    /// <param name="charCam">포커스할 캐릭터의 Cinemachine 카메라</param>
-    public void FocusOnCharacter(CinemachineCamera charCam)
+    private Unit ultimateUnit;
+    private List<Unit> ultimateTargets;
+
+    public void SetBeforeUltimate(Unit unit, List<Unit> targets)
     {
-        if (!canFocus)
-            return;
-        // 보드 카메라는 우선순위 낮추고
-        boardCam.Priority = boardPriority;
+        ultimateUnit = unit;
+        ultimateTargets = targets;
 
-        // 캐릭터 카메라는 높게
-        charCam.Priority = focusPriority;
+        // Focus 레이어로 전환
+        Method.SetLayerRecursively(unit.gameObject, LayerMask.NameToLayer("Focus"));
+        foreach (var target in targets)
+        {
+            if (target != null)
+                Method.SetLayerRecursively(target.gameObject, LayerMask.NameToLayer("Focus"));
+        }
 
-        currentCharCam = charCam;
+        // 포커스 볼륨 활성화
+        focusVolume.weight = 1f;
+        canFocus = false;
+    }
+
+    public void SetAfterUltimate()
+    {
+        // Default 레이어로 복구
+        if (ultimateUnit != null)
+            Method.SetLayerRecursively(ultimateUnit.gameObject, LayerMask.NameToLayer("Default"));
+
+        if (ultimateTargets != null)
+        {
+            foreach (var target in ultimateTargets)
+            {
+                if (target != null)
+                    Method.SetLayerRecursively(target.gameObject, LayerMask.NameToLayer("Default"));
+            }
+        }
+
+        // 포커스 볼륨 비활성화
+        focusVolume.weight = 0.3f;
+        canFocus = true;
+
+        ultimateUnit = null;
+        ultimateTargets = null;
     }
 
     /// <summary>

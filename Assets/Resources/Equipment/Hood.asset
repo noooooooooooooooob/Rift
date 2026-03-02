@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cf3cb6d14f8d641a5affe751fbfbcc, type: 3}
+  m_Name: Hood
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  equipmentName: "\uD6C4\uB4DC \uB85C\uBE0C"
+  description: "\uBAA8\uC2B5\uC744 \uC870\uAE08 \uAC00\uB824\uC904 \uC218 \uC788\uB294
+    \uC637\uC774\uB2E4.\nEV + 10, DEF + 10"
+  slot: 1
+  icon: {fileID: 21300000, guid: 3a33633e1ba06874694a36a52f144896, type: 3}
+  price: 121
+  effects:
+  - {fileID: 11400000, guid: b4b77b258ccf5f144bbd6a4f6bdf645e, type: 2}
+  - {fileID: 11400000, guid: 454be4fe78e9b2c46b78938bbe254195, type: 2}

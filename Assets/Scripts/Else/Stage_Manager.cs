@@ -27,6 +27,11 @@ public class Stage_Manager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "Start Scene")
+        {
+            Destroy(gameObject);
+        }
+        else
         if (scene.name == "Stage Select Scene")  // 씬 이름 확인
         {
             if(mapContainer != null)
@@ -93,8 +98,7 @@ public class Stage_Manager : MonoBehaviour
                 break;
             case Stage_Type.BOSS:
                 Debug.Log("Boss Node Selected");
-                // SceneManager.LoadScene("Boss Scene");
-                SceneManager.LoadScene("Battle Scene");
+                SceneManager.LoadScene("Boss Scene");
                 break;
         }
         currentStage.isCurrentNode = false;

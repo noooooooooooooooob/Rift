@@ -34,6 +34,7 @@ public class Unit_Description : MonoBehaviour
     public Button showAttackButton;
     public Button showSkill1Button;
     public Button showSkill2Button;
+    public Button showUltimateButton;
 
     [Header("Button Colors")]
     public Color selectedColor = new Color(0.7f, 0.9f, 1f);
@@ -58,11 +59,12 @@ public class Unit_Description : MonoBehaviour
         originalColors[showAttackButton] = showAttackButton.image.color;
         originalColors[showSkill1Button] = showSkill1Button.image.color;
         originalColors[showSkill2Button] = showSkill2Button.image.color;
-
+        originalColors[showUltimateButton] = showUltimateButton.image.color;
         showpassiveButton.onClick.AddListener(() => ShowPassiveDescription());
         showAttackButton.onClick.AddListener(() => ShowAttackDescription());
         showSkill1Button.onClick.AddListener(() => ShowSkill1Description());
         showSkill2Button.onClick.AddListener(() => ShowSkill2Description());
+        showUltimateButton.onClick.AddListener(() => ShowUltimateDescription());
     }
     private void SelectButton(Button button)
     {
@@ -84,9 +86,9 @@ public class Unit_Description : MonoBehaviour
     {
         SelectButton(showpassiveButton);
         HideSkillArea();
-        // TODO: UnitData에 패시브 필드 추가 후 연결
-        skillNameText.text = "패시브";
-        skillDescriptionText.text = "-";
+        
+        skillNameText.text = unit.unitData.passiveName;
+        skillDescriptionText.text = unit.unitData.passiveDescription;
     }
     private void ShowAttackDescription()
     {
@@ -118,6 +120,17 @@ public class Unit_Description : MonoBehaviour
         skillNameText.text = unit.skill2Action.skill2Data.skillName;
         skillDescriptionText.text = unit.skill2Action.skill2Data.description;
         skillCostText.text = unit.skill2Action.skill2Data.cost.ToString();
+    }
+    private void ShowUltimateDescription()
+    {
+        if (unit == null || unit.ultimateAction == null || unit.ultimateAction.ultimateSkillData == null) return;
+
+        ShowSkillArea(unit.ultimateAction.ultimateSkillData);
+        SelectButton(showUltimateButton);
+        
+        skillNameText.text = unit.ultimateAction.ultimateSkillData.skillName;
+        skillDescriptionText.text = unit.ultimateAction.ultimateSkillData.description;
+        skillCostText.text = unit.ultimateAction.ultimateSkillData.cost.ToString();
     }
     public void ShowDescription(Unit unit)
     {

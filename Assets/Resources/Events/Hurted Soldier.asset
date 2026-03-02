@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313f5ecf4ac949644a615df1e9be2677, type: 3}
+  m_Name: Hurted Soldier
+  m_EditorClassIdentifier: Assembly-CSharp::EventSceneData
+  image: {fileID: 21300000, guid: 8111db74d2ad0cb4cb9dd440701a69ab, type: 3}
+  description: "\uC804\uC7A5\uC5D0\uC11C \uC911\uC0C1\uC744 \uC785\uC740 \uC6A9\uBCD1\uC774
+    \uC4F0\uB7EC\uC838 \uC788\uC2B5\uB2C8\uB2E4."
+  choices:
+  - choiceText: "\uB3C4\uC640\uC900\uB2E4.(50% \uD655\uB960\uB85C \uC131\uACF5)(-50G)"
+    costType: 4
+    costValue: -50
+    successRate: 0.5
+    successEffectType: 4
+    successValue: 500
+    successText: "\uC6A9\uBCD1\uC774 \uAC10\uC0AC\uD45C\uC2DC\uB97C \uD558\uBA70
+      \uB5A0\uB0A9\uB2C8\uB2E4.(+500G)"
+    failEffectType: 3
+    failValue: 10
+    failText: "\uCE58\uB8CC\uD558\uB358 \uB3C4\uC911 \uAC10\uC5FC\uB418\uC5C8\uC2B5\uB2C8\uB2E4.(\uCD5C\uB300
+      \uCCB4\uB825 10% \uB9CC\uD07C\uC758 \uB300\uBBF8\uC9C0)"
+  - choiceText: "\uADF8\uB0E5 \uC9C0\uB098\uAC04\uB2E4."
+    costType: 0
+    costValue: 0
+    successRate: 1
+    successEffectType: 0
+    successValue: 0
+    successText: "\uC544\uBB34 \uC77C\uB3C4 \uC77C\uC5B4\uB098\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4."
+    failEffectType: 0
+    failValue: 0
+    failText: 

@@ -12,6 +12,7 @@ public class Pause_Manager : MonoBehaviour
     public Slider masterSlider;
     public Slider bgmSlider;
     public Slider sfxSlider;
+    public Button returnButton;
 
     public bool isPaused = false;
 
@@ -22,6 +23,11 @@ public class Pause_Manager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
+            returnButton.onClick.AddListener(() =>
+            {
+                Resume();
+                SceneManager.LoadScene("Start Scene");
+            });
         }
         else
         {
@@ -104,12 +110,12 @@ public class Pause_Manager : MonoBehaviour
     {
         if (Audio_Manager.Instance == null) return;
 
-        if (masterSlider != null && Audio_Manager.Instance.masterSlider != null)
-            masterSlider.value = Audio_Manager.Instance.masterSlider.value;
-        if (bgmSlider != null && Audio_Manager.Instance.bgmSlider != null)
-            bgmSlider.value = Audio_Manager.Instance.bgmSlider.value;
-        if (sfxSlider != null && Audio_Manager.Instance.sfxSlider != null)
-            sfxSlider.value = Audio_Manager.Instance.sfxSlider.value;
+        if (masterSlider != null)
+            masterSlider.SetValueWithoutNotify(Audio_Manager.Instance.GetMasterSliderValue());
+        if (bgmSlider != null)
+            bgmSlider.SetValueWithoutNotify(Audio_Manager.Instance.GetBGMSliderValue());
+        if (sfxSlider != null)
+            sfxSlider.SetValueWithoutNotify(Audio_Manager.Instance.GetSFXSliderValue());
     }
 
     public void Resume()

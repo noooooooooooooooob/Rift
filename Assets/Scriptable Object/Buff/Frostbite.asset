@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c34aaaa23dd3e04ca41ea5935e51843, type: 3}
+  m_Name: Frostbite
+  m_EditorClassIdentifier: Assembly-CSharp::BuffData
+  buffName: "\uB3D9\uC0C1"
+  description: "\uC2A4\uD0DD * 10 % \uB9CC\uD07C SPD\uAC00 \uAC10\uC18C"
+  icon: {fileID: 1401011104, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
+  buffType: 0
+  duration: 3
+  maxStacks: 10
+  effects:
+  - {fileID: 11400000, guid: 2eac6afb3e834df429ecbe2cb477dc9d, type: 2}

@@ -96,14 +96,27 @@ public class Turn_Gauge : MonoBehaviour
     /// </summary>
     public void UpdateAllIconPositions()
     {
-        foreach (var kvp in unitIconMap)
+        // 게이지 순으로 정렬된 리스트 생성 (낮은 게이지 → 높은 게이지, 같으면 플레이어 우선)
+        List<KeyValuePair<Unit, TurnIconUI>> sortedList = new List<KeyValuePair<Unit, TurnIconUI>>(unitIconMap);
+        sortedList.Sort((a, b) =>
         {
-            Unit unit = kvp.Key;
-            TurnIconUI iconUI = kvp.Value;
+            int gaugeCompare = a.Key.turnGauge.CompareTo(b.Key.turnGauge);
+            if (gaugeCompare != 0)
+                return gaugeCompare;
+            // 게이지가 같으면 플레이어 우선 (플레이어가 뒤쪽 = 앞에 렌더링)
+            return a.Key.isPlayerUnit.CompareTo(b.Key.isPlayerUnit);
+        });
+
+        // 정렬된 순서대로 sibling index 설정 (게이지 높은 캐릭터가 앞에)
+        for (int i = 0; i < sortedList.Count; i++)
+        {
+            Unit unit = sortedList[i].Key;
+            TurnIconUI iconUI = sortedList[i].Value;
 
             if (unit == null || unit.isDead || iconUI == null)
                 continue;
 
+            iconUI.transform.SetSiblingIndex(i);
             UpdateIconPosition(unit, iconUI);
         }
     }

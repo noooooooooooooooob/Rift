@@ -6,6 +6,7 @@ public class Setting_Manager : MonoBehaviour
     public Slider masterSlider;
     public Slider bgmSlider;
     public Slider sfxSlider;
+    public GameObject settingsMenu;
 
     private void Start()
     {
@@ -40,18 +41,18 @@ public class Setting_Manager : MonoBehaviour
     {
         if (Audio_Manager.Instance == null) return;
 
-        if (masterSlider != null && Audio_Manager.Instance.masterSlider != null)
-            masterSlider.value = Audio_Manager.Instance.masterSlider.value;
-        if (bgmSlider != null && Audio_Manager.Instance.bgmSlider != null)
-            bgmSlider.value = Audio_Manager.Instance.bgmSlider.value;
-        if (sfxSlider != null && Audio_Manager.Instance.sfxSlider != null)
-            sfxSlider.value = Audio_Manager.Instance.sfxSlider.value;
+        if (masterSlider != null)
+            masterSlider.SetValueWithoutNotify(Audio_Manager.Instance.GetMasterSliderValue());
+        if (bgmSlider != null)
+            bgmSlider.SetValueWithoutNotify(Audio_Manager.Instance.GetBGMSliderValue());
+        if (sfxSlider != null)
+            sfxSlider.SetValueWithoutNotify(Audio_Manager.Instance.GetSFXSliderValue());
     }
     public void ToggleSettingsMenu()
     {
-        if (gameObject != null)
+        if (settingsMenu != null)
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            settingsMenu.SetActive(!settingsMenu.activeSelf);
             SyncSliders();
         }
     }

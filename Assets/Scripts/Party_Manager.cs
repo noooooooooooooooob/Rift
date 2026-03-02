@@ -37,6 +37,12 @@ public class Party_Manager : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        foreach (GameObject go in partyUnits)
+        {
+            if (go != null)
+                Destroy(go);
+        }
+        partyUnits.Clear();
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -131,7 +137,7 @@ public class Party_Manager : MonoBehaviour
     /// </summary>
     public void UpdatePartyAfterBattle()
     {
-        // 버프 제거
+        // 전투 버프만 제거 (Stage, Permanent 버프는 유지)
         foreach (GameObject go in partyUnits)
         {
             if (go != null)
@@ -139,7 +145,7 @@ public class Party_Manager : MonoBehaviour
                 EffectHandler effectHandler = go.GetComponent<EffectHandler>();
                 if (effectHandler != null)
                 {
-                    effectHandler.ClearAllBuffs();
+                    effectHandler.ClearBattleBuffs();
                 }
             }
         }
@@ -317,5 +323,10 @@ public class Party_Manager : MonoBehaviour
                 }
             }
         }
+    }
+    public void GainMoney(int amount)
+    {
+        money += amount;
+        Debug.Log($"[Party_Manager] 돈 획득: {amount}원, 현재 잔액: {money}원");
     }
 }

@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     // 기존 필드
     public Tile currentTile;  // 현재 위치한 타일
     public UnitData unitData;  // 유닛 기본 데이터 (ScriptableObject)
+    public Vector3 unitOffset = new Vector3(0, 0f, 0); // 유닛 위치 오프셋
 
     // 런타임 스탯 (전투 중 변경 가능)
     [Header("Runtime Stats")]
@@ -55,8 +56,7 @@ public class Unit : MonoBehaviour
         currentHP = maxHP;
         currentUP = 0;
 
-
-        hpBar.UpdateBar(currentHP, maxHP);
+        hpBar.UpdateBar(currentHP, maxHP, guard);
         upBar.UpdateBar(currentUP, stats.UP);
     }
     /// <summary>
@@ -70,8 +70,27 @@ public class Unit : MonoBehaviour
 
         turnGauge = 0f;
         isDead = false;
-        hpBar.UpdateBar(currentHP, maxHP);
+        hpBar.UpdateBar(currentHP, maxHP, guard);
         upBar.UpdateBar(currentUP, stats.UP);
+
+        // 유닛 고유 패시브 적용
+        ApplyInnatePassives();
+    }
+
+    /// <summary>
+    /// 유닛 고유 패시브 적용
+    /// </summary>
+    private void ApplyInnatePassives()
+    {
+        if (effectHandler == null || unitData == null) return;
+
+        foreach (var passive in unitData.innatePassives)
+        {
+            if (passive != null)
+            {
+                effectHandler.AddBuff(passive);
+            }
+        }
     }
 
     /// <summary>
@@ -80,9 +99,6 @@ public class Unit : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damage, DamageTextType type = DamageTextType.Normal)
     {
-        currentHP = Mathf.Max(0, currentHP - damage);
-        hpBar.UpdateBar(currentHP, maxHP);
-
         type = damage == 0 ? DamageTextType.Miss : type; 
         // 대미지 텍스트 표시
         Vector3 textPos = transform.position + Vector3.up * 1.0f;
@@ -91,7 +107,26 @@ public class Unit : MonoBehaviour
         VFX_Manager.Instance?.Play("Hit_Effect", hitEffectPos);
 
         unitAnimation.PlayHitAnimation();
+        Audio_Manager.Instance.PlaySound("Hit");
 
+        // OnDamaged 트리거
+        effectHandler?.OnDamaged(null);
+
+        if(guard > 0)
+        {
+            if(guard >= damage)
+            {
+                guard -= damage;
+                damage = 0;
+            }
+            else
+            {
+                damage -= guard;
+                guard = 0;
+            }
+        }
+        currentHP = Mathf.Max(0, currentHP - damage);
+        hpBar.UpdateBar(currentHP, maxHP, guard);
         if (currentHP <= 0)
         {
             isDead = true;
@@ -109,7 +144,7 @@ public class Unit : MonoBehaviour
 
         int actualHeal = Mathf.Min(maxHP - currentHP, amount);
         currentHP = Mathf.Min(maxHP, currentHP + amount);
-        hpBar.UpdateBar(currentHP, maxHP);
+        hpBar.UpdateBar(currentHP, maxHP, guard);
 
         // 힐 텍스트 표시 (실제 회복량이 있을 때만)
         if (actualHeal > 0)
@@ -118,6 +153,11 @@ public class Unit : MonoBehaviour
             VFX_Manager.Instance?.PlayDamageText(textPos, actualHeal, DamageTextType.Heal);
         }
     }
+    public void Guard(int amount)
+    {
+        guard += amount;
+        hpBar.UpdateBar(currentHP, maxHP, guard);
+    }
 
     public void AddUP(int amount)
     {
@@ -125,7 +165,8 @@ public class Unit : MonoBehaviour
         if (currentUP >= stats.UP)
         {
             currentUP = stats.UP;
-            actionMenuUI.ultimateButton.interactable = true;
+            if(actionMenuUI!= null)
+                actionMenuUI.ultimateButton.interactable = true;
         }
 
         upBar.UpdateBar(currentUP, stats.UP);

@@ -3,7 +3,6 @@ using UnityEngine;
 public class Unit_Move : MonoBehaviour
 {
     public Unit unit;
-    public float animationDuration = 0.5f;
 
     private void Awake()
     {
@@ -35,7 +34,7 @@ public class Unit_Move : MonoBehaviour
         // 점프 이동 애니메이션 재생
         if (unit.unitAnimation != null)
         {
-            unit.unitAnimation.PlayMoveAnimation(targetTile.WorldPosition);
+            unit.unitAnimation.PlayMoveAnimation(targetTile.WorldPosition + unit.unitOffset);
         }
     }
 }

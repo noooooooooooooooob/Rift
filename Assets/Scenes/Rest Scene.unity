@@ -184,7 +184,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 504816078}
   - {fileID: 1782524256}
   - {fileID: 610177438}
   m_Father: {fileID: 0}
@@ -214,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 79440277}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.18, y: 0, z: 2.96}
+  m_LocalPosition: {x: -1.43, y: 0, z: 2.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1005,6 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   boardCam: {fileID: 554410778}
+  focusVolume: {fileID: 0}
   boardPriority: 10
   focusPriority: 20
   canFocus: 1
@@ -1624,51 +1624,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &504816077
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 504816078}
-  - component: {fileID: 504816079}
-  m_Layer: 0
-  m_Name: Click Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &504816078
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504816077}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 69104242}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &504816079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504816077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 393950f147464044ba7107c4d20c2cee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClickController
-  cam: {fileID: 330585545}
 --- !u!1 &520346495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,16 +1804,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b412c75a6821b4682298956106daa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainCameraController
-  dolly: {fileID: 554410777}
   cameraTransform: {fileID: 554410774}
   vcam: {fileID: 554410778}
+  lookAtTarget: {fileID: 0}
   horizontalSensitivity: 0.001
   verticalSensitivity: 0.01
-  minPitch: 25
-  maxPitch: 45
+  minX: -5
+  maxX: 5
+  minYOffset: -3
+  maxYOffset: 3
+  minY: 1
   zoomSensitivity: 200
-  minFOV: 40
-  maxFOV: 80
+  zoomInY: 3
+  zoomOutY: 10
+  zoomInZ: -5
+  zoomOutZ: -15
   positionDamping: 8
   rotationDamping: 8
   zoomDamping: 8
@@ -2071,7 +2031,7 @@ Transform:
   m_GameObject: {fileID: 625032448}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0, z: 4.52}
+  m_LocalPosition: {x: -1.14, y: 0, z: 3.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2321,6 +2281,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rest_Scene_Manager
   continueButton: {fileID: 1495292394}
+  unitPositions:
+  - {fileID: 79440278}
+  - {fileID: 625032449}
+  - {fileID: 1427037907}
 --- !u!4 &723695867
 Transform:
   m_ObjectHideFlags: 0
@@ -3826,7 +3790,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1440062475}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1440062474}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1833592496}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1440062475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5214,6 +5202,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1833592496}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1440062474}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1833592497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5430,10 +5442,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Battle_UI_Manager
   unit_UI_Positions: []
   battleUI_Panel: {fileID: 0}
-  GameOver_Panel: {fileID: 1408017460}
+  gameClear_Panel: {fileID: 0}
+  gameClear_MoneyText: {fileID: 0}
+  gameOver_Panel: {fileID: 0}
   turnGaugeUI: {fileID: 0}
   playerUI_Anchors: []
   enemyUI_Anchors: []
+  unitDescriptionUI: {fileID: 0}
 --- !u!1 &1926087545
 GameObject:
   m_ObjectHideFlags: 0

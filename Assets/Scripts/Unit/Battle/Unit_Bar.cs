@@ -11,13 +11,16 @@ public class Unit_Bar : MonoBehaviour
     [Header("References")]
     [SerializeField] private Slider bar;
     public TextMeshProUGUI text;
-    public void UpdateBar(float currentValue, float maxValue)
+    public void UpdateBar(float currentValue, float maxValue,float guardValue=0)
     {
         if (bar != null && maxValue > 0)
         {
             bar.value = currentValue / maxValue;
             if (text != null)
             {
+                if (guardValue > 0)
+                    text.text = $"{currentValue} (+{guardValue}) / {maxValue}";
+                else
                 text.text = $"{currentValue} / {maxValue}";
             }
         }

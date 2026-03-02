@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d17b9af80e23642bc2d0efe1753754, type: 3}
+  m_Name: BleedEffect
+  m_EditorClassIdentifier: Assembly-CSharp::BleedEffect
+  effectName: "\uCD9C\uD608"
+  description: "stack \uB9CC\uD07C\uC758 \uACE0\uC815 \uB300\uBBF8\uC9C0\uB97C \uBD80\uC5EC"
+  trigger: 32
+  icon: {fileID: 0}

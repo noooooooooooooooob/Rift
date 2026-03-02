@@ -103,6 +103,10 @@ public class Action_Controller : MonoBehaviour
         if (currentUnit == null || actionMenuUI == null) return;
         if (actionMenuUI.IsMenuActive())
         {
+            // Active Point 체크
+            if (!actionMenuUI.CanConfirmCurrentAction())
+                return;
+
             OnConfirmAction();
         }
     }
@@ -229,11 +233,51 @@ public class Action_Controller : MonoBehaviour
     {
         ClearHighlights();
 
-        // 모든 적 타일을 선택 가능 타일로 표시
-        foreach (var tile in Battle_Manager.instance.enemyTiles)
+        SkillData skillData = null;
+        switch(currentMode)
         {
-            tile.SetHighlight(HighlightType.Attackable);
-            highlightedTiles.Add(tile);
+            case ActionType.Attack:
+                skillData = currentUnit.attackAction.attackSkillData;
+                break;
+            case ActionType.Skill1:
+                skillData = currentUnit.skill1Action.skill1Data;
+                break;
+            case ActionType.Skill2:
+                skillData = currentUnit.skill2Action.skill2Data;
+                break;
+            case ActionType.Ultimate:
+                skillData = currentUnit.ultimateAction.ultimateSkillData;
+                break;
+        }
+        if(skillData.targetType == targetType.Enemy)
+        {
+            // 모든 플레이어 타일을 선택 가능 타일로 표시
+            foreach (var tile in Battle_Manager.instance.enemyTiles)
+            {
+                tile.SetHighlight(HighlightType.Attackable);
+                highlightedTiles.Add(tile);
+            }
+            return;
+        }
+        else if(skillData.targetType == targetType.Ally)
+        {
+            // 모든 적 타일을 선택 가능 타일로 표시
+            foreach (var tile in Battle_Manager.instance.playerTiles)
+            {
+                tile.SetHighlight(HighlightType.Attackable);
+                highlightedTiles.Add(tile);
+            }
+            return;
+        }
+        else if(skillData.targetType == targetType.Self)
+        {
+            // 자신의 타일만 선택 가능 타일로 표시
+            if(currentUnit.currentTile != null)
+            {
+                currentUnit.currentTile.SetHighlight(HighlightType.Attackable);
+                highlightedTiles.Add(currentUnit.currentTile);
+            }
+            return;
         }
     }
 
@@ -374,7 +418,7 @@ public class Action_Controller : MonoBehaviour
         ClearHighlights();
         actionMenuUI.HideAllMenus();
 
-        // StartCoroutine(currentUnit.skill1Action.ExecuteSkill1(attackableTiles));
+        StartCoroutine(currentUnit.skill1Action.ExecuteSkill1(attackableTiles));
         yield return new WaitUntil(() => !currentUnit.unitAnimation.isAttacking);
         turnManager.isTurnEnd = true;
         yield return null;
@@ -428,7 +472,7 @@ public class Action_Controller : MonoBehaviour
         ClearHighlights();
         actionMenuUI.HideAllMenus();
 
-        currentUnit.ultimateAction.ExecuteUltimate(attackableTiles);
+        StartCoroutine(currentUnit.ultimateAction.ExecuteUltimate(attackableTiles));
         yield return new WaitUntil(() => !currentUnit.unitAnimation.isAttacking);
 
         // Return 버튼 다시 활성화
@@ -528,8 +572,7 @@ public class Action_Controller : MonoBehaviour
     private IEnumerator ExecuteGuard()
     {
         actionMenuUI.HideAllMenus();
-        // 방어 로직 (추후 구현)
-        Debug.Log("방어 실행");
+        currentUnit.guardAction.ExecuteGuard();
         yield return null;
         turnManager.isTurnEnd = true;
     }
@@ -564,7 +607,7 @@ public class Action_Controller : MonoBehaviour
         // Return 버튼 비활성화 (취소 불가)
         if (actionMenuUI.returnButton != null)
             actionMenuUI.returnButton.gameObject.SetActive(false);
-        
-        
+
+
     }
 }

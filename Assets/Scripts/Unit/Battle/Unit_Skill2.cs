@@ -7,7 +7,7 @@ public class Unit_Skill2 : MonoBehaviour
     public Unit unit;
     public SkillData skill2Data;
 
-    List<Unit> targetUnits = new List<Unit>();
+    protected List<Unit> targetUnits = new List<Unit>();
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class Unit_Skill2 : MonoBehaviour
         yield return StartCoroutine(unit.unitAnimation.PlaySkill2Animation(tiles[0].transform));
         unit.AddUP(1);
     }
-    public void Skill2_Attack(float multiplier)
+    public virtual void Skill2_Attack(float multiplier)
     {
         foreach (var targetUnit in targetUnits)
         {
@@ -47,8 +47,7 @@ public class Unit_Skill2 : MonoBehaviour
             {
                 int damage = Method.CalculateDamage(unit, targetUnit, multiplier);
                 targetUnit.TakeDamage(damage);
-                unit.Heal(damage / 10);
-                Method.CalculateLifeSteal(unit, damage);
+                unit.Heal(Method.CalculateLifeSteal(unit, damage));
             }
         }
     }

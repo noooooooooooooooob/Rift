@@ -140,6 +140,7 @@ public class Turn_Manager : MonoBehaviour
     {
         Debug.Log("전투 시작 버튼 클릭됨!");
         isReadyToStartBattle = true;
+        Audio_Manager.Instance.PlaySound("Battle BGM", 0,true, SoundType.BGM);
     }
 
     /// <summary>
@@ -217,6 +218,12 @@ public class Turn_Manager : MonoBehaviour
         // 4. 전투 메인 루프
         while (true)
         {
+            // 결과 페이즈로 전환되면 루프 탈출
+            if (currentPhase == BattlePhase.Result)
+            {
+                yield break;
+            }
+
             // 궁극기 진행 중이면 대기
             if (isUltimateActive)
             {
@@ -306,6 +313,9 @@ public class Turn_Manager : MonoBehaviour
     /// </summary>
     private IEnumerator ExecuteUnitTurn(Unit unit)
     {
+        // OnTurnStart 트리거
+        unit.effectHandler?.OnTurnStart();
+
         if (unit.isPlayerUnit)
         {
             Debug.Log($"[Player Turn] {unit.unitData.unitName} - 입력 대기 중 (TODO)");
@@ -336,6 +346,9 @@ public class Turn_Manager : MonoBehaviour
 
             Battle_Manager.instance.AddEnemyActivePoint(1);
         }
+
+        // OnTurnEnd 트리거
+        unit.effectHandler?.OnTurnEnd();
     }
 
     /// <summary>
@@ -366,6 +379,14 @@ public class Turn_Manager : MonoBehaviour
     /// </summary>
     public void ActivateUltimate(Unit unit)
     {
+        if(unit == null)
+        {
+            return;
+        }
+        if(currentPhase != BattlePhase.Battle)
+        {
+            return;
+        }
         if (isUltimateActive) return;  // 이미 궁극기 진행 중이면 무시
         if (currentTurnUnit != null && !currentTurnUnit.isPlayerUnit)   return; // 적 유닛은 궁극기 사용 불가
 
@@ -411,6 +432,15 @@ public class Turn_Manager : MonoBehaviour
         // 중단된 유닛의 턴 재개
         if (interruptedTurnUnit != null)
         {
+            if (CheckBattleEnd())
+            {
+                Debug.Log("[Ultimate] 전투 종료!");
+                interruptedTurnUnit = null;
+                isUltimateActive = false;
+                currentPhase = BattlePhase.Result;
+                yield break;
+            }
+            
             Debug.Log($"[Ultimate] {interruptedTurnUnit.unitData.unitName}의 턴 재개!");
             Unit resumeUnit = interruptedTurnUnit;
             interruptedTurnUnit = null;
@@ -428,6 +458,15 @@ public class Turn_Manager : MonoBehaviour
         {
             interruptedTurnUnit = null;
             isUltimateActive = false;
+
+            // 전투 종료 체크
+            if (CheckBattleEnd())
+            {
+                Debug.Log("[Ultimate] 전투 종료!");
+                currentPhase = BattlePhase.Result;
+                yield break;
+            }
+
             Debug.Log("[Ultimate] 메인 루프로 복귀");
         }
     }

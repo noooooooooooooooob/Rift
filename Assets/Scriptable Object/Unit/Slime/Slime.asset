@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12209eee19e5d2149b4b12520f0f9f3b, type: 3}
+  m_Name: Slime
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitName: "\uC2AC\uB77C\uC784"
+  unitClass: "\uC2AC\uB77C\uC784"
+  unitDescription: "\uC2AC\uB77C\uC784"
+  unitTurnGaugePrefab: {fileID: 3604922561627443427, guid: 4b83f1781745b9247bdfce208eb7fc84, type: 3}
+  unitPortrait: {fileID: 21300000, guid: 97caed10fc682f849af076cbd7024b4c, type: 3}
+  turnGaugeIcon: {fileID: 21300000, guid: 97caed10fc682f849af076cbd7024b4c, type: 3}
+  baseStat:
+    HP: 666
+    UP: 0
+    ATK: 320
+    DEF: 10
+    SPD: 10
+    AGI: 0
+    LS: 0
+    RST: 0
+    EV: 0
+    CA: 0
+    DR: 0
+    AP: 0
+  innatePassives: []
+  passiveName: "\uD1B5\uD1B5"
+  passiveDescription: "\uC2AC\uB77C\uC784\uC740 \uC6C0\uC9C1\uC77C \uC218\uAC00 \uC5C6\uC5B4\uC694!"
